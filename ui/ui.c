@@ -6,6 +6,7 @@ char game_name[602] = " _______  _______  ___          _______  _______  _______
 
 void show_game_name(){
 
+    //MOSTRAR EL NOMBRE DEL JUEGO
     printf("%s\n", game_name);
 
 }
@@ -16,12 +17,14 @@ int create_menu(menu menu_to_show){
 
     printf("\n");
 
+    //MOSTRAR ENTRADAS U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
 
         printf("%i: %s\n", i+1, menu_to_show.entries[i].name);
 
     }
 
+    //PEDIR UNA OPCIÓN AL USUARIO DENTRO DEL RANGO DE OPCIONES POSIBLES
     do{
 
         printf("\nElige dentro del rango de opciones > ");
@@ -30,12 +33,14 @@ int create_menu(menu menu_to_show){
 
     } while(!((decision >= 0) && (decision <= menu_to_show.number_of_entries-1)));
     
+    //EJECUTAR UNA ACCIÓN SI ÉSTA NO ES NULA
     if(menu_to_show.entries[decision].action != NULL){
 
         menu_to_show.entries[decision].action();
 
     }
 
+    //DEVOLVER EL ÍNDICE DE LA DECISIÓN TOMADA
     return decision;
 
 }
