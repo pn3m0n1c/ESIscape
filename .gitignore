@@ -1,0 +1,27 @@
+# Compilados y binarios
+*.o
+*.a
+*.so
+*.out
+a.out
+ESI-Escape
+
+# Directorios de build
+build/
+bin/
+
+# Partida guardada (estado runtime, no código)
+data/Partida.txt
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Valgrind
+vgcore.*
