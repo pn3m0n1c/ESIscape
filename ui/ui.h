@@ -2,6 +2,9 @@
 
 #define UI
 
+//GRÁFICOS
+extern const char graphic_game_name[604];
+
 //ENTRADAS DE MENÚ
 typedef struct{
 
