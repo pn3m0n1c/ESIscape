@@ -3,29 +3,29 @@
 #define UI
 
 //GRÁFICOS
-extern const char graphic_game_nombre[604];
+extern const char graphic_game_name[604];
 
-//ENTRADAS DE MENÚ
+//entries DE MENÚ
 typedef struct{
 
-    char nombre[128];
-    void (*accion)();
+    char name[128];
+    void (*action)();
 
-} menu_entrada;
+} menu_entry;
 
 //MENUS
 typedef struct{
 
-    menu_entrada* entradas;
-    int number_of_entradas;
+    menu_entry* entries;
+    int number_of_entries;
     int type;
 
 } menu;
 
-//CABECERA void show_game_nombre()
+//CABECERA void show_game_name()
 //PRECONDICIÓN
-//POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla
-void show_game_nombre();
+//POSTCONDICIÓN imprime el name del juego "ESI-ESCAPE" en pantalla
+void show_game_name();
 
 //CABECERA: int crear_menu(menu menu_to_show)
 //PRECONDICIÓN: menu_to_show preinicializado
