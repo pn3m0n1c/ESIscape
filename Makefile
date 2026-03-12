@@ -40,7 +40,8 @@ ifeq ($(OS), Windows_NT)
 TARGET = $(BIN_DIR)/esi-escape.exe
 MKDIR = mkdir
 RM = rmdir /s /q
-SOURCES := $(shell dir /s /b $(SRC_DIR)\*.c 2>nul)
+SOURCES := $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/*.c)
+#SOURCES := $(shell dir /s /b $(SRC_DIR)\*.c 2>nul)
 
 else 
 # Se entiende GNU-Linux en este caso
@@ -71,8 +72,10 @@ $(TARGET): $(OBJECTS)
 
 # Compilar de .c a .o 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	-$(MKDIR) $(@D)  # Create parent dir for .o file (e.g., build/Part1)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@  # $< = input .c file, $@ = output .o file
+# Create parent dir for .o file (e.g., build/Part1)
+	-$(MKDIR) "$(@D)"
+# $< = input .c file, $@ = output .o file
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Limpiar artefactos (no se que son)
 clean:  
