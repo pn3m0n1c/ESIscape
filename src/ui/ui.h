@@ -2,7 +2,7 @@
 
 #define UI
 
-//entries DE MENÚ
+//ENTRADAS DE MENÚ
 typedef struct{
 
     char name[128];

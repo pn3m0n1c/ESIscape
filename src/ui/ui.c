@@ -16,7 +16,7 @@ int ui_menu_create(menu menu_to_show){
 
     printf("\n");
 
-    //MOSTRAR entries U OPCIONES
+    //MOSTRAR ENTRIES U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
 
         printf("%i: %s\n", i+1, menu_to_show.entries[i].name);
