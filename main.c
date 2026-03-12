@@ -27,8 +27,8 @@ int main(){
     menu_start.entries[2] = menu_entry_salir;
     menu_start.number_of_entries = 3;
 
-    printf("%s", graphic_game_name);
-    printf("%i", ui_crear_menu(menu_start));
+    graphic_show_game_name();
+    printf("%i", ui_menu_create(menu_start));
 
     free(menu_start.entries);
     return(0);

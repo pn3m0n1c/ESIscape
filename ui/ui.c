@@ -3,9 +3,14 @@
 #include <string.h>
 #include "ui.h"
 
-const char graphic_game_name[604] = "\n _______  _______  ___          _______  _______  _______  _______  _______  _______ \n|       ||       ||   |        |       ||       ||       ||   _   ||       ||       |\n|    ___||  _____||   |  ____  |    ___||  _____||       ||  |_|  ||    _  ||    ___|\n|   |___ | |_____ |   | |____| |   |___ | |_____ |       ||       ||   |_| ||   |___ \n|    ___||_____  ||   |        |    ___||_____  ||      _||       ||    ___||    ___|\n|   |___  _____| ||   |        |   |___  _____| ||     |_ |   _   ||   |    |   |___ \n|_______||_______||___|        |_______||_______||_______||__| |__||___|    |_______|\n";
+void graphic_show_game_name(){
 
-int ui_crear_menu(menu menu_to_show){
+    char graphic_game_name[604] = "\n _______  _______  ___          _______  _______  _______  _______  _______  _______ \n|       ||       ||   |        |       ||       ||       ||   _   ||       ||       |\n|    ___||  _____||   |  ____  |    ___||  _____||       ||  |_|  ||    _  ||    ___|\n|   |___ | |_____ |   | |____| |   |___ | |_____ |       ||       ||   |_| ||   |___ \n|    ___||_____  ||   |        |    ___||_____  ||      _||       ||    ___||    ___|\n|   |___  _____| ||   |        |   |___  _____| ||     |_ |   _   ||   |    |   |___ \n|_______||_______||___|        |_______||_______||_______||__| |__||___|    |_______|\n";
+    printf("%s", graphic_game_name);
+
+}
+
+int ui_menu_create(menu menu_to_show){
 
     int i, decision;
 
@@ -40,17 +45,17 @@ int ui_crear_menu(menu menu_to_show){
 }
 
 //PEDIR INFORMACION DEL JUGADOR
-void ui_pedir_info_jugador(){
+void ui_ask_for_player_info(){
 
 
 
 }
 
 //RESOLUCIÓN DE PUZLES, TOMARÁ COMO ARGUMENTO UNA ESTRUCTURA "PUZLE" Y DEVOLVERÁ 1 o 0 SI SE HA RESUELTO O NO
-int ui_resolver_puzle(){
+int ui_solve_puzle(){
 
-    char input_jugador[50];
+    char input_player[50];
 
-    fgets(input_jugador, 51, stdin);
+    fgets(input_player, 51, stdin);
 
 }

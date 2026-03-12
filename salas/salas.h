@@ -23,8 +23,6 @@ typedef struct{
 
 } salas;
 
-extern salas arr_salas;
-
 //CONEXIONES
 
 typedef struct{
@@ -36,5 +34,10 @@ typedef struct{
     char con_id_cond[5]; //ID DEL OBJETO O PUZLE A RESOLVER PARA PODER ATRAVESAR LA CONEXION
 
 } conn;
+
+//CABECERA: sala* get_sala_from_id(char* id_to_search)
+//PRECONDICIÓN: char y salas preinicializado
+//POSTCONDICIÓN: devuelve un puntero a la sala dentro de un conjunto de salas con el id especificado en los argumentos.
+sala* get_sala_from_id(char*, salas*);
 
 #endif
