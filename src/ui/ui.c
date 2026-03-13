@@ -10,7 +10,7 @@ void graphic_show_game_name(){
 
 }
 
-int ui_menu_create(menu menu_to_show){
+int ui_menu_create(Menu menu_to_show){
 
     int i, decision;
 
