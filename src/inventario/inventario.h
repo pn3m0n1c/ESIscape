@@ -14,9 +14,11 @@ typedef struct {
 } Item;
 
 typedef struct {
-    Item *slots;
+    Item *slot; /* *slot <=> Array de slots */
     int size;
 } Inventory;
 
+Inventory* inv_read_items(char path[]);
+Inventory inv_create_empty_inventory();
 
 #endif /* INVENTARIO_H */
