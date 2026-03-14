@@ -29,4 +29,19 @@ void graphic_show_game_name();
 //POSTCONDICIÓN: mostrará en pantalla el menú cargado en menu_to_show, y devolverá el índice de la opción elegida, y ejecutará una función si esta no está definida como nula.
 int ui_menu_create(Menu);
 
+//CABECERA: int ui_main_menu()
+//PRECONDICIÓN: 
+//POSTCONDICIÓN: Llama y muestra el main menu, devolviendo el indice de la opción elegida
+int ui_main_menu();
+
+//CABECERA: int game_loop_start_menu()
+//PRECONDICIÓN: 
+//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y devuelve el índice de la opción elegida.
+int game_loop_start_menu();
+
+//CABECERA: void ui_ask_for_player_info()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Lee la información del jugador, y posteriormente llama a la función de creado de jugadores de su módulo correspondiente
+void ui_ask_for_player_info();
+
 #endif

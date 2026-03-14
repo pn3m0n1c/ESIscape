@@ -40,7 +40,7 @@ Salas* load_salas(){
 
     else{
 
-        printf("\n##### SALAS #####\n");
+        //printf("\n##### SALAS #####\n");
 
         char current_row[512];  //FILA ACTUAL EN LECTURA
 
@@ -88,10 +88,10 @@ Salas* load_salas(){
                 loaded_salas->salas[loaded_salas->number_of_salas-1] = sala_currentlyreading;
 
                 //TEST PRINT
-                printf("\nID: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_id);
-                printf("\nNombre: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_name);
-                printf("\nDesc: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_desc);
-                printf("\nTipo en num: %i", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_type);
+                //printf("\nID: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_id);
+                //printf("\nNombre: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_name);
+                //printf("\nDesc: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_desc);
+                //printf("\nTipo en num: %i", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_type);
 
             }
 
@@ -121,7 +121,7 @@ Conns* load_conns(){
 
     else{
 
-        printf("\n##### CONEXIONES #####\n");
+        //printf("\n##### CONEXIONES #####\n");
 
         char current_row[512];  //FILA ACTUAL EN LECTURA
 
@@ -129,7 +129,7 @@ Conns* load_conns(){
 
             if(current_row[0] != '\n'){
 
-                printf("\n\nFila leida: %s: ", current_row);
+                //printf("\n\nFila leida: %s: ", current_row);
 
                 //AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
                 loaded_conns->number_of_conns++;
@@ -170,11 +170,11 @@ Conns* load_conns(){
                 loaded_conns->conns[loaded_conns->number_of_conns-1] = conn_currentlyreading;
 
                 //TEST PRINT
-                printf("\nConnID: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id);
-                printf("\nConnSalaFrom: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_from_id);
-                printf("\nConnSalaTo: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_to_id);
-                printf("\nConnBlock: %i", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_block);
-                printf("\nConnIdCond: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id_cond);
+                //printf("\nConnID: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id);
+                //printf("\nConnSalaFrom: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_from_id);
+                //printf("\nConnSalaTo: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_to_id);
+                //printf("\nConnBlock: %i", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_block);
+                //printf("\nConnIdCond: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id_cond);
 
             }
 

@@ -19,7 +19,7 @@ int ui_menu_create(Menu menu_to_show){
     //MOSTRAR ENTRIES U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
 
-        printf("%i: %s\n", i+1, menu_to_show.entries[i].name);
+        printf("%i:\t%s\n", i+1, menu_to_show.entries[i].name);
 
     }
 
@@ -44,7 +44,104 @@ int ui_menu_create(Menu menu_to_show){
 
 }
 
-//PEDIR INFORMACION DEL JUGADOR
+int ui_main_menu(){
+
+    Menu menu_start;
+    int answer;
+
+    Menu_Entry Menu_Entry_nueva_partida;
+    strcpy(Menu_Entry_nueva_partida.name, "Nueva partida");
+    Menu_Entry_nueva_partida.action = NULL;
+
+    Menu_Entry Menu_Entry_cargar_partida;
+    strcpy(Menu_Entry_cargar_partida.name, "Cargar partida");
+    Menu_Entry_cargar_partida.action = NULL;
+
+    Menu_Entry Menu_Entry_salir;
+    strcpy(Menu_Entry_salir.name, "Salir");
+    Menu_Entry_salir.action = NULL;
+
+    menu_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*3);
+    menu_start.entries[0] = Menu_Entry_nueva_partida;
+    menu_start.entries[1] = Menu_Entry_cargar_partida;
+    menu_start.entries[2] = Menu_Entry_salir;
+    menu_start.number_of_entries = 3;
+
+    graphic_show_game_name();
+    answer = ui_menu_create(menu_start);
+
+    free(menu_start.entries);
+
+    return(answer);
+
+}
+
+int game_loop_start_menu(){
+
+    Menu menu_game_loop_start;
+    int answer;
+
+    Menu_Entry Menu_Entry_describir_sala;
+    strcpy(Menu_Entry_describir_sala.name, "Describir sala");
+    Menu_Entry_describir_sala.action = NULL;
+    
+    Menu_Entry Menu_Entry_examinar;
+    strcpy(Menu_Entry_examinar.name, "Examinar (objetos y salidas)");
+    Menu_Entry_describir_sala.action = NULL;
+    
+    Menu_Entry Menu_Entry_entrar_en_otra_sala;
+    strcpy(Menu_Entry_entrar_en_otra_sala.name, "Entrar en otra sala");
+    Menu_Entry_entrar_en_otra_sala.action = NULL;
+
+    Menu_Entry Menu_Entry_coger_objeto;
+    strcpy(Menu_Entry_coger_objeto.name, "Coger objeto");
+    Menu_Entry_coger_objeto.action = NULL;
+
+    Menu_Entry Menu_Entry_soltar_objeto;
+    strcpy(Menu_Entry_soltar_objeto.name, "Soltar objeto");
+    Menu_Entry_soltar_objeto.action = NULL;
+
+    Menu_Entry Menu_Entry_inventario;
+    strcpy(Menu_Entry_inventario.name, "Inventario");
+    Menu_Entry_inventario.action = NULL;
+
+    Menu_Entry Menu_Entry_usar_objeto;
+    strcpy(Menu_Entry_usar_objeto.name, "Usar objeto");
+    Menu_Entry_usar_objeto.action = NULL;
+
+    Menu_Entry Menu_Entry_puzle_codigo;
+    strcpy(Menu_Entry_puzle_codigo.name, "Resolver puzle / introducir codigo");
+    Menu_Entry_puzle_codigo.action = NULL;
+
+    Menu_Entry Menu_Entry_guardar_partida;
+    strcpy(Menu_Entry_guardar_partida.name, "Guardar partida");
+    Menu_Entry_guardar_partida.action = NULL;
+    
+    Menu_Entry Menu_Entry_volver;
+    strcpy(Menu_Entry_volver.name, "Volver");
+    Menu_Entry_volver.action = NULL;
+
+    menu_game_loop_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*10);
+    menu_game_loop_start.entries[0] = Menu_Entry_describir_sala;
+    menu_game_loop_start.entries[1] = Menu_Entry_examinar;
+    menu_game_loop_start.entries[2] = Menu_Entry_entrar_en_otra_sala;
+    menu_game_loop_start.entries[3] = Menu_Entry_coger_objeto;
+    menu_game_loop_start.entries[4] = Menu_Entry_soltar_objeto;
+    menu_game_loop_start.entries[5] = Menu_Entry_inventario;
+    menu_game_loop_start.entries[6] = Menu_Entry_usar_objeto;
+    menu_game_loop_start.entries[7] = Menu_Entry_puzle_codigo;
+    menu_game_loop_start.entries[8] = Menu_Entry_guardar_partida;
+    menu_game_loop_start.entries[9] = Menu_Entry_volver;
+    menu_game_loop_start.number_of_entries = 10;
+
+    printf("\nSala: #######");
+    answer = ui_menu_create(menu_game_loop_start);
+    free(menu_game_loop_start.entries);
+
+    return(answer);
+
+}
+
 void ui_ask_for_player_info(){
 
     char InfoPlayer_FullName[21];
@@ -60,7 +157,7 @@ void ui_ask_for_player_info(){
     
 }
 
-//RESOLUCIÓN DE PUZLES, TOMARÁ COMO ARGUMENTO UNA ESTRUCTURA "PUZLE" Y DEVOLVERÁ 1 o 0 SI SE HA RESUELTO O NO
+/*
 int ui_solve_puzle(){
 
     char input_player[50];
@@ -68,3 +165,4 @@ int ui_solve_puzle(){
     fgets(input_player, 51, stdin);
 
 }
+*/
