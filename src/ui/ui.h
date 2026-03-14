@@ -3,6 +3,7 @@
 #define UI
 
 #include "../salas/salas.h"
+#include "../inventario/inventario.h"
 
 //ENTRADAS DE MENÚ
 typedef struct{
@@ -60,5 +61,7 @@ void ui_ask_for_player_info();
 //PRECONDICIÓN: Sala preinicializado
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
 void ui_describe_sala(Sala*);
+
+void ui_show_inventory(Inventory*);
 
 #endif
