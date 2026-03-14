@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "ui.h"
+#include "../inventario/inventario.h"
 
 void graphic_show_game_name(){
 
@@ -211,6 +212,19 @@ void ui_describe_sala(Sala* sala_to_describe){
 
     }
 
+}
+
+void ui_show_inventory(Inventory *inv) {
+    for (int i = 0; i < inv->size; i++) {
+        printf(
+            "Item %d: %s - %s - Desc %s Loc %s\n", 
+            i, 
+            inv->slot[i].id, 
+            inv->slot[i].name,
+            inv->slot[i].description,
+            inv->slot[i].location
+        );
+    }
 }
 
 /*
