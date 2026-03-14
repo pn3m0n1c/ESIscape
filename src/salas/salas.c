@@ -22,7 +22,7 @@ Sala* get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
 }
 
-Salas* load_salas(char* filepath){
+Salas* load_salas(){
 
     FILE* f;
     Salas* loaded_salas;
@@ -31,14 +31,16 @@ Salas* load_salas(char* filepath){
     loaded_salas->number_of_salas = 0;
     
     //OBTENGO Salas.txt
-    if((f=fopen(filepath, "r")) == NULL){
+    if((f=fopen("./data/Salas.txt", "r")) == NULL){
 
-        printf("Error al cargar salas. Archivo de texto no cargado.");
+        printf("Error al cargar salas. Archivo de texto de salas no cargado.");
         exit(1);
 
     }
 
     else{
+
+        printf("\n##### SALAS #####\n");
 
         char current_row[512];  //FILA ACTUAL EN LECTURA
 
@@ -46,8 +48,9 @@ Salas* load_salas(char* filepath){
 
             if(current_row[0] != '\n'){
 
-                printf("\n\nFila leida: %s: ", current_row);
+                //printf("\n\nFila leida: %s: ", current_row);
 
+                //AÑADIMOS HUECO PARA LA NUEVA SALA
                 loaded_salas->number_of_salas++;
                 loaded_salas->salas = (Sala*)realloc(loaded_salas->salas, sizeof(Sala)*loaded_salas->number_of_salas);
 
@@ -67,6 +70,12 @@ Salas* load_salas(char* filepath){
                 }
                 else if(strcmp(sala_string_type, "SALIDA") == 0){
                     sala_currentlyreading.sala_type = SALIDA;
+                }
+                else{
+
+                    printf("Formato incorrecto de tipo de sala.");
+                    exit(1);
+
                 }
                 
                 strcpy(sala_currentlyreading.sala_desc, strtok(NULL, "-")); //DESCRIPCIÓN
@@ -91,5 +100,88 @@ Salas* load_salas(char* filepath){
     }
 
     return loaded_salas;
+
+}
+
+Conns* load_conns(){
+
+    FILE* f;
+    Conns* loaded_conns;
+    loaded_conns = (Conns*)malloc(sizeof(Conns));
+    loaded_conns->conns = NULL;
+    loaded_conns->number_of_conns = 0;
+    
+    //OBTENGO Salas.txt
+    if((f=fopen("./data/Conexiones.txt", "r")) == NULL){
+
+        printf("Error al cargar salas. Archivo de texto de conexiones no cargado.");
+        exit(1);
+
+    }
+
+    else{
+
+        printf("\n##### CONEXIONES #####\n");
+
+        char current_row[512];  //FILA ACTUAL EN LECTURA
+
+        while(fgets(current_row, 512, f) != NULL){ //LEO FILA A FILA
+
+            if(current_row[0] != '\n'){
+
+                printf("\n\nFila leida: %s: ", current_row);
+
+                //AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
+                loaded_conns->number_of_conns++;
+                loaded_conns->conns = (Conn*)realloc(loaded_conns->conns, sizeof(Conn)*loaded_conns->number_of_conns);
+
+                Conn conn_currentlyreading;
+                strcpy(conn_currentlyreading.conn_id, strtok(current_row, "-")); //ID
+                strcpy(conn_currentlyreading.conn_sala_from_id, strtok(NULL, "-")); //ID FROM
+                strcpy(conn_currentlyreading.conn_sala_to_id, strtok(NULL, "-")); //ID TO
+
+                char blocked_string[11];
+                strcpy(blocked_string, strtok(NULL, "-")); //ACTIVA O BLOQUEDA EN FORMATO STRING
+                //ACTIVA O BLOQUEDA EN 0 SI ACTIVA Y 1 SI BLOQUEADA
+                if(strcmp(blocked_string, "Bloqueada") == 0){
+
+                    conn_currentlyreading.conn_block = 1;
+
+                }
+                else if(strcmp(blocked_string, "Activa") == 0){
+
+                    conn_currentlyreading.conn_block = 0;
+
+                }
+                else{
+
+                    printf("Formato incorrecto de bloqueo o activacion de conexion.");
+                    exit(1);
+
+                }
+                
+                strcpy(conn_currentlyreading.conn_id_cond, strtok(NULL, "-")); //ID DEL OBJETO O PUZLE PARA DESBLOQUEAR
+                if(conn_currentlyreading.conn_id_cond[strlen(conn_currentlyreading.conn_id_cond)-1] == '\n'){
+
+                    conn_currentlyreading.conn_id_cond[strlen(conn_currentlyreading.conn_id_cond)-1] = '\0'; //ELIMINO EL \n DEL FINAL DE LÍNEA
+                    
+                }
+
+                loaded_conns->conns[loaded_conns->number_of_conns-1] = conn_currentlyreading;
+
+                //TEST PRINT
+                printf("\nConnID: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id);
+                printf("\nConnSalaFrom: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_from_id);
+                printf("\nConnSalaTo: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_to_id);
+                printf("\nConnBlock: %i", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_block);
+                printf("\nConnIdCond: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id_cond);
+
+            }
+
+        }
+
+    }
+
+    return loaded_conns;
 
 }

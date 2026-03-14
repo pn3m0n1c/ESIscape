@@ -6,7 +6,8 @@
 
 int main(){
 
-    load_salas("./data/Salas.txt");
+    //load_salas();
+    //load_conns();
 
     //EJEMPLO DE MENÚ, PROBABLEMENTE SE MOVERÁ A OTRO SITIO -Josemi
 
