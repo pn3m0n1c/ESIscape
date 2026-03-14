@@ -47,6 +47,11 @@ typedef struct{
 //POSTCONDICIÓN: devuelve un puntero a la sala dentro de un conjunto de salas con el id especificado en los argumentos.
 Sala* get_sala_from_id(char*, Salas*);
 
+//CABECERA: Sala* get_sala_inicial(Salas* arr_salas)
+//PRECONDICIÓN: arr_salas preinicializada
+//POSTCONDICIÓN: Devuelve un puntero a la sala inicial
+Sala* get_sala_inicial(Salas*);
+
 //CABECERA:         Salas* load_salas()
 //PRECONDICIÓN:     Que exista el archivo de salas.txt
 //POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las salas cargadas desde su archivo

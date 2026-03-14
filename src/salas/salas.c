@@ -22,6 +22,25 @@ Sala* get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
 }
 
+Sala* get_sala_inicial(Salas* arr_salas){
+
+    int i;
+    Sala* Sala_inicial = NULL;
+
+    for(i=0; i<(arr_salas->number_of_salas); i++){
+
+        if(arr_salas->salas[i].sala_type == INICIAL){
+
+            Sala_inicial = &(arr_salas->salas[i]);
+            
+        }
+
+    }
+
+    return(Sala_inicial);
+
+}
+
 Salas* load_salas(){
 
     FILE* f;

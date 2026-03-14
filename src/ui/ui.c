@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "ui.h"
 
 void graphic_show_game_name(){
@@ -44,10 +45,16 @@ int ui_menu_create(Menu menu_to_show){
 
 }
 
-int ui_main_menu(){
+void ui_exit_game(){
+
+    printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero. 2026.\n\n");
+    exit(0);
+
+}
+
+void ui_main_menu(){
 
     Menu menu_start;
-    int answer;
 
     Menu_Entry Menu_Entry_nueva_partida;
     strcpy(Menu_Entry_nueva_partida.name, "Nueva partida");
@@ -59,7 +66,7 @@ int ui_main_menu(){
 
     Menu_Entry Menu_Entry_salir;
     strcpy(Menu_Entry_salir.name, "Salir");
-    Menu_Entry_salir.action = NULL;
+    Menu_Entry_salir.action = &ui_exit_game;
 
     menu_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*3);
     menu_start.entries[0] = Menu_Entry_nueva_partida;
@@ -68,11 +75,9 @@ int ui_main_menu(){
     menu_start.number_of_entries = 3;
 
     graphic_show_game_name();
-    answer = ui_menu_create(menu_start);
+    ui_menu_create(menu_start);
 
     free(menu_start.entries);
-
-    return(answer);
 
 }
 
@@ -155,6 +160,50 @@ void ui_ask_for_player_info(){
     printf("Introduce una contrasena para el jugador: ");
     fgets(InfoPlayer_Password, 9, stdin);
     
+}
+
+void describe_sala(Sala* sala_to_describe){
+
+    printf("Sala: %s\n", sala_to_describe->sala_name);
+    printf("Descripción: %s\n", sala_to_describe->sala_desc);
+
+    switch(sala_to_describe->sala_type){
+
+        case INICIAL:
+            printf("Te encuentras en la sala inicial.\n");
+            break;
+        case NORMAL:
+            printf("Te encuentras en una sala normal.\n");
+            break;
+        case SALIDA:
+            printf("\n##     ## ####  ######  ########  #######  ########  ####    ###    #### \n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##    ## ##   #### \n##     ##  ##  ##          ##    ##     ## ##     ##  ##   ##   ##  #### \n##     ##  ##  ##          ##    ##     ## ########   ##  ##     ##  ##  \n ##   ##   ##  ##          ##    ##     ## ##   ##    ##  #########      \n  ## ##    ##  ##    ##    ##    ##     ## ##    ##   ##  ##     ## #### \n   ###    ####  ######     ##     #######  ##     ## #### ##     ## #### ");
+            printf("\n\nHas completado ESI-Escape!!!");
+            printf("\nQuieres regresar al menu principal?");
+            char volver_char;
+            do{
+
+                printf("\n(S/N) > ");
+                scanf(" %c", &volver_char);
+                volver_char = tolower(volver_char);
+
+            }while(!(volver_char == 's' || volver_char == 'n'));
+
+            if(volver_char == 's'){
+
+                //...
+
+            }
+
+            else{
+
+                //...
+
+            }
+
+            break;
+
+    }
+
 }
 
 /*
