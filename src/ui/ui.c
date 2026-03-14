@@ -45,6 +45,21 @@ int ui_menu_create(Menu menu_to_show){
 
 }
 
+int ui_confirmation(){
+
+    char answer_char;
+    do{
+
+        printf("\n(S/N) > ");
+        scanf(" %c", &answer_char);
+        answer_char = tolower(answer_char);
+
+    }while(!(answer_char == 's' || answer_char == 'n'));
+
+    return(answer_char == 's');
+
+}
+
 void ui_exit_game(){
 
     printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero. 2026.\n\n");
@@ -81,7 +96,7 @@ void ui_main_menu(){
 
 }
 
-int game_loop_start_menu(){
+int ui_game_loop_start_menu(){
 
     Menu menu_game_loop_start;
     int answer;
@@ -162,7 +177,7 @@ void ui_ask_for_player_info(){
     
 }
 
-void describe_sala(Sala* sala_to_describe){
+void ui_describe_sala(Sala* sala_to_describe){
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
     printf("Descripción: %s\n", sala_to_describe->sala_desc);
@@ -179,16 +194,8 @@ void describe_sala(Sala* sala_to_describe){
             printf("\n##     ## ####  ######  ########  #######  ########  ####    ###    #### \n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##    ## ##   #### \n##     ##  ##  ##          ##    ##     ## ##     ##  ##   ##   ##  #### \n##     ##  ##  ##          ##    ##     ## ########   ##  ##     ##  ##  \n ##   ##   ##  ##          ##    ##     ## ##   ##    ##  #########      \n  ## ##    ##  ##    ##    ##    ##     ## ##    ##   ##  ##     ## #### \n   ###    ####  ######     ##     #######  ##     ## #### ##     ## #### ");
             printf("\n\nHas completado ESI-Escape!!!");
             printf("\nQuieres regresar al menu principal?");
-            char volver_char;
-            do{
-
-                printf("\n(S/N) > ");
-                scanf(" %c", &volver_char);
-                volver_char = tolower(volver_char);
-
-            }while(!(volver_char == 's' || volver_char == 'n'));
-
-            if(volver_char == 's'){
+            
+            if(ui_confirmation()){
 
                 //...
 

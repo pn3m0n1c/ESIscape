@@ -31,6 +31,11 @@ void graphic_show_game_name();
 //POSTCONDICIÓN: mostrará en pantalla el menú cargado en menu_to_show, y devolverá el índice de la opción elegida, y ejecutará una función si esta no está definida como nula.
 int ui_menu_create(Menu);
 
+//CABECERA: int ui_confirmation()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Devuelve 1 si el usuario introduce S o s, y 0 si el usuario introduce N o n. Repetirá la solicitud hasta obtener una respuesta válida.
+int ui_confirmation();
+
 //CABECERA: void ui_exit_game()
 //PRECONDICIÓN: 
 //POSTCONDICIÓN: Muestra los créditos y cierra el juego
@@ -44,7 +49,7 @@ void ui_main_menu();
 //CABECERA: int game_loop_start_menu()
 //PRECONDICIÓN: 
 //POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y devuelve el índice de la opción elegida.
-int game_loop_start_menu();
+int ui_game_loop_start_menu();
 
 //CABECERA: void ui_ask_for_player_info()
 //PRECONDICIÓN:
@@ -54,6 +59,6 @@ void ui_ask_for_player_info();
 //CABECERA: void describe_sala(Sala* sala_to_describe)
 //PRECONDICIÓN: Sala preinicializado
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
-void describe_sala(Sala*);
+void ui_describe_sala(Sala*);
 
 #endif
