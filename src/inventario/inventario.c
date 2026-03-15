@@ -10,6 +10,11 @@
 - Localización del objeto (Localiz): Id_sala o Inventario.
 */
 
+/* Debug (Main):     
+    Inventory* all_items = inv_read_items("data/Objetos.txt");
+    ui_show_inventory(all_items); 
+*/
+
 /* Recibe una línea, extrae sus componentes y devuelve el item "construido" */
 Item build_item(char line[]) {
     Item item;
@@ -42,9 +47,6 @@ Inventory* inv_read_items(char path[]) {
 
     int i = 0;
     char line[200];
-    /* Esto es como hacer malloc en verdad, porque si realloc recibe
-    NULL, hace malloc. */
-    Item current_item;
 
     Inventory *all_items = malloc(sizeof(Inventory));
     all_items->slot = NULL;
@@ -56,11 +58,8 @@ Inventory* inv_read_items(char path[]) {
             (i+1) * sizeof(Item)
         );
 
-        /*Construye el Item*/
-        current_item = build_item(line);
-
         /*Añadelo e indica el nuevo tamaño*/
-        all_items->slot[i] = current_item;
+        all_items->slot[i] = build_item(line);
         all_items->size = i + 1;
 
         i++;
