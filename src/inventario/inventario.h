@@ -19,6 +19,15 @@ typedef struct {
 } Inventory;
 
 Inventory* inv_read_items(char path[]);
+
 Inventory inv_create_empty_inventory();
 
-#endif /* INVENTARIO_H */
+int inv_itemcmp(Item item_1, Item item_2);
+
+int inv_find_item(Item item, Inventory *inv);
+
+int inv_add_item(Item item, Inventory *inv);
+
+int inv_remove_item(Item item, Inventory *inv);
+
+#endif
