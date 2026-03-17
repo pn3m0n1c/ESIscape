@@ -1,0 +1,3 @@
+OB01-Tarjeta Lab-Tarjeta con banda magnetica de acceso al laboratorio-03-01
+OB02-Destornillador-Destornillador que sirve para abrir una caja-05-02
+OB03-Nota arrugada-Papel con numeros para un puzle-02-03
