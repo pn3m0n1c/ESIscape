@@ -3,7 +3,7 @@
 #include <string.h>
 #include "salas.h"
 
-Sala* get_sala_from_id(char* id_to_search, Salas* arr_salas){
+Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
     int i;
     Sala* Sala_return = NULL;
@@ -22,7 +22,7 @@ Sala* get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
 }
 
-Sala* get_sala_inicial(Salas* arr_salas){
+Sala* salas_get_sala_inicial(Salas* arr_salas){
 
     int i;
     Sala* Sala_inicial = NULL;
@@ -41,13 +41,12 @@ Sala* get_sala_inicial(Salas* arr_salas){
 
 }
 
-Salas* load_salas(){
+Salas salas_load_salas(){
 
     FILE* f;
-    Salas* loaded_salas;
-    loaded_salas = (Salas*)malloc(sizeof(Salas));
-    loaded_salas->salas = NULL;
-    loaded_salas->number_of_salas = 0;
+    Salas loaded_salas;
+    loaded_salas.salas = NULL;
+    loaded_salas.number_of_salas = 0;
     
     //OBTENGO Salas.txt
     if((f=fopen("./data/Salas.txt", "r")) == NULL){
@@ -70,8 +69,8 @@ Salas* load_salas(){
                 //printf("\n\nFila leida: %s: ", current_row);
 
                 //AÑADIMOS HUECO PARA LA NUEVA SALA
-                loaded_salas->number_of_salas++;
-                loaded_salas->salas = (Sala*)realloc(loaded_salas->salas, sizeof(Sala)*loaded_salas->number_of_salas);
+                loaded_salas.number_of_salas++;
+                loaded_salas.salas = (Sala*)realloc(loaded_salas.salas, sizeof(Sala)*loaded_salas.number_of_salas);
 
                 Sala sala_currentlyreading;
                 strcpy(sala_currentlyreading.sala_id, strtok(current_row, "-")); //ID
@@ -104,13 +103,7 @@ Salas* load_salas(){
                     
                 }
 
-                loaded_salas->salas[loaded_salas->number_of_salas-1] = sala_currentlyreading;
-
-                //TEST PRINT
-                //printf("\nID: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_id);
-                //printf("\nNombre: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_name);
-                //printf("\nDesc: %s", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_desc);
-                //printf("\nTipo en num: %i", loaded_salas->salas[loaded_salas->number_of_salas-1].sala_type);
+                loaded_salas.salas[loaded_salas.number_of_salas-1] = sala_currentlyreading;
 
             }
 
@@ -122,13 +115,12 @@ Salas* load_salas(){
 
 }
 
-Conns* load_conns(){
+Conns salas_load_conns(){
 
     FILE* f;
-    Conns* loaded_conns;
-    loaded_conns = (Conns*)malloc(sizeof(Conns));
-    loaded_conns->conns = NULL;
-    loaded_conns->number_of_conns = 0;
+    Conns loaded_conns;
+    loaded_conns.conns = NULL;
+    loaded_conns.number_of_conns = 0;
     
     //OBTENGO Salas.txt
     if((f=fopen("./data/Conexiones.txt", "r")) == NULL){
@@ -151,8 +143,8 @@ Conns* load_conns(){
                 //printf("\n\nFila leida: %s: ", current_row);
 
                 //AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
-                loaded_conns->number_of_conns++;
-                loaded_conns->conns = (Conn*)realloc(loaded_conns->conns, sizeof(Conn)*loaded_conns->number_of_conns);
+                loaded_conns.number_of_conns++;
+                loaded_conns.conns = (Conn*)realloc(loaded_conns.conns, sizeof(Conn)*loaded_conns.number_of_conns);
 
                 Conn conn_currentlyreading;
                 strcpy(conn_currentlyreading.conn_id, strtok(current_row, "-")); //ID
@@ -186,14 +178,7 @@ Conns* load_conns(){
                     
                 }
 
-                loaded_conns->conns[loaded_conns->number_of_conns-1] = conn_currentlyreading;
-
-                //TEST PRINT
-                //printf("\nConnID: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id);
-                //printf("\nConnSalaFrom: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_from_id);
-                //printf("\nConnSalaTo: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_sala_to_id);
-                //printf("\nConnBlock: %i", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_block);
-                //printf("\nConnIdCond: %s", loaded_conns->conns[loaded_conns->number_of_conns-1].conn_id_cond);
+                loaded_conns.conns[loaded_conns.number_of_conns-1] = conn_currentlyreading;
 
             }
 

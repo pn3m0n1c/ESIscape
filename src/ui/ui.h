@@ -46,10 +46,10 @@ void ui_exit_game();
 //POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes
 void ui_main_menu();
 
-//CABECERA: int game_loop_start_menu()
+//CABECERA: void game_loop_start_menu()
 //PRECONDICIÓN: 
-//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y devuelve el índice de la opción elegida.
-int ui_game_loop_start_menu();
+//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes.
+void ui_game_loop_start_menu();
 
 //CABECERA: void ui_ask_for_player_info()
 //PRECONDICIÓN:

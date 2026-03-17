@@ -96,7 +96,7 @@ void ui_main_menu(){
 
 }
 
-int ui_game_loop_start_menu(){
+void ui_game_loop_start_menu(){
 
     Menu menu_game_loop_start;
     int answer;
@@ -157,8 +157,6 @@ int ui_game_loop_start_menu(){
     printf("\nSala: #######");
     answer = ui_menu_create(menu_game_loop_start);
     free(menu_game_loop_start.entries);
-
-    return(answer);
 
 }
 

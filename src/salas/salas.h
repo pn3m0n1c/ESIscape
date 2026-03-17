@@ -42,24 +42,24 @@ typedef struct{
 
 } Conns;
 
-//CABECERA: sala* get_sala_from_id(char* id_to_search)
+//CABECERA: sala* salas_get_sala_from_id(char* id_to_search)
 //PRECONDICIÓN: char y salas preinicializado
 //POSTCONDICIÓN: devuelve un puntero a la sala dentro de un conjunto de salas con el id especificado en los argumentos.
-Sala* get_sala_from_id(char*, Salas*);
+Sala* salas_get_sala_from_id(char*, Salas*);
 
-//CABECERA: Sala* get_sala_inicial(Salas* arr_salas)
+//CABECERA: Sala* salas_get_sala_inicial(Salas* arr_salas)
 //PRECONDICIÓN: arr_salas preinicializada
 //POSTCONDICIÓN: Devuelve un puntero a la sala inicial
-Sala* get_sala_inicial(Salas*);
+Sala* salas_get_sala_inicial(Salas*);
 
-//CABECERA:         Salas* load_salas()
+//CABECERA:         Salas salas_load_salas()
 //PRECONDICIÓN:     Que exista el archivo de salas.txt
 //POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las salas cargadas desde su archivo
-Salas* load_salas();
+Salas salas_load_salas();
 
-//CABECERA:         Conns* load_conns()
+//CABECERA:         Conns salas_load_conns()
 //PRECONDICIÓN:     Que exista el archivo de Conexiones.txt
 //POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las conexiones cargadas desde su archivo
-Conns* load_conns();
+Conns salas_load_conns();
 
 #endif
