@@ -22,10 +22,10 @@ typedef struct{
 
 } Menu;
 
-//CABECERA void graphic_show_game_name()
+//CABECERA void ui_graphic_show_game_name()
 //PRECONDICIÓN
 //POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla
-void graphic_show_game_name();
+void ui_graphic_show_game_name();
 
 //CABECERA: int ui_menu_create(menu menu_to_show)
 //PRECONDICIÓN: menu_to_show preinicializado
@@ -62,6 +62,9 @@ void ui_ask_for_player_info();
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
 void ui_describe_sala(Sala*);
 
+//CABECERA: void ui_show_inventory(Inventory* inv)
+//PRECONDICIÓN: Inventario al que apunta inv preinicializado
+//POSTCONDICIÓN: Muestra en pantalla los elementos del inventario
 void ui_show_inventory(Inventory*);
 
 #endif

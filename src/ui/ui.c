@@ -5,18 +5,24 @@
 #include "ui.h"
 #include "../inventario/inventario.h"
 
-void graphic_show_game_name(){
+void ui_graphic_show_game_name(){
 
     char graphic_game_name[604] = "\n _______  _______  ___          _______  _______  _______  _______  _______  _______ \n|       ||       ||   |        |       ||       ||       ||   _   ||       ||       |\n|    ___||  _____||   |  ____  |    ___||  _____||       ||  |_|  ||    _  ||    ___|\n|   |___ | |_____ |   | |____| |   |___ | |_____ |       ||       ||   |_| ||   |___ \n|    ___||_____  ||   |        |    ___||_____  ||      _||       ||    ___||    ___|\n|   |___  _____| ||   |        |   |___  _____| ||     |_ |   _   ||   |    |   |___ \n|_______||_______||___|        |_______||_______||_______||__| |__||___|    |_______|\n";
-    printf("%s", graphic_game_name);
+    printf("%s\n", graphic_game_name);
+
+}
+
+void ui_graphic_show_screen_separation(){
+
+    char graphic_screen_separation[65] = "________________________________________________________________";
+
+    printf("\n\n%s\n\n", graphic_screen_separation);
 
 }
 
 int ui_menu_create(Menu menu_to_show){
 
     int i, decision;
-
-    printf("\n");
 
     //MOSTRAR ENTRIES U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
@@ -90,7 +96,8 @@ void ui_main_menu(){
     menu_start.entries[2] = Menu_Entry_salir;
     menu_start.number_of_entries = 3;
 
-    graphic_show_game_name();
+    ui_graphic_show_screen_separation();
+    ui_graphic_show_game_name();
     ui_menu_create(menu_start);
 
     free(menu_start.entries);
@@ -100,7 +107,6 @@ void ui_main_menu(){
 void ui_game_loop_start_menu(){
 
     Menu menu_game_loop_start;
-    int answer;
 
     Menu_Entry Menu_Entry_describir_sala;
     strcpy(Menu_Entry_describir_sala.name, "Describir sala");
@@ -155,8 +161,9 @@ void ui_game_loop_start_menu(){
     menu_game_loop_start.entries[9] = Menu_Entry_volver;
     menu_game_loop_start.number_of_entries = 10;
 
+    ui_graphic_show_screen_separation();
     printf("\nSala: #######");
-    answer = ui_menu_create(menu_game_loop_start);
+    ui_menu_create(menu_game_loop_start);
     free(menu_game_loop_start.entries);
 
 }
@@ -212,17 +219,15 @@ void ui_describe_sala(Sala* sala_to_describe){
 
 }
 
-void ui_show_inventory(Inventory *inv) {
-    for (int i = 0; i < inv->size; i++) {
-        printf(
-            "Item %d: %s - %s - Desc %s Loc %s\n", 
-            i, 
-            inv->slot[i].id, 
-            inv->slot[i].name,
-            inv->slot[i].description,
-            inv->slot[i].location
-        );
+void ui_show_inventory(Inventory* inv){
+
+    int i;
+    for(i = 0; i < inv->size; i++){
+
+        printf("Item %d\t%s\t%s\tDesc: %s\tLoc: %s\n", i, inv->slot[i].id, inv->slot[i].name, inv->slot[i].description, inv->slot[i].location);
+
     }
+
 }
 
 /*

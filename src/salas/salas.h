@@ -2,6 +2,8 @@
 
 #define SALAS
 
+#include "../inventario/inventario.h"
+
 //SALAS
 
 typedef enum {INICIAL, NORMAL, SALIDA} type_sala;
@@ -12,7 +14,7 @@ typedef struct{
     char sala_name[31];     //30 CARACTERES MÁX
     char sala_desc[151];    //150 CARACTERES MÁX
     type_sala sala_type;    //INICIAL, NORMAL, SALIDA
-    //AQUÍ IRÁ EL "INVENTARIO DE LA SALA" Y LOS PUZLES QUE TENDRÁ
+    Inventory sala_inventory;
 
 } Sala;
 
