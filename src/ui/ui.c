@@ -111,33 +111,43 @@ int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
 
     Menu_Entry Menu_Entry_describir_sala;
     strcpy(Menu_Entry_describir_sala.name, "Describir sala");
+    Menu_Entry_describir_sala.action = NULL;
     
     Menu_Entry Menu_Entry_examinar;
     strcpy(Menu_Entry_examinar.name, "Examinar (objetos y salidas)");
+    Menu_Entry_examinar.action = NULL;
     
     Menu_Entry Menu_Entry_entrar_en_otra_sala;
     strcpy(Menu_Entry_entrar_en_otra_sala.name, "Entrar en otra sala");
+    Menu_Entry_entrar_en_otra_sala.action = NULL;
 
     Menu_Entry Menu_Entry_coger_objeto;
     strcpy(Menu_Entry_coger_objeto.name, "Coger objeto");
+    Menu_Entry_coger_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_soltar_objeto;
     strcpy(Menu_Entry_soltar_objeto.name, "Soltar objeto");
+    Menu_Entry_soltar_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_inventario;
     strcpy(Menu_Entry_inventario.name, "Inventario");
+    Menu_Entry_inventario.action = NULL;
 
     Menu_Entry Menu_Entry_usar_objeto;
     strcpy(Menu_Entry_usar_objeto.name, "Usar objeto");
+    Menu_Entry_usar_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_puzle_codigo;
     strcpy(Menu_Entry_puzle_codigo.name, "Resolver puzle / introducir codigo");
+    Menu_Entry_puzle_codigo.action = NULL;
 
     Menu_Entry Menu_Entry_guardar_partida;
     strcpy(Menu_Entry_guardar_partida.name, "Guardar partida");
+    Menu_Entry_guardar_partida.action = NULL;
     
     Menu_Entry Menu_Entry_volver;
     strcpy(Menu_Entry_volver.name, "Volver");
+    Menu_Entry_volver.action = NULL;
 
     menu_game_loop_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*10);
     menu_game_loop_start.entries[0] = Menu_Entry_describir_sala;
