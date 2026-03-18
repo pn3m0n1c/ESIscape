@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "ui.h"
 #include "../inventario/inventario.h"
 #include "../salas/salas.h"

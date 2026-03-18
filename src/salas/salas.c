@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "salas.h"
 
 Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){

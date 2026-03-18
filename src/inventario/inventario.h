@@ -1,6 +1,10 @@
 #ifndef INVENTARIO_H
 #define INVENTARIO_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define MAX_ID_ITEM    5   /* "OB01" + '\0' */
 #define MAX_NAME_ITEM  21 /* 20 caracteres + '\0' */
 #define MAX_DESC_ITEM  100  /* 99 caracteres + '\0' */
