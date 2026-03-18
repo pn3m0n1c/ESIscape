@@ -138,7 +138,6 @@ int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
     
     Menu_Entry Menu_Entry_volver;
     strcpy(Menu_Entry_volver.name, "Volver");
-    Menu_Entry_volver.action = NULL;
 
     menu_game_loop_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*10);
     menu_game_loop_start.entries[0] = Menu_Entry_describir_sala;
@@ -164,6 +163,7 @@ int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
 
         case 9:
             *game_is_playing = 0;
+            break;
 
     }
 
