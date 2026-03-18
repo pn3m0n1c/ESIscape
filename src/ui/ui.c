@@ -204,10 +204,10 @@ void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing){
     switch(sala_to_describe->sala_type){
 
         case INICIAL:
-            printf("Te encuentras en la sala inicial.\n");
+            printf("Te encuentras en la sala inicial.");
             break;
         case NORMAL:
-            printf("Te encuentras en una sala normal.\n");
+            printf("Te encuentras en una sala normal.");
             break;
         case SALIDA:
             printf("\n##     ## ####  ######  ########  #######  ########  ####    ###    #### \n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##    ## ##   #### \n##     ##  ##  ##          ##    ##     ## ##     ##  ##   ##   ##  #### \n##     ##  ##  ##          ##    ##     ## ########   ##  ##     ##  ##  \n ##   ##   ##  ##          ##    ##     ## ##   ##    ##  #########      \n  ## ##    ##  ##    ##    ##    ##     ## ##    ##   ##  ##     ## #### \n   ###    ####  ######     ##     #######  ##     ## #### ##     ## #### ");
@@ -216,7 +216,7 @@ void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing){
             
             if(ui_confirmation()){
 
-                
+                *game_is_playing = 0;
 
             }
 
