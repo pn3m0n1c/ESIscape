@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "ui.h"
 #include "../inventario/inventario.h"
+#include "../salas/salas.h"
 
 void ui_graphic_show_game_name(){
 
@@ -74,9 +75,10 @@ void ui_exit_game(){
 
 }
 
-void ui_main_menu(){
+int ui_main_menu(){
 
     Menu menu_start;
+    int answer;
 
     Menu_Entry Menu_Entry_nueva_partida;
     strcpy(Menu_Entry_nueva_partida.name, "Nueva partida");
@@ -88,7 +90,7 @@ void ui_main_menu(){
 
     Menu_Entry Menu_Entry_salir;
     strcpy(Menu_Entry_salir.name, "Salir");
-    Menu_Entry_salir.action = &ui_exit_game;
+    Menu_Entry_salir.action = NULL;
 
     menu_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*3);
     menu_start.entries[0] = Menu_Entry_nueva_partida;
@@ -98,51 +100,45 @@ void ui_main_menu(){
 
     ui_graphic_show_screen_separation();
     ui_graphic_show_game_name();
-    ui_menu_create(menu_start);
-
+    
+    answer = ui_menu_create(menu_start);
     free(menu_start.entries);
+
+    return(answer);
 
 }
 
-void ui_game_loop_start_menu(){
+int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
 
     Menu menu_game_loop_start;
+    int answer;
 
     Menu_Entry Menu_Entry_describir_sala;
     strcpy(Menu_Entry_describir_sala.name, "Describir sala");
-    Menu_Entry_describir_sala.action = NULL;
     
     Menu_Entry Menu_Entry_examinar;
     strcpy(Menu_Entry_examinar.name, "Examinar (objetos y salidas)");
-    Menu_Entry_describir_sala.action = NULL;
     
     Menu_Entry Menu_Entry_entrar_en_otra_sala;
     strcpy(Menu_Entry_entrar_en_otra_sala.name, "Entrar en otra sala");
-    Menu_Entry_entrar_en_otra_sala.action = NULL;
 
     Menu_Entry Menu_Entry_coger_objeto;
     strcpy(Menu_Entry_coger_objeto.name, "Coger objeto");
-    Menu_Entry_coger_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_soltar_objeto;
     strcpy(Menu_Entry_soltar_objeto.name, "Soltar objeto");
-    Menu_Entry_soltar_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_inventario;
     strcpy(Menu_Entry_inventario.name, "Inventario");
-    Menu_Entry_inventario.action = NULL;
 
     Menu_Entry Menu_Entry_usar_objeto;
     strcpy(Menu_Entry_usar_objeto.name, "Usar objeto");
-    Menu_Entry_usar_objeto.action = NULL;
 
     Menu_Entry Menu_Entry_puzle_codigo;
     strcpy(Menu_Entry_puzle_codigo.name, "Resolver puzle / introducir codigo");
-    Menu_Entry_puzle_codigo.action = NULL;
 
     Menu_Entry Menu_Entry_guardar_partida;
     strcpy(Menu_Entry_guardar_partida.name, "Guardar partida");
-    Menu_Entry_guardar_partida.action = NULL;
     
     Menu_Entry Menu_Entry_volver;
     strcpy(Menu_Entry_volver.name, "Volver");
@@ -162,13 +158,28 @@ void ui_game_loop_start_menu(){
     menu_game_loop_start.number_of_entries = 10;
 
     ui_graphic_show_screen_separation();
-    printf("\nSala: #######");
-    ui_menu_create(menu_game_loop_start);
+    printf("\nSala: %s\n\n", current_sala->sala_name);
+
+    switch(ui_menu_create(menu_game_loop_start)){
+
+        case 0:
+            ui_describe_sala(current_sala, game_is_playing);
+            break;
+
+        case 9:
+            *game_is_playing = 0;
+
+    }
+
     free(menu_game_loop_start.entries);
+
+    return(answer);
 
 }
 
 void ui_ask_for_player_info(){
+
+    ui_graphic_show_screen_separation();
 
     char InfoPlayer_FullName[21];
     char InfoPlayer_AccessName[11];
@@ -183,7 +194,9 @@ void ui_ask_for_player_info(){
     
 }
 
-void ui_describe_sala(Sala* sala_to_describe){
+void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing){
+
+    ui_graphic_show_screen_separation();
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
     printf("Descripción: %s\n", sala_to_describe->sala_desc);
@@ -203,13 +216,13 @@ void ui_describe_sala(Sala* sala_to_describe){
             
             if(ui_confirmation()){
 
-                //...
+                
 
             }
 
             else{
 
-                //...
+                ui_exit_game();
 
             }
 
@@ -221,6 +234,8 @@ void ui_describe_sala(Sala* sala_to_describe){
 
 void ui_show_inventory(Inventory* inv){
 
+    ui_graphic_show_screen_separation();
+    
     int i;
     for(i = 0; i < inv->size; i++){
 

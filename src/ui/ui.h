@@ -42,25 +42,25 @@ int ui_confirmation();
 //POSTCONDICIÓN: Muestra los créditos y cierra el juego
 void ui_exit_game();
 
-//CABECERA: void ui_main_menu()
+//CABECERA: int ui_main_menu()
 //PRECONDICIÓN: 
-//POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes
-void ui_main_menu();
+//POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
+int ui_main_menu();
 
-//CABECERA: void game_loop_start_menu()
-//PRECONDICIÓN: 
-//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes.
-void ui_game_loop_start_menu();
+//CABECERA: int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala)
+//PRECONDICIÓN: current_sala y game_is_playing preinicializados
+//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
+int ui_game_loop_start_menu(int*, Sala*);
 
 //CABECERA: void ui_ask_for_player_info()
 //PRECONDICIÓN:
 //POSTCONDICIÓN: Lee la información del jugador, y posteriormente llama a la función de creado de jugadores de su módulo correspondiente
 void ui_ask_for_player_info();
 
-//CABECERA: void describe_sala(Sala* sala_to_describe)
-//PRECONDICIÓN: Sala preinicializado
+//CABECERA: void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing)
+//PRECONDICIÓN: sala_to_describe preinicializado
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
-void ui_describe_sala(Sala*);
+void ui_describe_sala(Sala*, int*);
 
 //CABECERA: void ui_show_inventory(Inventory* inv)
 //PRECONDICIÓN: Inventario al que apunta inv preinicializado
