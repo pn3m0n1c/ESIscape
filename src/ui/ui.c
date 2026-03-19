@@ -74,7 +74,7 @@ void ui_anykey_press(){
 
 void ui_exit_game(){
 
-    printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero. 2026.\n\n");
+    printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero | 2026\n\n");
     exit(0);
 
 }
