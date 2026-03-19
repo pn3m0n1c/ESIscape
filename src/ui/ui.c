@@ -104,7 +104,7 @@ int ui_main_menu(){
 
 }
 
-int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
+int ui_game_loop_start_menu(GameState *game_state){
 
     Menu menu_game_loop_start;
     int answer;
@@ -163,16 +163,16 @@ int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala){
     menu_game_loop_start.number_of_entries = 10;
 
     ui_graphic_show_screen_separation();
-    printf("\nSala: %s\n\n", current_sala->sala_name);
+    printf("\nSala: %s\n\n", game_state->current_sala->sala_name);
 
     switch(ui_menu_create(menu_game_loop_start)){
 
         case 0:
-            ui_describe_sala(current_sala, game_is_playing);
+            ui_describe_sala(game_state->current_sala, game_state);
             break;
 
         case 9:
-            *game_is_playing = 0;
+            game_state->game_is_playing = 0;
             break;
 
     }
@@ -200,7 +200,7 @@ void ui_ask_for_player_info(){
     
 }
 
-void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing){
+void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
     ui_graphic_show_screen_separation();
 
@@ -222,7 +222,7 @@ void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing){
             
             if(ui_confirmation()){
 
-                *game_is_playing = 0;
+                game_state->game_is_playing = 0;
 
             }
 
@@ -253,45 +253,42 @@ void ui_show_inventory(Inventory* inv){
 
 void ui_game_start(){
 
-    while(1==1){
+    GameState game_state;
+    game_state.game_is_playing = 1;
 
-        int game_is_playing = 1;
+    //WE LOAD DATA FROM ROOM AND CONNECTION FILES
+    game_state.salas = salas_load_salas();
+    game_state.conns = salas_load_conns();
 
-        //WE LOAD DATA FROM ROOM AND CONNECTION FILES
-        Salas salas = salas_load_salas();
-        Conns conns = salas_load_conns();
+    game_state.current_sala = salas_get_sala_inicial(&game_state.salas);
+    
+    switch(ui_main_menu()){
 
-        Sala *currentsala = salas_get_sala_inicial(&salas);
-        
-        switch(ui_main_menu()){
+        case 0:
 
-            case 0:
+            //EN ESTE HUECO SE CREARÍA LA NUEVA PARTIDA
 
-                //EN ESTE HUECO SE CREARÍA LA NUEVA PARTIDA
+            while(game_state.game_is_playing){
+                ui_game_loop_start_menu(&game_state);
+            }
 
-                while(game_is_playing){
-                    ui_game_loop_start_menu(&game_is_playing, currentsala);
-                }
+            break;
 
-                break;
+        case 1:
 
-            case 1:
+            //EN ESTE HUECO SE CARGARÍA LA PARTIDA
 
-                //EN ESTE HUECO SE CARGARÍA LA PARTIDA
+            while(game_state.game_is_playing){
+                ui_game_loop_start_menu(&game_state);
+            }
 
-                while(game_is_playing){
-                    ui_game_loop_start_menu(&game_is_playing, currentsala);
-                }
+            break;
 
-                break;
+        case 2:
 
-            case 2:
+            ui_exit_game();
 
-                ui_exit_game();
-
-                break;
-
-        }
+            break;
 
     }
 

@@ -2,7 +2,11 @@
 
 int main(){
 
-    ui_game_start();
+    while(1==1){
+
+        ui_game_start();
+
+    }
     
     return(0);
 

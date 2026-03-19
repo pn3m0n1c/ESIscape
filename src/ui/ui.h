@@ -26,6 +26,16 @@ typedef struct{
 
 } Menu;
 
+//GAMESTATE
+typedef struct{
+
+    int game_is_playing;
+    Salas salas;
+    Conns conns;
+    Sala *current_sala;
+
+} GameState;
+
 //CABECERA void ui_graphic_show_game_name()
 //PRECONDICIÓN
 //POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla
@@ -51,20 +61,20 @@ void ui_exit_game();
 //POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
 int ui_main_menu();
 
-//CABECERA: int ui_game_loop_start_menu(int *game_is_playing, Sala *current_sala)
-//PRECONDICIÓN: current_sala y game_is_playing preinicializados
+//CABECERA: int ui_game_loop_start_menu(GameState *game_state)
+//PRECONDICIÓN: game_state preinicializado
 //POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
-int ui_game_loop_start_menu(int*, Sala*);
+int ui_game_loop_start_menu(GameState*);
 
 //CABECERA: void ui_ask_for_player_info()
 //PRECONDICIÓN:
 //POSTCONDICIÓN: Lee la información del jugador, y posteriormente llama a la función de creado de jugadores de su módulo correspondiente
 void ui_ask_for_player_info();
 
-//CABECERA: void ui_describe_sala(Sala* sala_to_describe, int* game_is_playing)
-//PRECONDICIÓN: sala_to_describe preinicializado
+//CABECERA: void ui_describe_sala(Sala* sala_to_describe, GameState *game_state)
+//PRECONDICIÓN: sala_to_describe y game_state preinicializado
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
-void ui_describe_sala(Sala*, int*);
+void ui_describe_sala(Sala*, GameState*);
 
 //CABECERA: void ui_show_inventory(Inventory* inv)
 //PRECONDICIÓN: Inventario al que apunta inv preinicializado
