@@ -71,4 +71,9 @@ void ui_describe_sala(Sala*, int*);
 //POSTCONDICIÓN: Muestra en pantalla los elementos del inventario
 void ui_show_inventory(Inventory*);
 
+//CABECERA: void ui_game_start()
+//PRECONDICIÓN
+//POSTCONDICIÓN: Es la función que comienza
+void ui_game_start();
+
 #endif
