@@ -1,0 +1,148 @@
+#include "inventario.h"
+
+/* Fichero Objetos.txt
+- Identificador del objeto (Id_obj), 4 caracteres. 
+- Nombre del objeto (Nomb_obj), 15 caracteres máximo.
+- Descripción del objeto (Describ), 50 caracteres máximo.
+- Localización del objeto (Localiz): Id_sala o Inventario.
+*/
+
+/* Debug (Main):     
+    Inventory* all_items = inv_read_items("data/Objetos.txt");
+    ui_show_inventory(all_items); 
+*/
+
+/* Recibe una línea, extrae sus componentes y devuelve el item "construido" */
+Item build_item(char line[]) {
+    Item item;
+
+    strcpy(item.id, strtok(line, "-"));
+    strcpy(item.name, strtok(NULL, "-"));
+    strcpy(item.description, strtok(NULL, "-"));
+    strcpy(item.location, strtok(NULL, "-"));
+
+    return item;
+}
+
+/* Recibe un archivo y comprueba si puede abrirse */
+int check_file(FILE *file){
+    if (file == NULL) {
+        printf("Error al abrir el fichero\n");
+        return 0;
+    }
+    
+    return 1;
+}
+
+/* Lee los objetos del inventario del archivo correspondiente y devuelve un
+ * "Inventario" con todos los objetos ya extraidos y organizados en forma 
+ * de Item. */
+Inventory* inv_read_items(char path[]) {
+    FILE *file = fopen(path, "r");
+
+    if(!check_file(file)) return NULL;
+
+    int i = 0;
+    char line[200];
+
+    Inventory *all_items = malloc(sizeof(Inventory));
+    all_items->slot = NULL;
+    all_items->size = 0;
+
+    while(fgets(line,200,file) != NULL){
+        all_items->slot = realloc(
+            all_items->slot, 
+            (i+1) * sizeof(Item)
+        );
+
+        /*Añadelo e indica el nuevo tamaño*/
+        all_items->slot[i] = build_item(line);
+        all_items->size = i + 1;
+
+        i++;
+    }
+
+    /* Pendiente un free, entiendo que será al final del juego - Christian*/
+    
+    fclose(file);
+    return all_items;
+}
+
+/* Al igual que strcmp(), devuelve 1 si dos items NO son iguales y 0 si efectivamente lo son. */
+int inv_itemcmp(Item item_1, Item item_2){
+    if(
+        strcmp(item_1.id, item_2.id) == 0 && 
+        strcmp(item_1.name, item_2.name) == 0 &&
+        strcmp(item_1.description, item_2.description) == 0 &&
+        strcmp(item_1.location, item_2.location) == 0
+    ) return 0;
+
+    return 1;
+}
+
+/* Busca un item en un inventario. En caso de encontrarlo devuelve su posición en el array, de no encontrarlo 
+ * devuelve "-1", en lugar de 0, por si el item está en la posición 0. 
+ * Al devolver la posición creo que se le puede sacar mas 
+ * provecho a esta función. */
+int inv_find_item(Item item, Inventory *inv){
+    for (int i = 0; i < inv->size; i++) {
+        if(inv_itemcmp(item, inv->slot[i]) == 0) return i;
+    }
+
+    return -1;
+}
+
+/* Crea un inventario vacío, útil para crear un jugador 
+ * en una Nueva partida*/
+Inventory inv_create_empty_inventory(){
+    Inventory inventory;
+
+    inventory.slot = NULL;
+    inventory.size = 0;
+
+    return inventory;
+}
+
+/* Intenta añadir un Item a un Inventory. Devuelve 1 si lo añadió con éxito o 0 en otro caso */
+int inv_add_item(Item item, Inventory *inv){
+    inv->slot = realloc(
+        inv->slot, 
+        (inv->size + 1) *sizeof(item)
+    );
+
+    inv->slot[inv->size] = item;
+
+    if(inv_itemcmp(inv->slot[inv->size], item) == 0){
+        inv->size++;
+        return 1;
+    }
+
+    return 0;
+}
+
+/* Para eliminar el item, tengo que primero buscarlo. Si está, se debe copiar los datos 
+ * del último item a él, y reducir la memoria a 1 para marcar como basura el último item.
+ * En caso de haber 2 items iguales, que quizá no debería, elimina el primero que encuentra. */
+int inv_remove_item(Item item, Inventory *inv){
+
+    int wanted_item = inv_find_item(item, inv);
+
+    if(wanted_item > -1){ /* Si es > -1, ha debido encontrarlo, debe ser un índice */
+
+        strcpy(inv->slot[wanted_item].id, inv->slot[inv->size - 1].id);
+        strcpy(inv->slot[wanted_item].name, inv->slot[inv->size - 1].name);
+        strcpy(inv->slot[wanted_item].description, inv->slot[inv->size - 1].description);
+        strcpy(inv->slot[wanted_item].location, inv->slot[inv->size - 1].location);
+
+        inv->slot = realloc(
+            inv->slot, 
+            (inv->size - 1) * sizeof(item)
+        );
+
+        inv->size--;
+
+        return 1;
+    };
+
+    return 0;
+}

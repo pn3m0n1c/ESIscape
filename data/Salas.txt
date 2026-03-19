@@ -1,0 +1,4 @@
+01-Conserjería-INICIAL-Pequeño habitáculo con mostrador que se encuentra a la entrada de la ESI, antes de acceder al Hall
+02-Escalera principal-NORMAL-Escalera principal de subida a la primera planta situada frente a conserjería
+03-Cafetería-NORMAL-Cafetería situada en la primera planta, después de subir la escalera principal
+04-Exterior-SALIDA-La salida al exterior está aquí
