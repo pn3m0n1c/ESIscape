@@ -112,7 +112,7 @@ Salas salas_load_salas(char *file_path){
 
 }
 
-Conns salas_load_conns(){
+Conns salas_load_conns(char *file_path){
 
     FILE* f;
     Conns loaded_conns;
@@ -120,7 +120,7 @@ Conns salas_load_conns(){
     loaded_conns.number_of_conns = 0;
     
     //OBTENGO Salas.txt
-    if((f=fopen("./data/Conexiones.txt", "r")) == NULL){
+    if((f=fopen(file_path, "r")) == NULL){
 
         printf("Error al cargar salas. Archivo de texto de conexiones no cargado.");
         exit(1);
