@@ -51,6 +51,11 @@ int ui_menu_create(Menu);
 //POSTCONDICIÓN: Devuelve 1 si el usuario introduce S o s, y 0 si el usuario introduce N o n. Repetirá la solicitud hasta obtener una respuesta válida.
 int ui_confirmation();
 
+//CABECERA: void ui_anykey_press()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Hace que el programa espera una entrada del teclado para poder visualizar información sin que pase sola
+void ui_anykey_press();
+
 //CABECERA: void ui_exit_game()
 //PRECONDICIÓN: 
 //POSTCONDICIÓN: Muestra los créditos y cierra el juego
@@ -82,7 +87,7 @@ void ui_describe_sala(Sala*, GameState*);
 void ui_show_inventory(Inventory*);
 
 //CABECERA: void ui_game_start()
-//PRECONDICIÓN
+//PRECONDICIÓN:
 //POSTCONDICIÓN: Es la función que comienza
 void ui_game_start();
 

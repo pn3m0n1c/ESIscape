@@ -64,6 +64,13 @@ int ui_confirmation(){
 
 }
 
+void ui_anykey_press(){
+
+    printf("Pulsa cualquier tecla...");
+    getchar();
+
+}
+
 void ui_exit_game(){
 
     printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero. 2026.\n\n");
@@ -211,9 +218,11 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
         case INICIAL:
             printf("Te encuentras en la sala inicial.");
+            ui_anykey_press();
             break;
         case NORMAL:
             printf("Te encuentras en una sala normal.");
+            ui_anykey_press();
             break;
         case SALIDA:
             printf("\n##     ## ####  ######  ########  #######  ########  ####    ###    #### \n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##    ## ##   #### \n##     ##  ##  ##          ##    ##     ## ##     ##  ##   ##   ##  #### \n##     ##  ##  ##          ##    ##     ## ########   ##  ##     ##  ##  \n ##   ##   ##  ##          ##    ##     ## ##   ##    ##  #########      \n  ## ##    ##  ##    ##    ##    ##     ## ##    ##   ##  ##     ## #### \n   ###    ####  ######     ##     #######  ##     ## #### ##     ## #### ");
@@ -248,6 +257,8 @@ void ui_show_inventory(Inventory* inv){
         printf("Item %d\t%s\t%s\tDesc: %s\tLoc: %s\n", i, inv->slot[i].id, inv->slot[i].name, inv->slot[i].description, inv->slot[i].location);
 
     }
+
+    ui_anykey_press();
 
 }
 
