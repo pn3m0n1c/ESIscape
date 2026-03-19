@@ -11,8 +11,8 @@ puzle* cargar_puzles(char path[], int *total_leidos) {
     }
 }
 
-int capacidad = 2; 
-int contador = 0;
+int capacidad= 2; 
+int contador= 0;
 
 puzle *array_puzles = (puzle*) malloc(capacidad * sizeof(puzle));
     if (array_puzles == NULL) {
