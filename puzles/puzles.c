@@ -3,8 +3,8 @@
 #include<string.h>
 #include"puzles.h"
 
-puzle* cargar_puzles(const char *"puzles.txt", int *total_leidos) {
-    FILE *f = fopen("puzles.txt", "r"); 
+puzle* cargar_puzles(char path[], int *total_leidos) {
+    FILE *f = fopen(path, "r");
     if (f == NULL) {
         *total_leidos = 0;
         return NULL;

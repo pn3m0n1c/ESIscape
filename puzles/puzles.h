@@ -10,7 +10,7 @@ typedef struct{
     char *sol;
 }puzle;
 
-puzle* cargar_puzles(const char *"puzles.txt", int *total_leidos);
+puzle* cargar_puzles(char path[], int *total_leidos);
 
 void liberar_puzles(puzle *array_puzles, int total_leidos);
 
