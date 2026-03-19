@@ -10,9 +10,6 @@ ESI-Escape
 build/
 bin/
 
-# Partida guardada (estado runtime, no código)
-data/Partida.txt
-
 # Editores
 .vscode/
 .idea/
