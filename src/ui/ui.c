@@ -66,7 +66,7 @@ int ui_confirmation(){
 
 void ui_anykey_press(){
 
-    printf("\n\nPulsa cualquier tecla...");
+    printf("\n\nPulsa cualquier tecla... ");
     while(getchar() != '\n');
     getchar();
 
