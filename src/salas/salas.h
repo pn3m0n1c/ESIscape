@@ -57,14 +57,14 @@ Sala* salas_get_sala_from_id(char*, Salas*);
 //POSTCONDICIÓN: Devuelve un puntero a la sala inicial
 Sala* salas_get_sala_inicial(Salas*);
 
-//CABECERA:         Salas salas_load_salas()
-//PRECONDICIÓN:     Que exista el archivo de salas.txt
+//CABECERA:         Salas salas_load_salas(char *file_path)
+//PRECONDICIÓN:     Que exista el archivo de file_path
 //POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las salas cargadas desde su archivo
-Salas salas_load_salas();
+Salas salas_load_salas(char*);
 
-//CABECERA:         Conns salas_load_conns()
+//CABECERA:         Conns salas_load_conns(char *file_path)
 //PRECONDICIÓN:     Que exista el archivo de Conexiones.txt
 //POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las conexiones cargadas desde su archivo
-Conns salas_load_conns();
+Conns salas_load_conns(char*);
 
 #endif

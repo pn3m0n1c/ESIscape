@@ -38,7 +38,7 @@ Sala* salas_get_sala_inicial(Salas* arr_salas){
 
 }
 
-Salas salas_load_salas(){
+Salas salas_load_salas(char *file_path){
 
     FILE* f;
     Salas loaded_salas;
@@ -46,7 +46,7 @@ Salas salas_load_salas(){
     loaded_salas.number_of_salas = 0;
     
     //OBTENGO Salas.txt
-    if((f=fopen("./data/Salas.txt", "r")) == NULL){
+    if((f=fopen(file_path, "r")) == NULL){
 
         printf("Error al cargar salas. Archivo de texto de salas no cargado.");
         exit(1);

@@ -268,8 +268,8 @@ void ui_game_start(){
     game_state.game_is_playing = 1;
 
     //WE LOAD DATA FROM ROOM AND CONNECTION FILES
-    game_state.salas = salas_load_salas();
-    game_state.conns = salas_load_conns();
+    game_state.salas = salas_load_salas("../data/Salas.txt");
+    game_state.conns = salas_load_conns("../data/Conexiones.txt");
 
     game_state.current_sala = salas_get_sala_inicial(&game_state.salas);
     
