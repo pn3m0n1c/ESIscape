@@ -212,13 +212,13 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_graphic_show_screen_separation();
 
-    printf("SALIDAS: #################\n\n");
-
-    ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
-
-    printf("\n\nOBJETOS: #################\n\n");
+    printf("OBJETOS: #################\n\n");
 
     ui_show_filter_inventory(game_state->inventory, sala_to_examine->sala_id);
+    
+    printf("\n\nSALIDAS: #################\n\n");
+
+    ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
 
     ui_anykey_press();
 
