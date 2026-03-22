@@ -72,9 +72,19 @@ void ui_ask_for_player_info();
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
 void ui_describe_sala(Sala*, GameState*);
 
-//CABECERA: void ui_show_inventory(Inventory* inv)
-//PRECONDICIÓN: Inventario al que apunta inv preinicializado
-//POSTCONDICIÓN: Muestra en pantalla los elementos del inventario
-void ui_show_inventory(Inventory*);
+//CABECERA: void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter)
+//PRECONDICIÓN: Conns y sala_id_filter preinicializados
+//POSTCONDICIÓN: Muestra las conexiones que tienen como partida la sala con id sala_id_filter
+void ui_show_filter_connections(Conns*, Salas*, char*);
+
+//CABECERA: void ui_show_filter_inventory(Inventory* inv, char *location_filter)
+//PRECONDICIÓN: Inventario al que apunta inv y location_filter preinicializados
+//POSTCONDICIÓN: Muestra en pantalla los elementos del inventario que esten en la localizacion especificada en location_filter
+void ui_show_filter_inventory(Inventory*, char*);
+
+//CABECERA: void ui_examine_sala(Sala* sala_to_examine, GameState *game_state)
+//PRECONDICIÓN: sala_to_examine y game_state preinicializado
+//POSTCONDICIÓN: muestra los objetos y las salidas disponibles en la sala especificada
+void ui_examine_sala(Sala*, GameState*);
 
 #endif

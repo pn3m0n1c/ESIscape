@@ -3,6 +3,7 @@
 #define PARTIDA
 
 #include "../salas/salas.h"
+#include "../inventario/inventario.h"
 
 //GAMESTATE
 typedef struct{
@@ -11,6 +12,7 @@ typedef struct{
     Salas salas;
     Conns conns;
     Sala *current_sala;
+    Inventory *inventory;
 
 } GameState;
 

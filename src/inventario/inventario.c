@@ -9,7 +9,7 @@
 
 /* Debug (Main):     
     Inventory* all_items = inv_read_items("data/Objetos.txt");
-    ui_show_inventory(all_items); 
+    ui_show_filter_inventory(all_items); 
 */
 
 /* Recibe una línea, extrae sus componentes y devuelve el item "construido" */

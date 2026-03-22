@@ -1,3 +1,4 @@
-OB01-Tarjeta Lab-Tarjeta con banda magnetica de acceso al laboratorio-03-01
-OB02-Destornillador-Destornillador que sirve para abrir una caja-05-02
-OB03-Nota arrugada-Papel con numeros para un puzle-02-03
+OB01-Tarjeta Lab-Tarjeta con banda magnetica de acceso al laboratorio-03
+OB02-Destornillador-Destornillador que sirve para abrir una caja-05
+OB03-Nota arrugada-Papel con numeros para un puzle-02
+OB04-Cuatrigesimo commit-Este objeto me lo he inventado para que salga al probar el Examinar sala-01

@@ -132,16 +132,16 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
     ui_graphic_show_screen_separation();
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
-    printf("Descripción: %s\n", sala_to_describe->sala_desc);
+    printf(" - Descripción: %s\n", sala_to_describe->sala_desc);
 
     switch(sala_to_describe->sala_type){
 
         case INICIAL:
-            printf("Te encuentras en la sala inicial.");
+            printf(" - Te encuentras en la sala inicial.");
             ui_anykey_press();
             break;
         case NORMAL:
-            printf("Te encuentras en una sala normal.");
+            printf(" - Te encuentras en una sala normal.");
             ui_anykey_press();
             break;
         case SALIDA:
@@ -167,16 +167,58 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
 }
 
-void ui_show_inventory(Inventory* inv){
+void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter){
 
-    ui_graphic_show_screen_separation();
-    
+    int i;
+    for(i = 0; i<conns->number_of_conns; i++){
+
+        if(strcmp((conns->conns)[i].conn_sala_from_id, sala_id_filter) == 0){
+
+            Sala *sala_destino = salas_get_sala_from_id((conns->conns)[i].conn_sala_to_id, salas);
+
+            char condicion_texto[128] = "";
+            if(strcmp((conns->conns)[i].conn_id_cond, "0") != 0){
+                
+                char *bloqueado_texto = ((conns->conns)[i].conn_block) ? " | Salida BLOQUEADA\t" : " | Salida no bloqueada\t";
+                strcat(condicion_texto, bloqueado_texto);
+                strcat(condicion_texto, " | IDcondicion_secambiaraporloquees: ");
+                strcat(condicion_texto, (conns->conns)[i].conn_id_cond);
+            }
+
+            printf(" - Salida %s\t | Destino: %s\t%s\n", (conns->conns)[i].conn_id, sala_destino->sala_name, condicion_texto);
+
+        }
+
+    }
+
+}
+
+void ui_show_filter_inventory(Inventory* inv, char *location_filter){
+
     int i;
     for(i = 0; i < inv->size; i++){
 
-        printf("Item %d\t%s\t%s\tDesc: %s\tLoc: %s\n", i, inv->slot[i].id, inv->slot[i].name, inv->slot[i].description, inv->slot[i].location);
+        if(strcmp(inv->slot[i].location, location_filter) == 0){
 
+            printf(" - Item %s - %s\t | Desc: %s\n", inv->slot[i].id, inv->slot[i].name, inv->slot[i].description);
+
+        }
+        
     }
+
+}
+
+void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
+
+    ui_graphic_show_screen_separation();
+
+    printf("SALIDAS: #################\n\n");
+
+    ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
+
+    printf("\n\nOBJETOS: #################\n\n");
+
+    ui_show_filter_inventory(game_state->inventory, sala_to_examine->sala_id);
 
     ui_anykey_press();
 
