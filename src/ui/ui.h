@@ -87,4 +87,14 @@ void ui_show_filter_inventory(Inventory*, char*);
 //POSTCONDICIÓN: muestra los objetos y las salidas disponibles en la sala especificada
 void ui_examine_sala(Sala*, GameState*);
 
+//CABECERA: void ui_enter_sala(GameState *game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: permitirá al jugador ir a otra sala si la salida hacia esta no está bloqueada
+void ui_enter_sala(GameState*);
+
+//CABECERA: void ui_show_player_inventory(GameState* game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: muestra el inventario del jugador actualmente
+void ui_show_player_inventory(GameState*);
+
 #endif

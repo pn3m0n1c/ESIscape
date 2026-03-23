@@ -71,6 +71,14 @@ int partida_game_loop_start_menu(GameState *game_state){
             ui_examine_sala(game_state->current_sala, game_state);
             break;
 
+        case 2:
+            ui_enter_sala(game_state);
+            break;
+
+        case 5:
+            ui_show_player_inventory(game_state);
+            break;
+
         case 9:
             game_state->game_is_playing = 0;
             break;
