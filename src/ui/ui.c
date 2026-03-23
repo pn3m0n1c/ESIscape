@@ -185,7 +185,7 @@ void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter
                 strcat(condicion_texto, (conns->conns)[i].conn_id_cond);
             }
 
-            printf(" - Salida con destino: %s (ID de sala: \"%s\")\t%s\n", sala_destino->sala_name, sala_destino->sala_id, condicion_texto);
+            printf(" - Salida a: %s (ID DE SALA: \"%s\")\t%s\n", sala_destino->sala_name, sala_destino->sala_id, condicion_texto);
 
         }
 
@@ -248,7 +248,7 @@ void ui_enter_sala(GameState *game_state){
     while(getchar() != '\n');
 
     fgets(sala_id_destino, 3, stdin);
-    if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
+    if(sala_id_destino[strlen(sala_id_destino)-1] == '\n' && strlen(sala_id_destino)>1){
 
         sala_id_destino[strlen(sala_id_destino)-1] = '\0';
 
