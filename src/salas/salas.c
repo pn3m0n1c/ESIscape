@@ -106,6 +106,8 @@ Salas salas_load_salas(char *file_path){
 
         }
 
+        fclose(f);
+
     }
 
     return loaded_salas;
@@ -180,9 +182,23 @@ Conns salas_load_conns(char *file_path){
             }
 
         }
+        
+        fclose(f);
 
     }
 
     return loaded_conns;
+
+}
+
+void salas_free_salas(Salas* salas){
+
+    free(salas->salas);
+
+}
+
+void salas_free_conns(Conns* conns){
+
+    free(conns->conns);
 
 }
