@@ -27,6 +27,11 @@ typedef struct{
 
 } Menu;
 
+//CABECERA: void ui_clean_buffer()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Limpia el buffer de entrada
+void ui_clean_buffer();
+
 //CABECERA void ui_graphic_show_game_name()
 //PRECONDICIÓN
 //POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla

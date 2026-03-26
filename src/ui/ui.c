@@ -1,5 +1,12 @@
 #include "ui.h"
 
+void ui_clean_buffer(){
+
+    int c;
+    while((c = getchar()) != '\n' && c != EOF);
+
+}
+
 void ui_graphic_show_game_name(){
 
     char graphic_game_name[604] = "\n _______  _______  ___          _______  _______  _______  _______  _______  _______ \n|       ||       ||   |        |       ||       ||       ||   _   ||       ||       |\n|    ___||  _____||   |  ____  |    ___||  _____||       ||  |_|  ||    _  ||    ___|\n|   |___ | |_____ |   | |____| |   |___ | |_____ |       ||       ||   |_| ||   |___ \n|    ___||_____  ||   |        |    ___||_____  ||      _||       ||    ___||    ___|\n|   |___  _____| ||   |        |   |___  _____| ||     |_ |   _   ||   |    |   |___ \n|_______||_______||___|        |_______||_______||_______||__| |__||___|    |_______|\n";
@@ -65,7 +72,6 @@ int ui_confirmation(){
 void ui_anykey_press(){
 
     printf("\n\nPulsa cualquier tecla... ");
-    while(getchar() != '\n');
     getchar();
 
 }
@@ -138,10 +144,12 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
         case INICIAL:
             printf(" - Te encuentras en la sala inicial.");
+            ui_clean_buffer();
             ui_anykey_press();
             break;
         case NORMAL:
             printf(" - Te encuentras en una sala normal.");
+            ui_clean_buffer();
             ui_anykey_press();
             break;
         case SALIDA:
@@ -228,6 +236,7 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
 
+    ui_clean_buffer();
     ui_anykey_press();
 
 }
@@ -245,16 +254,16 @@ void ui_enter_sala(GameState *game_state){
     char sala_id_destino[3];
 
     printf("\n\nIntroduce el ID de la sala a la que quieres dirigirte (escribe \'n\' para salir de esta decision) > ");
-    while(getchar() != '\n');
+    ui_clean_buffer();
 
     fgets(sala_id_destino, 3, stdin);
-    if(sala_id_destino[strlen(sala_id_destino)-1] == '\n' && strlen(sala_id_destino)>1){
+    if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
 
         sala_id_destino[strlen(sala_id_destino)-1] = '\0';
 
     }
 
-    if(strcmp(sala_id_destino, "n") == 0){
+    if(strcmp(sala_id_destino, "n") == 0 || strcmp(sala_id_destino, "") == 0){
 
         skip_enter_sala = 1;
 
@@ -309,6 +318,7 @@ void ui_show_player_inventory(GameState* game_state){
 
     ui_show_filter_inventory(game_state->inventory, "Inventario");
 
+    ui_clean_buffer();
     ui_anykey_press();
 
 }
