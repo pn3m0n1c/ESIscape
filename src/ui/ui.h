@@ -26,16 +26,6 @@ typedef struct{
 
 } Menu;
 
-//GAMESTATE
-typedef struct{
-
-    int game_is_playing;
-    Salas salas;
-    Conns conns;
-    Sala *current_sala;
-
-} GameState;
-
 //CABECERA void ui_graphic_show_game_name()
 //PRECONDICIÓN
 //POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla
