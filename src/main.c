@@ -1,11 +1,12 @@
-#include "ui/ui.h"
-#include "salas/salas.h"
+#include "partida/partida.h"
 
 int main(){
 
-    Salas test_salas = salas_load_salas("./data/Salas.txt");
-    Conns test_conns = salas_load_conns("./data/Conexiones.txt");
-    ui_show_filter_connections(&test_conns, &test_salas, "");
+    while(1==1){
+
+        partida_game_start();
+
+    }
     
     return(0);
 
