@@ -180,20 +180,9 @@ void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter
     int i;
     for(i = 0; i<conns->number_of_conns; i++){
 
-        if(strcmp((conns->conns)[i].conn_sala_from_id, sala_id_filter) == 0){
+        if(strcmp((conns->conns)[i].conn_sala_from_id, sala_id_filter) == 0 || strcmp(sala_id_filter, "") == 0){
 
-            Sala *sala_destino = salas_get_sala_from_id((conns->conns)[i].conn_sala_to_id, salas);
-
-            char condicion_texto[128] = "";
-            if(strcmp((conns->conns)[i].conn_id_cond, "0") != 0){
-                
-                char *bloqueado_texto = ((conns->conns)[i].conn_block) ? " | Salida BLOQUEADA\t" : " | Salida no bloqueada\t";
-                strcat(condicion_texto, bloqueado_texto);
-                strcat(condicion_texto, " | IDcondicion_secambiaraporloquees: ");
-                strcat(condicion_texto, (conns->conns)[i].conn_id_cond);
-            }
-
-            printf(" - Salida a: %s (ID DE SALA: \"%s\")\t%s\n", sala_destino->sala_name, sala_destino->sala_id, condicion_texto);
+            printf("ID: %s\t | SalaFromID: %s\t | SalaToID: %s\t | ConnBlock: %i\t | Condicion: %s\n", (conns->conns)[i].conn_id, (conns->conns)[i].conn_sala_from_id, (conns->conns)[i].conn_sala_to_id, (conns->conns)[i].conn_block, (conns->conns)[i].conn_id_cond);
 
         }
 
