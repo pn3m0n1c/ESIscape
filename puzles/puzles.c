@@ -3,17 +3,17 @@
 #include<string.h>
 #include"puzles.h"
 
-puzle* cargar_puzles(char path[], int *total_leidos) {
+puzle* cargar_puzles(char path, int *total_leidos) {
     FILE *f = fopen(path, "r");
     if (f == NULL) {
-        printf("ERROR: No se pudo abrir %s\n, path[]");
+        printf("ERROR: No se pudo abrir %s\n", path);
         *total_leidos = 0;
         return NULL;
     }
 
 puzle *array_puzles = NULL;
     int cont = 0;
-    char linea[512];
+    char linea[300];
 
     while (fgets(linea, sizeof(linea), f)) {
         linea[strcspn(linea, "\r\n")] = 0;
