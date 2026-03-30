@@ -1,6 +1,11 @@
 #include "ui.h"
-#include "../inventario/inventario.h"
-#include "../salas/salas.h"
+
+void ui_clean_buffer(){
+
+    int c;
+    while((c = getchar()) != '\n' && c != EOF);
+
+}
 
 void ui_graphic_show_game_name(){
 
@@ -13,7 +18,7 @@ void ui_graphic_show_screen_separation(){
 
     char graphic_screen_separation[65] = "________________________________________________________________";
 
-    printf("\n\n%s\n\n", graphic_screen_separation);
+    printf("\n%s\n\n", graphic_screen_separation);
 
 }
 
@@ -67,7 +72,6 @@ int ui_confirmation(){
 void ui_anykey_press(){
 
     printf("\n\nPulsa cualquier tecla... ");
-    while(getchar() != '\n');
     getchar();
 
 }
@@ -112,85 +116,6 @@ int ui_main_menu(){
 
 }
 
-int ui_game_loop_start_menu(GameState *game_state){
-
-    Menu menu_game_loop_start;
-    int answer;
-
-    Menu_Entry Menu_Entry_describir_sala;
-    strcpy(Menu_Entry_describir_sala.name, "Describir sala");
-    Menu_Entry_describir_sala.action = NULL;
-    
-    Menu_Entry Menu_Entry_examinar;
-    strcpy(Menu_Entry_examinar.name, "Examinar (objetos y salidas)");
-    Menu_Entry_examinar.action = NULL;
-    
-    Menu_Entry Menu_Entry_entrar_en_otra_sala;
-    strcpy(Menu_Entry_entrar_en_otra_sala.name, "Entrar en otra sala");
-    Menu_Entry_entrar_en_otra_sala.action = NULL;
-
-    Menu_Entry Menu_Entry_coger_objeto;
-    strcpy(Menu_Entry_coger_objeto.name, "Coger objeto");
-    Menu_Entry_coger_objeto.action = NULL;
-
-    Menu_Entry Menu_Entry_soltar_objeto;
-    strcpy(Menu_Entry_soltar_objeto.name, "Soltar objeto");
-    Menu_Entry_soltar_objeto.action = NULL;
-
-    Menu_Entry Menu_Entry_inventario;
-    strcpy(Menu_Entry_inventario.name, "Inventario");
-    Menu_Entry_inventario.action = NULL;
-
-    Menu_Entry Menu_Entry_usar_objeto;
-    strcpy(Menu_Entry_usar_objeto.name, "Usar objeto");
-    Menu_Entry_usar_objeto.action = NULL;
-
-    Menu_Entry Menu_Entry_puzle_codigo;
-    strcpy(Menu_Entry_puzle_codigo.name, "Resolver puzle / introducir codigo");
-    Menu_Entry_puzle_codigo.action = NULL;
-
-    Menu_Entry Menu_Entry_guardar_partida;
-    strcpy(Menu_Entry_guardar_partida.name, "Guardar partida");
-    Menu_Entry_guardar_partida.action = NULL;
-    
-    Menu_Entry Menu_Entry_volver;
-    strcpy(Menu_Entry_volver.name, "Volver");
-    Menu_Entry_volver.action = NULL;
-
-    menu_game_loop_start.entries = (Menu_Entry*)malloc(sizeof(Menu_Entry)*10);
-    menu_game_loop_start.entries[0] = Menu_Entry_describir_sala;
-    menu_game_loop_start.entries[1] = Menu_Entry_examinar;
-    menu_game_loop_start.entries[2] = Menu_Entry_entrar_en_otra_sala;
-    menu_game_loop_start.entries[3] = Menu_Entry_coger_objeto;
-    menu_game_loop_start.entries[4] = Menu_Entry_soltar_objeto;
-    menu_game_loop_start.entries[5] = Menu_Entry_inventario;
-    menu_game_loop_start.entries[6] = Menu_Entry_usar_objeto;
-    menu_game_loop_start.entries[7] = Menu_Entry_puzle_codigo;
-    menu_game_loop_start.entries[8] = Menu_Entry_guardar_partida;
-    menu_game_loop_start.entries[9] = Menu_Entry_volver;
-    menu_game_loop_start.number_of_entries = 10;
-
-    ui_graphic_show_screen_separation();
-    printf("\nSala: %s\n\n", game_state->current_sala->sala_name);
-
-    switch(ui_menu_create(menu_game_loop_start)){
-
-        case 0:
-            ui_describe_sala(game_state->current_sala, game_state);
-            break;
-
-        case 9:
-            game_state->game_is_playing = 0;
-            break;
-
-    }
-
-    free(menu_game_loop_start.entries);
-
-    return(answer);
-
-}
-
 void ui_ask_for_player_info(){
 
     ui_graphic_show_screen_separation();
@@ -213,16 +138,18 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
     ui_graphic_show_screen_separation();
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
-    printf("Descripción: %s\n", sala_to_describe->sala_desc);
+    printf(" - Descripción: %s\n", sala_to_describe->sala_desc);
 
     switch(sala_to_describe->sala_type){
 
         case INICIAL:
-            printf("Te encuentras en la sala inicial.");
+            printf(" - Te encuentras en la sala inicial.");
+            ui_clean_buffer();
             ui_anykey_press();
             break;
         case NORMAL:
-            printf("Te encuentras en una sala normal.");
+            printf(" - Te encuentras en una sala normal.");
+            ui_clean_buffer();
             ui_anykey_press();
             break;
         case SALIDA:
@@ -248,17 +175,150 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
 }
 
-void ui_show_inventory(Inventory* inv){
+void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter){
 
-    ui_graphic_show_screen_separation();
-    
     int i;
-    for(i = 0; i < inv->size; i++){
+    for(i = 0; i<conns->number_of_conns; i++){
 
-        printf("Item %d\t%s\t%s\tDesc: %s\tLoc: %s\n", i, inv->slot[i].id, inv->slot[i].name, inv->slot[i].description, inv->slot[i].location);
+        if(strcmp((conns->conns)[i].conn_sala_from_id, sala_id_filter) == 0){
+
+            Sala *sala_destino = salas_get_sala_from_id((conns->conns)[i].conn_sala_to_id, salas);
+
+            char condicion_texto[128] = "";
+            if(strcmp((conns->conns)[i].conn_id_cond, "0") != 0){
+                
+                char *bloqueado_texto = ((conns->conns)[i].conn_block) ? " | Salida BLOQUEADA\t" : " | Salida no bloqueada\t";
+                strcat(condicion_texto, bloqueado_texto);
+                strcat(condicion_texto, " | IDcondicion_secambiaraporloquees: ");
+                strcat(condicion_texto, (conns->conns)[i].conn_id_cond);
+            }
+
+            printf(" - Salida a: %s (ID DE SALA: \"%s\")\t%s\n", sala_destino->sala_name, sala_destino->sala_id, condicion_texto);
+
+        }
 
     }
 
+}
+
+void ui_show_filter_inventory(Inventory* inv, char *location_filter){
+
+    int i, count = 0;
+
+    for(i = 0; i < inv->size; i++){
+
+        if(strcmp(inv->slot[i].location, location_filter) == 0 || strcmp(location_filter, "") == 0){
+
+            count++;
+            printf(" - Item %s - %s\t | Desc: %s\n", inv->slot[i].id, inv->slot[i].name, inv->slot[i].description);
+
+        }
+        
+    }
+
+    if(count == 0){
+
+        printf(" - VACIO - \n");
+
+    }
+
+}
+
+void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
+
+    ui_graphic_show_screen_separation();
+
+    printf("OBJETOS: #################\n\n");
+
+    ui_show_filter_inventory(game_state->inventory, sala_to_examine->sala_id);
+    
+    printf("\n\nSALIDAS: #################\n\n");
+
+    ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
+
+    ui_clean_buffer();
+    ui_anykey_press();
+
+}
+
+void ui_enter_sala(GameState *game_state){
+
+    ui_graphic_show_screen_separation();
+
+    printf("\n\nSALIDAS: #################\n\n");
+
+    ui_show_filter_connections(&(game_state->conns), &(game_state->salas), game_state->current_sala->sala_id);
+
+    int salida_exists_here = 0, skip_enter_sala = 0, i;
+    Conn salida_destino;
+    char sala_id_destino[3];
+
+    printf("\n\nIntroduce el ID de la sala a la que quieres dirigirte (escribe \'n\' para salir de esta decision) > ");
+    ui_clean_buffer();
+
+    fgets(sala_id_destino, 3, stdin);
+    if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
+
+        sala_id_destino[strlen(sala_id_destino)-1] = '\0';
+
+    }
+
+    if(strcmp(sala_id_destino, "n") == 0 || strcmp(sala_id_destino, "") == 0){
+
+        skip_enter_sala = 1;
+
+    }
+
+    if(!skip_enter_sala){
+
+        for(i = 0; i<((game_state->conns).number_of_conns); i++){
+
+            //COMPROBAMOS SI LA SALIDA POR LA QUE QUEREMOS SALIR EXISTE
+            if(strcmp(((game_state->conns).conns)[i].conn_sala_from_id, game_state->current_sala->sala_id) == 0 && 
+            strcmp(((game_state->conns).conns)[i].conn_sala_to_id, sala_id_destino) == 0){
+
+                salida_exists_here = 1;
+                salida_destino = ((game_state->conns).conns)[i];
+
+            }
+
+        }
+
+        if(salida_exists_here){
+
+            if(salida_destino.conn_block){
+
+                printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s. (QUIZAS SE PONDRA MAS BONITA LA CONDICION)", salida_destino.conn_id_cond);
+                ui_anykey_press();
+
+            }
+            else{
+
+                game_state->current_sala = salas_get_sala_from_id(salida_destino.conn_sala_to_id, &(game_state->salas));
+
+            }
+
+        }
+        else{
+
+            printf("\n\nNO HAY NINGUNA SALIDA A ESA SALA, O NO EXISTE!");
+            ui_anykey_press();
+
+        }
+
+    }
+
+}
+
+void ui_show_player_inventory(GameState* game_state){
+
+    ui_graphic_show_screen_separation();
+
+    printf("INVENTARIO: #################\n\n");
+
+    ui_show_filter_inventory(game_state->inventory, "Inventario");
+
+    ui_clean_buffer();
     ui_anykey_press();
 
 }

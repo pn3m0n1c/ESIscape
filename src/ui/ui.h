@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include "../salas/salas.h"
 #include "../inventario/inventario.h"
+#include "../partida/partida.h"
 
 //ENTRADAS DE MENÚ
 typedef struct{
@@ -26,10 +27,20 @@ typedef struct{
 
 } Menu;
 
+//CABECERA: void ui_clean_buffer()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Limpia el buffer de entrada
+void ui_clean_buffer();
+
 //CABECERA void ui_graphic_show_game_name()
 //PRECONDICIÓN
 //POSTCONDICIÓN imprime el nombre del juego "ESI-ESCAPE" en pantalla
 void ui_graphic_show_game_name();
+
+//CABECERA: void ui_graphic_show_screen_separation()
+//PRECONDICIÓN:
+//POSTCONDICIÓN: Muestra en pantalla una separación horizontal
+void ui_graphic_show_screen_separation();
 
 //CABECERA: int ui_menu_create(menu menu_to_show)
 //PRECONDICIÓN: menu_to_show preinicializado
@@ -56,11 +67,6 @@ void ui_exit_game();
 //POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
 int ui_main_menu();
 
-//CABECERA: int ui_game_loop_start_menu(GameState *game_state)
-//PRECONDICIÓN: game_state preinicializado
-//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
-int ui_game_loop_start_menu(GameState*);
-
 //CABECERA: void ui_ask_for_player_info()
 //PRECONDICIÓN:
 //POSTCONDICIÓN: Lee la información del jugador, y posteriormente llama a la función de creado de jugadores de su módulo correspondiente
@@ -71,14 +77,29 @@ void ui_ask_for_player_info();
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal
 void ui_describe_sala(Sala*, GameState*);
 
-//CABECERA: void ui_show_inventory(Inventory* inv)
-//PRECONDICIÓN: Inventario al que apunta inv preinicializado
-//POSTCONDICIÓN: Muestra en pantalla los elementos del inventario
-void ui_show_inventory(Inventory*);
+//CABECERA: void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter)
+//PRECONDICIÓN: Conns y sala_id_filter preinicializados
+//POSTCONDICIÓN: Muestra las conexiones que tienen como partida la sala con id sala_id_filter
+void ui_show_filter_connections(Conns*, Salas*, char*);
 
-//CABECERA: void ui_game_start()
-//PRECONDICIÓN:
-//POSTCONDICIÓN: Es la función que comienza
-void ui_game_start();
+//CABECERA: void ui_show_filter_inventory(Inventory* inv, char *location_filter)
+//PRECONDICIÓN: Inventario al que apunta inv y location_filter preinicializados
+//POSTCONDICIÓN: Muestra en pantalla los elementos del inventario que esten en la localizacion especificada en location_filter
+void ui_show_filter_inventory(Inventory*, char*);
+
+//CABECERA: void ui_examine_sala(Sala* sala_to_examine, GameState *game_state)
+//PRECONDICIÓN: sala_to_examine y game_state preinicializado
+//POSTCONDICIÓN: muestra los objetos y las salidas disponibles en la sala especificada
+void ui_examine_sala(Sala*, GameState*);
+
+//CABECERA: void ui_enter_sala(GameState *game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: permitirá al jugador ir a otra sala si la salida hacia esta no está bloqueada
+void ui_enter_sala(GameState*);
+
+//CABECERA: void ui_show_player_inventory(GameState* game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: muestra el inventario del jugador actualmente
+void ui_show_player_inventory(GameState*);
 
 #endif

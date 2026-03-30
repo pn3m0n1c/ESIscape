@@ -1,10 +1,10 @@
-#include "ui/ui.h"
+#include "partida/partida.h"
 
 int main(){
 
     while(1==1){
 
-        ui_game_start();
+        partida_game_start();
 
     }
     
