@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<jugador.h>
+#include "jugador.h"
 
-jugador* cargar_jugador(char path, int *total_leidos) {
-    FILE *f = fopen(char path[], "r"); 
+jugador* cargar_jugador(char path[], int *total_leidos) {
+    FILE *f = fopen(path, "r"); 
     if (f == NULL) {
         printf("ERROR: No se pudo abrir %s\n", path);
         *total_leidos = 0;
@@ -35,12 +35,11 @@ jugador *array_jugador = NULL;
         token = strtok(NULL, "-");
         if (token) strcpy(array_jugador[cont].Contrasena, token);
 
-        array_jugador[cont].inventario = NULL;
-        array_jugador[cont].inv=inv_create_empty_inventory()
+        array_jugador[cont].inv = inv_create_empty_inventory();
         token = strtok(NULL, "-");
         while (token != NULL){
             Item objeto_temporal;
-            strcpy(objeto_temporal.ID, token);
+            strcpy(objeto_temporal.id, token);
             strcpy(objeto_temporal.location, "Inventario");
             inv_add_item(objeto_temporal, &array_jugador[cont].inv);
             
@@ -60,10 +59,10 @@ jugador *array_jugador = NULL;
     void liberar_jugador(jugador *array_jugador, int total_leidos) {
     if (array_jugador != NULL) {
         for (int i = 0; i < total_leidos; i++) {
-            for (int j = 0; j < /*Numero objetos*/; j++) {
-                
+            for (int j = 0; j < array_jugador[i].inv.size; j++) {
             }
         }
+
         free(array_jugador);
     }
 }

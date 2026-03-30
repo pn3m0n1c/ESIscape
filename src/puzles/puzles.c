@@ -3,7 +3,7 @@
 #include<string.h>
 #include"puzles.h"
 
-puzle* cargar_puzles(char path, int *total_leidos) {
+puzle* cargar_puzles(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r");
     if (f == NULL) {
         printf("ERROR: No se pudo abrir %s\n", path);
