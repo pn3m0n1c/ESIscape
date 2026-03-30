@@ -1,5 +1,5 @@
-#ifndef INVENTARIO_H
-#define INVENTARIO_H
+#ifndef INVENTARIO
+#define INVENTARIO
 
 #include <stdio.h>
 #include <stdlib.h>
