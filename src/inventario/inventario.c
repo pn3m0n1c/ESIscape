@@ -16,6 +16,12 @@
 Item build_item(char line[]) {
     Item item;
 
+    if(line[strlen(line)-1] == '\n'){
+
+        line[strlen(line)-1] = '\0';
+
+    }
+
     strcpy(item.id, strtok(line, "-"));
     strcpy(item.name, strtok(NULL, "-"));
     strcpy(item.description, strtok(NULL, "-"));
@@ -90,6 +96,31 @@ int inv_find_item(Item item, Inventory *inv){
     }
 
     return -1;
+}
+
+/* Escribe las líneas OBJETO de todos los items al fichero abierto recibido,
+ * con el formato de Partida.txt: "OBJETO: Id_obj-Localiz\n"
+ * Devuelve 1 si se escribió todo con éxito, 0 en otro caso. */
+int inv_write_items(FILE *file, Inventory *all_items){
+    if(file == NULL || all_items == NULL) return 0;
+
+    for(int i = 0; i < all_items->size; i++){
+        if(fprintf(file, "OBJETO: %s-%s\n",
+            all_items->slot[i].id,
+            all_items->slot[i].location) < 0) return 0;
+    }
+
+    return 1;
+}
+
+/* Busca un item en un inventario en base a su ID. Si lo encuentra devuelve
+ * un puntero al Item. Si no lo encuentra, devuelve NULL. */
+Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
+    for (int i = 0; i < inv->size; i++) {
+        if (strcmp(inv->slot[i].id, wanted_id) == 0)
+            return &inv->slot[i];
+    }
+    return NULL;
 }
 
 /* Crea un inventario vacío, útil para crear un jugador 

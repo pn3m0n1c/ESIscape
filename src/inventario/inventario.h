@@ -24,6 +24,10 @@ typedef struct {
 
 Inventory* inv_read_items(char path[]);
 
+Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv);
+
+int inv_write_items(FILE *file, Inventory *all_items);
+
 Inventory inv_create_empty_inventory();
 
 int inv_itemcmp(Item item_1, Item item_2);

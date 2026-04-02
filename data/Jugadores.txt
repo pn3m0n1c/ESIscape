@@ -1,2 +1,2 @@
-01-Guillermo Gómez-jugador1-gg125431-OB01-OB03
-02-Manuel López-jugador2-ml909876-OB02
+01-Alumno ESI-alumno0001-pass1234
+02-Profesor MP-profesor02-admin_00-OB01

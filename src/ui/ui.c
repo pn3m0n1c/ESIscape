@@ -189,7 +189,7 @@ void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter
                 
                 char *bloqueado_texto = ((conns->conns)[i].conn_block) ? " | Salida BLOQUEADA\t" : " | Salida no bloqueada\t";
                 strcat(condicion_texto, bloqueado_texto);
-                strcat(condicion_texto, " | IDcondicion_secambiaraporloquees: ");
+                strcat(condicion_texto, " | Condicion: ");
                 strcat(condicion_texto, (conns->conns)[i].conn_id_cond);
             }
 
@@ -228,11 +228,11 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_graphic_show_screen_separation();
 
-    printf("OBJETOS: #################\n\n");
+    printf("OBJETOS EN LA SALA ACTUAL: #################\n\n");
 
     ui_show_filter_inventory(game_state->inventory, sala_to_examine->sala_id);
     
-    printf("\n\nSALIDAS: #################\n\n");
+    printf("\n\nSALIDAS DE LA SALA ACTUAL: #################\n\n");
 
     ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
 
@@ -245,7 +245,7 @@ void ui_enter_sala(GameState *game_state){
 
     ui_graphic_show_screen_separation();
 
-    printf("\n\nSALIDAS: #################\n\n");
+    printf("\nSALIDAS DE LA SALA ACTUAL: #################\n\n");
 
     ui_show_filter_connections(&(game_state->conns), &(game_state->salas), game_state->current_sala->sala_id);
 
@@ -288,7 +288,8 @@ void ui_enter_sala(GameState *game_state){
 
             if(salida_destino.conn_block){
 
-                printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s. (QUIZAS SE PONDRA MAS BONITA LA CONDICION)", salida_destino.conn_id_cond);
+                printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s.", salida_destino.conn_id_cond);
+                ui_clean_buffer();
                 ui_anykey_press();
 
             }
@@ -302,7 +303,88 @@ void ui_enter_sala(GameState *game_state){
         else{
 
             printf("\n\nNO HAY NINGUNA SALIDA A ESA SALA, O NO EXISTE!");
+            ui_clean_buffer();
             ui_anykey_press();
+
+        }
+
+    }
+
+}
+
+void ui_grab_pick_object(GameState* game_state, int pick){
+
+    ui_graphic_show_screen_separation();
+
+    char id_from[256];
+    char id_to[256];
+
+    if(pick){
+        strcpy(id_from, game_state->current_sala->sala_id);
+        strcpy(id_to, "Inventario");
+    }
+    else{
+        strcpy(id_from, "Inventario");
+        strcpy(id_to, game_state->current_sala->sala_id);
+    }
+
+    if(pick) printf("OBJETOS EN LA SALA ACTUAL: #################\n\n");
+    else printf("OBJETOS EN TU INVENTARIO: #################\n\n");
+
+    ui_show_filter_inventory(game_state->inventory, id_from);
+
+    char id_object_to_pick[5];
+    Item *object_found;
+    int skip_dothethings_object = 0;
+
+    if(pick) printf("\nIntroduce el ID del objeto que quieres agarrar (escribe \'n\' para salir de esta decision) > ");
+    else printf("\nIntroduce el ID del objeto que quieres soltar (escribe \'n\' para salir de esta decision) > ");
+
+    ui_clean_buffer();
+
+    fgets(id_object_to_pick, 5, stdin);
+
+    if(id_object_to_pick[strlen(id_object_to_pick)-1] == '\n'){
+
+        id_object_to_pick[strlen(id_object_to_pick)-1] = '\0';
+
+    }
+
+    if(strcmp(id_object_to_pick, "n") == 0 || strcmp(id_object_to_pick, "") == 0){
+
+        skip_dothethings_object = 1;
+
+    }
+
+    if(!skip_dothethings_object){
+
+        object_found = inv_find_item_by_id(id_object_to_pick, game_state->inventory);
+
+        if(object_found == NULL){
+
+            if(pick) printf("\n\nESTE OBJETO NO EXISTE!");
+            else printf("\n\nNO TIENES ESTE OBJETO!");
+            ui_clean_buffer();
+            ui_anykey_press();
+
+        }
+
+        else{
+
+            if(strcmp(object_found->location, id_from) != 0){
+
+                if(pick) printf("\n\nESTE OBJETO NO ESTA EN ESTA SALA!");
+                else printf("\n\nESTE OBJETO NO EXISTE!");
+                ui_clean_buffer();
+                ui_anykey_press();
+
+            }
+
+            else{
+
+                strcpy(object_found->location, id_to);
+
+            }
 
         }
 
@@ -320,6 +402,98 @@ void ui_show_player_inventory(GameState* game_state){
 
     ui_clean_buffer();
     ui_anykey_press();
+
+}
+
+void ui_use_object(GameState* game_state){
+
+    ui_graphic_show_screen_separation();
+
+    printf("OBJETOS EN TU INVENTARIO: #################\n\n");
+    ui_show_filter_inventory(game_state->inventory, "Inventario");
+
+    char id_object_to_use[5];
+    Item *object_found;
+    int skip_dothethings_object = 0;
+
+    printf("\nIntroduce el ID del objeto que quieres usar (escribe \'n\' para salir de esta decision) > ");
+
+    ui_clean_buffer();
+
+    fgets(id_object_to_use, 5, stdin);
+
+    if(id_object_to_use[strlen(id_object_to_use)-1] == '\n'){
+
+        id_object_to_use[strlen(id_object_to_use)-1] = '\0';
+
+    }
+
+    if(strcmp(id_object_to_use, "n") == 0 || strcmp(id_object_to_use, "") == 0){
+
+        skip_dothethings_object = 1;
+
+    }
+
+    if(!skip_dothethings_object){
+
+        object_found = inv_find_item_by_id(id_object_to_use, game_state->inventory);
+
+        if(object_found == NULL){
+
+            printf("\n\nNO EXISTE ESTE OBJETO!");
+            ui_clean_buffer();
+            ui_anykey_press();
+
+        }
+
+        else{
+
+            int i, vecesaplicadas = 0;
+
+            if(strcmp(object_found->location, "Inventario") != 0){
+
+                printf("\n\nNO TIENES ESTE OBJETO!");
+                ui_clean_buffer();
+                ui_anykey_press();
+
+            }
+
+            else{
+
+                printf("\n\n");
+
+                for(i = 0; i < (game_state->conns).number_of_conns; i++){
+
+                    if(strcmp(((game_state->conns).conns)[i].conn_id_cond, object_found->id) == 0 && strcmp(((game_state->conns).conns)[i].conn_sala_from_id, game_state->current_sala->sala_id) == 0){
+
+                        vecesaplicadas++;
+                        if(((game_state->conns).conns)[i].conn_block == 1){
+
+                            Sala *sala_destino = salas_get_sala_from_id(((game_state->conns).conns)[i].conn_sala_to_id, &(game_state->salas));
+
+                            ((game_state->conns).conns)[i].conn_block = 0;
+                            printf("- La salida a la sala %s (ID: %s) HA SIDO DESBLOQUEADA!\n", sala_destino->sala_name, sala_destino->sala_id);
+
+                        }
+
+                    }
+
+                }
+
+                if(vecesaplicadas == 0){
+
+                    printf("ESTE OBJETO NO LO PUEDES APLICAR AQUI!");
+
+                }
+
+                ui_clean_buffer();
+                ui_anykey_press();
+
+            }
+
+        }
+
+    }
 
 }
 
