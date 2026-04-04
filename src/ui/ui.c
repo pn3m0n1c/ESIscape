@@ -138,7 +138,7 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
     ui_graphic_show_screen_separation();
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
-    printf(" - Descripción: %s\n", sala_to_describe->sala_desc);
+    printf(" - Descripcion: %s\n", sala_to_describe->sala_desc);
 
     switch(sala_to_describe->sala_type){
 
