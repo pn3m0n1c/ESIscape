@@ -1,3 +1,6 @@
-01-Conserjería-INICIAL-Pequeño habitáculo con mostrador que se encuentra a la entrada de la ESI, antes de acceder al Hall
-02-Escalera principal-NORMAL-Escalera principal de subida a la primera planta situada frente a conserjería
-03-Cafetería-SALIDA-Cafetería situada en la primera planta, después de subir la escalera principal
+01-Hall Principal-INICIAL-Amplio recibidor de la ESI con la gran escalinata y acceso a conserjería y pasillos.
+02-Conserjería-NORMAL-Habitáculo acristalado donde los bedeles guardan llaves y tarjetas de la escuela.
+03-Pasillo Laboratorios-NORMAL-Largo pasillo de la primera planta que conecta con los laboratorios de software.
+04-Laboratorio S11-NORMAL-Aula llena de ordenadores para las prácticas de Metodología de la Programación.
+05-Biblioteca-NORMAL-Zona de estudio silenciosa con varias mesas y ordenadores de consulta.
+06-Aparcamiento Exterior-SALIDA-El exterior de la ESI. ¡Has conseguido salir a tiempo para coger el autobús!

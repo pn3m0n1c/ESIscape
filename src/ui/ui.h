@@ -97,9 +97,19 @@ void ui_examine_sala(Sala*, GameState*);
 //POSTCONDICIÓN: permitirá al jugador ir a otra sala si la salida hacia esta no está bloqueada
 void ui_enter_sala(GameState*);
 
+//CABECERA: void ui_grab_pick_object(GameState* game_state, int pick)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: permite al jugador añadir uno de los objetos de la sala actual a su inventario si pick 1, si es 0, suelta objetos
+void ui_grab_pick_object(GameState*, int);
+
 //CABECERA: void ui_show_player_inventory(GameState* game_state)
 //PRECONDICIÓN: game_state preinicializado
 //POSTCONDICIÓN: muestra el inventario del jugador actualmente
 void ui_show_player_inventory(GameState*);
+
+//CABECERA: void ui_use_object(GameState* game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: se usa el objeto que el usuario pida si se puede aplicar. Si no se puede aplicar, se informa al jugador
+void ui_use_object(GameState*);
 
 #endif
