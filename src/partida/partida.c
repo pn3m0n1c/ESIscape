@@ -90,6 +90,10 @@ int partida_game_loop_start_menu(GameState *game_state){
         case 6:
             ui_use_object(game_state);
             break;
+
+        case 7:
+            ui_solve_puzzle(game_state);
+            break;
             
         case 9:
             game_state->game_is_playing = 0;
@@ -112,6 +116,7 @@ void partida_game_start(){
     game_state.salas = salas_load_salas("./data/Salas.txt");
     game_state.conns = salas_load_conns("./data/Conexiones.txt");
     game_state.inventory = inv_read_items("./data/Objetos.txt");
+    game_state.arr_puzles = cargar_puzles("./data/Puzles.txt");
 
     game_state.current_sala = salas_get_sala_inicial(&game_state.salas);
     
