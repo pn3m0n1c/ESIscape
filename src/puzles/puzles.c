@@ -1,54 +1,63 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include"puzles.h"
+#include "puzles.h"
 
-puzle* cargar_puzles(char path[], int *total_leidos) {
+array_puz* cargar_puzles(char path[]){
+    
     FILE *f = fopen(path, "r");
     if (f == NULL) {
         printf("ERROR: No se pudo abrir %s\n", path);
-        *total_leidos = 0;
         return NULL;
     }
 
-puzle *array_puzles = NULL;
-    int cont = 0;
-    char linea[300];
+    array_puz *arr_puzles = (array_puz *)malloc(sizeof(array_puz));
 
-    while (fgets(linea, sizeof(linea), f)) {
-        linea[strcspn(linea, "\r\n")] = 0;
-        if (strlen(linea) == 0) continue;
+    if(arr_puzles != NULL){
 
-        array_puzles = realloc(array_puzles, (cont + 1) * sizeof(puzle));
+        arr_puzles->unidad = NULL;
+        arr_puzles->total_leidos = 0;
+        char linea[300];
 
-        char *token = strtok(linea, "-");
-        if (token) strcpy(array_puzles[cont].id_puzle, token);
+        while (fgets(linea, sizeof(linea), f) != NULL) {
+            linea[strcspn(linea, "\r\n")] = 0;
+            if (strlen(linea) == 0) continue;
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_puzles[cont].nomb_puz, token);
+            arr_puzles->unidad = realloc(arr_puzles->unidad, (arr_puzles->total_leidos + 1) * sizeof(puzle));
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_puzles[cont].id_sala, token);
+            char *token = strtok(linea, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].id_puzle, token);
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_puzles[cont].tipo, token);
+            token = strtok(NULL, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].nomb_puz, token);
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_puzles[cont].descrip, token);
+            token = strtok(NULL, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].id_sala, token);
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_puzles[cont].sol, token);
+            token = strtok(NULL, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].tipo, token);
 
-        cont++;
+            token = strtok(NULL, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].descrip, token);
+
+            token = strtok(NULL, "-");
+            if (token) strcpy((arr_puzles->unidad)[(arr_puzles->total_leidos)].sol, token);
+
+            (arr_puzles->unidad)[(arr_puzles->total_leidos)].resuelto = 0;
+
+            (arr_puzles->total_leidos)++;
+        }
+
     }
 
     fclose(f);
-    *total_leidos = cont;
-    return array_puzles;
+
+    return arr_puzles;
+
 }
 
-void liberar_puzles(puzle *array_puzles, int total_leidos) {
-    if (array_puzles != NULL) {
-        free(array_puzles);
+void liberar_puzles(array_puz *arr_puzles) {
+    if ((arr_puzles) != NULL) {
+        if ((arr_puzles->unidad) != NULL) {
+            free(arr_puzles->unidad);
+        }
+        free(arr_puzles);
     }
 }

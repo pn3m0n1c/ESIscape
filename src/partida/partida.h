@@ -4,7 +4,7 @@
 
 #include "../salas/salas.h"
 #include "../inventario/inventario.h"
-#include "../ui/ui.h"
+#include "../puzles/puzles.h"
 
 //GAMESTATE
 typedef struct{
@@ -18,6 +18,7 @@ typedef struct{
     jugador player;
 } Gamestate;
     Inventory *inventory;
+    array_puz *arr_puzles;
 
 } GameState;
 

@@ -1,14 +1,16 @@
-#ifndef JUGADOR
-#define JUGADOR
-#include "../inventario/inventario.h"
-#include "../puzles/puzles.h"
+#ifndef jugador_h
+#define jugador_h
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include "inventario.h"
 
 typedef struct{
     char Id_jugador[3];
     char Nomb_jugador[21];
     char Jugador[11];
     char Contrasena[9];
-    //char Id_obj[5];
     Inventory inv; 
 }jugador;
 

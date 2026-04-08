@@ -138,7 +138,7 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
     ui_graphic_show_screen_separation();
 
     printf("Sala: %s\n", sala_to_describe->sala_name);
-    printf(" - Descripción: %s\n", sala_to_describe->sala_desc);
+    printf(" - Descripcion: %s\n", sala_to_describe->sala_desc);
 
     switch(sala_to_describe->sala_type){
 
@@ -224,6 +224,30 @@ void ui_show_filter_inventory(Inventory* inv, char *location_filter){
 
 }
 
+
+void ui_show_filter_puzles(array_puz* arr_puzles, char *location_filter){
+
+    int i, count = 0;
+
+    for(i = 0; i < arr_puzles->total_leidos; i++){
+
+        if(strcmp((arr_puzles->unidad)[i].id_sala, location_filter) == 0 || strcmp(location_filter, "") == 0){
+
+            count++;
+            printf(" - Puzle %s: %s\t | Tipo: %s\n", (arr_puzles->unidad)[i].id_puzle, (arr_puzles->unidad)[i].nomb_puz, (arr_puzles->unidad)[i].tipo);
+
+        }
+        
+    }
+
+    if(count == 0){
+
+        printf(" - VACIO - \n");
+
+    }
+
+}
+
 void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_graphic_show_screen_separation();
@@ -260,6 +284,12 @@ void ui_enter_sala(GameState *game_state){
     if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
 
         sala_id_destino[strlen(sala_id_destino)-1] = '\0';
+
+    }
+    
+    else{
+
+        ui_clean_buffer();
 
     }
 
@@ -350,6 +380,12 @@ void ui_grab_pick_object(GameState* game_state, int pick){
 
     }
 
+    else{
+
+        ui_clean_buffer();
+
+    }
+
     if(strcmp(id_object_to_pick, "n") == 0 || strcmp(id_object_to_pick, "") == 0){
 
         skip_dothethings_object = 1;
@@ -364,7 +400,6 @@ void ui_grab_pick_object(GameState* game_state, int pick){
 
             if(pick) printf("\n\nESTE OBJETO NO EXISTE!");
             else printf("\n\nNO TIENES ESTE OBJETO!");
-            ui_clean_buffer();
             ui_anykey_press();
 
         }
@@ -375,7 +410,6 @@ void ui_grab_pick_object(GameState* game_state, int pick){
 
                 if(pick) printf("\n\nESTE OBJETO NO ESTA EN ESTA SALA!");
                 else printf("\n\nESTE OBJETO NO EXISTE!");
-                ui_clean_buffer();
                 ui_anykey_press();
 
             }
@@ -428,6 +462,12 @@ void ui_use_object(GameState* game_state){
 
     }
 
+    else{
+
+        ui_clean_buffer();
+
+    }
+
     if(strcmp(id_object_to_use, "n") == 0 || strcmp(id_object_to_use, "") == 0){
 
         skip_dothethings_object = 1;
@@ -441,7 +481,6 @@ void ui_use_object(GameState* game_state){
         if(object_found == NULL){
 
             printf("\n\nNO EXISTE ESTE OBJETO!");
-            ui_clean_buffer();
             ui_anykey_press();
 
         }
@@ -453,7 +492,6 @@ void ui_use_object(GameState* game_state){
             if(strcmp(object_found->location, "Inventario") != 0){
 
                 printf("\n\nNO TIENES ESTE OBJETO!");
-                ui_clean_buffer();
                 ui_anykey_press();
 
             }
@@ -486,7 +524,6 @@ void ui_use_object(GameState* game_state){
 
                 }
 
-                ui_clean_buffer();
                 ui_anykey_press();
 
             }
@@ -497,12 +534,139 @@ void ui_use_object(GameState* game_state){
 
 }
 
-/*
-int ui_solve_puzle(){
+void ui_solve_puzzle(GameState* game_state){
 
-    char input_player[50];
+    ui_graphic_show_screen_separation();
 
-    fgets(input_player, 51, stdin);
+    printf("PUZLES EN ESTA SALA: #################\n\n");
+    ui_show_filter_puzles(game_state->arr_puzles, game_state->current_sala->sala_id);
+
+    char id_puzzle_to_solve[4];
+    puzle *puzzle_found = NULL;
+    int skip_dothethings_puzle = 0;
+
+    printf("\nIntroduce el ID del puzle que quieres resolver (escribe \'n\' para salir de esta decision) > ");
+
+    ui_clean_buffer();
+
+    fgets(id_puzzle_to_solve, 4, stdin);
+
+    if(id_puzzle_to_solve[strlen(id_puzzle_to_solve)-1] == '\n'){
+
+        id_puzzle_to_solve[strlen(id_puzzle_to_solve)-1] = '\0';
+
+    }
+    
+    else{
+
+        ui_clean_buffer();
+
+    }
+
+    if(strcmp(id_puzzle_to_solve, "n") == 0 || strcmp(id_puzzle_to_solve, "") == 0){
+
+        skip_dothethings_puzle = 1;
+
+    }
+
+    if(!skip_dothethings_puzle){
+
+        int puzidx;
+
+        for(puzidx = 0; puzidx < game_state->arr_puzles->total_leidos; puzidx++){
+
+            if(strcmp((game_state->arr_puzles->unidad)[puzidx].id_puzle, id_puzzle_to_solve) == 0){
+
+                puzzle_found = &((game_state->arr_puzles->unidad)[puzidx]);
+
+            }
+
+        }
+
+        if(puzzle_found == NULL){
+
+            printf("\n\nNO EXISTE ESE PUZLE!");
+            ui_anykey_press();
+
+        }
+
+        else{
+
+            int i;
+
+            if(strcmp(puzzle_found->id_sala, game_state->current_sala->sala_id) != 0){
+
+                printf("\n\nESE PUZLE NO SE ENCUENTRA EN ESTA SALA!");
+                ui_anykey_press();
+
+            }
+
+            else if(puzzle_found->resuelto == 1){
+
+                printf("\n\nESE PUZLE YA ESTA RESUELTO!");
+                ui_anykey_press();
+
+            }
+
+            else{
+
+                printf("\n");
+
+                printf("%s\n\nIntroduce la solucion > ", puzzle_found->descrip);
+
+                char soluc[51];
+                
+                ui_clean_buffer();
+                fgets(soluc, 51, stdin);
+                if(soluc[strlen(soluc)-1] == '\n'){
+
+                    soluc[strlen(soluc)-1] = '\0';
+                    
+                }
+
+                else{
+
+                    ui_clean_buffer();
+
+                }
+
+                printf("\n\n");
+
+                if(strcmp(soluc, puzzle_found->sol) != 0){
+
+                    printf("- SOLUCION INCORRECTA.\n");
+
+                }
+
+                else{
+
+                    for(i = 0; i < (game_state->conns).number_of_conns; i++){
+
+                        if(strcmp(((game_state->conns).conns)[i].conn_id_cond, puzzle_found->id_puzle) == 0){
+
+                            if(((game_state->conns).conns)[i].conn_block == 1){
+
+                                Sala *sala_destino = salas_get_sala_from_id(((game_state->conns).conns)[i].conn_sala_to_id, &(game_state->salas));
+
+                                ((game_state->conns).conns)[i].conn_block = 0;
+                                printf("- La salida a la sala %s (ID: %s) HA SIDO DESBLOQUEADA!\n", sala_destino->sala_name, sala_destino->sala_id);
+
+                                puzzle_found->resuelto = 1;
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                ui_anykey_press();
+
+            }
+
+        }
+
+    }
 
 }
-*/

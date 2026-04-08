@@ -1,7 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include "jugador.h"
+#include"jugador.h"
 
 jugador* cargar_jugador(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r"); 
@@ -11,7 +8,6 @@ jugador* cargar_jugador(char path[], int *total_leidos) {
         return NULL;
     }
 
-
 jugador *array_jugador = NULL;
     int cont = 0;
     char linea[300];
@@ -20,7 +16,7 @@ jugador *array_jugador = NULL;
         linea[strcspn(linea, "\r\n")] = 0;
         if (strlen(linea) == 0) continue;
 
-        array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
+    array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
 
 
         char *token = strtok(linea, "-");
@@ -35,7 +31,7 @@ jugador *array_jugador = NULL;
         token = strtok(NULL, "-");
         if (token) strcpy(array_jugador[cont].Contrasena, token);
 
-        array_jugador[cont].inv = inv_create_empty_inventory();
+        array_jugador[cont].inv=inv_create_empty_inventory();
         token = strtok(NULL, "-");
         while (token != NULL){
             Item objeto_temporal;
@@ -58,11 +54,7 @@ jugador *array_jugador = NULL;
 
     void liberar_jugador(jugador *array_jugador, int total_leidos) {
     if (array_jugador != NULL) {
-        for (int i = 0; i < total_leidos; i++) {
-            for (int j = 0; j < array_jugador[i].inv.size; j++) {
-            }
-        }
-
+    
         free(array_jugador);
     }
 }

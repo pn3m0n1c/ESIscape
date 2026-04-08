@@ -1,5 +1,9 @@
-#ifndef PUZLES
-#define PUZLES
+#ifndef puzles
+#define puzles
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct{
     char id_puzle[4];
@@ -8,10 +12,16 @@ typedef struct{
     char tipo[20];
     char descrip[151];
     char sol[51];
+    int resuelto;
 }puzle;
 
-puzle* cargar_puzles(char path[], int *total_leidos);
+typedef struct{
+    puzle *unidad;
+    int total_leidos;
+}array_puz;
 
-void liberar_puzles(puzle *array_puzles, int total_leidos);
+array_puz* cargar_puzles(char path[]);
+
+void liberar_puzles(array_puz *);
 
 #endif
