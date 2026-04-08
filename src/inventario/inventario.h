@@ -22,7 +22,7 @@ typedef struct {
     int size;
 } Inventory;
 
-Inventory* inv_read_items(char path[]);
+Inventory* inv_load_items(char path[]);
 
 Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv);
 
