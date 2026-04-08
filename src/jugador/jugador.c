@@ -55,7 +55,7 @@ jugador *array_jugador = NULL;
     return array_jugador;
 }
 
-    void liberar_jugador(jugador *array_jugador, int total_leidos) {
+    void liberar_jugador(jugador *array_jugador) {
     if (array_jugador != NULL) {
     
         free(array_jugador);

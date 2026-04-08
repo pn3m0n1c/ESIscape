@@ -11,6 +11,6 @@ typedef struct{
 }jugador;
 
 jugador* cargar_jugador(char path[], int *total_leidos);
-void liberar_jugador(jugador *array_jugador, int total_leidos);
+void liberar_jugador(jugador *array_jugador);
 
 #endif
