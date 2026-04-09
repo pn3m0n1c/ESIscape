@@ -278,9 +278,10 @@ void ui_enter_sala(GameState *game_state){
     char sala_id_destino[3];
 
     printf("\n\nIntroduce el ID de la sala a la que quieres dirigirte (escribe \'n\' para salir de esta decision) > ");
+    
     ui_clean_buffer();
-
     fgets(sala_id_destino, 3, stdin);
+    
     if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
 
         sala_id_destino[strlen(sala_id_destino)-1] = '\0';
