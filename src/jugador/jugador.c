@@ -1,6 +1,5 @@
 #include"jugador.h"
-#include"inventario.h"
-#include"salas.h"
+
 /*Carga los jugadores y sus respectivos objetos*/
 jugador* cargar_jugador(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r"); 
