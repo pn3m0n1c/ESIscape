@@ -9,6 +9,7 @@
 #include "../salas/salas.h"
 #include "../inventario/inventario.h"
 #include "../partida/partida.h"
+#include "../puzles/puzles.h"
 
 //ENTRADAS DE MENÚ
 typedef struct{
@@ -87,6 +88,11 @@ void ui_show_filter_connections(Conns*, Salas*, char*);
 //POSTCONDICIÓN: Muestra en pantalla los elementos del inventario que esten en la localizacion especificada en location_filter
 void ui_show_filter_inventory(Inventory*, char*);
 
+//CABECERA: void ui_show_filter_puzles(array_puz* arr_puzles, char *location_filter)
+//PRECONDICIÓN: Array de puzles y location_filter preinicializados
+//POSTCONDICIÓN: Muestra en pantalla los puzles que esten en la localizacion especificada en location_filter
+void ui_show_filter_puzles(array_puz*, char*);
+
 //CABECERA: void ui_examine_sala(Sala* sala_to_examine, GameState *game_state)
 //PRECONDICIÓN: sala_to_examine y game_state preinicializado
 //POSTCONDICIÓN: muestra los objetos y las salidas disponibles en la sala especificada
@@ -111,5 +117,10 @@ void ui_show_player_inventory(GameState*);
 //PRECONDICIÓN: game_state preinicializado
 //POSTCONDICIÓN: se usa el objeto que el usuario pida si se puede aplicar. Si no se puede aplicar, se informa al jugador
 void ui_use_object(GameState*);
+
+//CABECERA: void ui_solve_puzzle(GameState* game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: le pide al usuario resolver uno de los puzles de la sala, y entonces, el jugador intentará resolverlo, y si acierta, se desbloquearan las salidas bloquedas que lo requirieran
+void ui_solve_puzzle(GameState*);
 
 #endif
