@@ -1,4 +1,6 @@
 #include"jugador.h"
+#include"inventario.h"
+#include"salas.h"
 //Carga los jugadores
 jugador* cargar_jugador(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r"); 
@@ -135,6 +137,24 @@ jugador *array_jugador = NULL;
         fclose(f);
     }
     
+    void estado_jugador(jugador *array_jugador, int total_leidos){
+        char comparador[3];
+        printf("Escribe el ID de tu jugador para ver los detalles de tu jugador: ");
+        fgets(comparador, sizeof(comparador), stdin);
+        comparador[strcspn(comparador, "\n")] = 0;
+        
+        int i;
+        for(i = 0; i < total_leidos; i++){
+            if(strcmp(comparador, array_jugador[i].Id_jugador) == 0){
+                printf("----DETALLES DE TU JUGADOR----");
+                printf("El nombre de tu usuario es: %s", array_jugador[i].Nomb_jugador);
+                printf("El nombre de tu jugador es: %s", array_jugador[i].Jugador);
+               // printf("Tienes una cantidad de %i objetos", ); //Preguntar en clase
+               // printf("Estas en la sala %s", ); //Preguntar en clase
+            }
+        }
+    }
+
     //Borra el array de jugadores y lo deja vacio
     void liberar_jugador(jugador *array_jugador) {
     if (array_jugador != NULL) {

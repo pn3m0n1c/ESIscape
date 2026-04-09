@@ -18,7 +18,8 @@ jugador* cargar_jugador(char path[], int *total_leidos);
 void liberar_jugador(jugador *array_jugador);
 int iniciar_sesion(jugador *array_jugador, int total_leidos);
 jugador *registrar_jugador(jugador *array_jugador, int *total_leidos);
-void guardar_jugador(jugador *array_jugador, char *path);
-void estado_jugador();
+void guardar_jugador(jugador *array_jugador, char *path, int total_leidos);
+void estado_jugador(jugador *array_jugador, int total_leidos);
+
 
 #endif
