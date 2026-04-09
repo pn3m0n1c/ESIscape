@@ -21,7 +21,6 @@ jugador* cargar_jugador(char path[], int *total_leidos) {
 
         array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
 
-
         char *token = strtok(linea, "-");
         if (token) strcpy(array_jugador[cont].Id_jugador, token);
 
@@ -90,7 +89,7 @@ jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
     jugador *reserva = realloc(array_jugador, (*total_leidos) * sizeof(jugador));
     (*total_leidos)++;
 
-    if (reserva == NULL) {
+    if(reserva == NULL){
         printf("ERROR: No se pudo reservar memoria para el nuevo jugador.\n");
         (*total_leidos)--; 
         return array_jugador; 
@@ -104,7 +103,7 @@ jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
     
         printf("Introduce un ID (2 numeros): ");
         fgets(array_jugador[num_usr].Id_jugador, sizeof(array_jugador[num_usr].Id_jugador), stdin);
-        array_jugador[num_usr].Id_jugador[strcspn(array_jugador[num_usr].Id_jugador, "\n")] = 0; 
+        array_jugador[num_usr].Id_jugador[strcspn(array_jugador[num_usr].Id_jugador, "\n")] = 0;
 
         printf("Introduce tu nombre: ");
         fgets(array_jugador[num_usr].Nomb_jugador, sizeof(array_jugador[num_usr].Nomb_jugador), stdin);
