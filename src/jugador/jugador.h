@@ -1,5 +1,9 @@
 #ifndef jugador_h
 #define jugador_h
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 #include "inventario.h"
 
 typedef struct{

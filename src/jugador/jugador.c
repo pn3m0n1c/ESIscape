@@ -1,6 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 #include"jugador.h"
 
 jugador* cargar_jugador(char path[], int *total_leidos) {
