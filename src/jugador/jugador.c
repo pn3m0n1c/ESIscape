@@ -140,7 +140,7 @@ jugador *array_jugador = NULL;
     }
     /*Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
     dentro de un blucle for el cual va buscando al jugador pasando por todos*/
-    void estado_jugador(jugador *array_jugador, int total_leidos){
+    /*void estado_jugador(jugador *array_jugador, int total_leidos){
         char comparador[3];
         printf("Escribe el ID de tu jugador para ver los detalles de tu jugador: ");
         fgets(comparador, sizeof(comparador), stdin);
@@ -156,7 +156,7 @@ jugador *array_jugador = NULL;
                // printf("Estas en la sala %s", ); //Preguntar en clase
             }
         }
-    }
+    }*/
 
     //Borra el array de jugadores y lo deja vacio
     void liberar_jugador(jugador *array_jugador) {
