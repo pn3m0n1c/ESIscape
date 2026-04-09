@@ -1,7 +1,7 @@
 #include"jugador.h"
 #include"inventario.h"
 #include"salas.h"
-//Carga los jugadores
+/*Carga los jugadores y sus respectivos objetos*/
 jugador* cargar_jugador(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r"); 
     if (f == NULL) {
@@ -53,7 +53,8 @@ jugador *array_jugador = NULL;
     *total_leidos = cont;
     return array_jugador;
 }
-    //Entra en un jugador ya creado anteriormente, devuelve un numero si existe, si no existe devuelve 0
+    /*Entra en un jugador ya creado anteriormente comparando el nombre de usuario y la contraseña, devuelve un numero si existe, 
+    si no existe devuelve 0*/
     int iniciar_sesion(jugador *array_jugador, int total_leidos){
         if(array_jugador == NULL){
             printf("No hay jugadores disponibles");
@@ -77,7 +78,8 @@ jugador *array_jugador = NULL;
         
     }    
 }
-    //Añade un nuevo jugador al array de jugadores
+    /*Añade jugadores a la string de jugadores, primero añade 1 jugador al total de leidos, luego se reserva memmoria para ese jugador 
+    luego se pone el array de jugadores a 0 igualandolo a reserva y se introducen los datos del nuevo jugador*/
     jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
     int num_usr = *total_leidos; 
     
@@ -120,7 +122,7 @@ jugador *array_jugador = NULL;
     
     }
 }
-    //Guarda jugadores dentro del array de jugadores dentro del fichero "Jugadores.txt"
+    /*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
     void guardar_jugador(jugador *array_jugador, char *path, int total_leidos){
         if(array_jugador == NULL){
             printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
@@ -136,7 +138,8 @@ jugador *array_jugador = NULL;
         }
         fclose(f);
     }
-    
+    /*Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
+    dentro de un blucle for el cual va buscando al jugador pasando por todos*/
     void estado_jugador(jugador *array_jugador, int total_leidos){
         char comparador[3];
         printf("Escribe el ID de tu jugador para ver los detalles de tu jugador: ");
