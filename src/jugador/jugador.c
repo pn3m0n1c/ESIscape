@@ -10,15 +10,16 @@ jugador* cargar_jugador(char path[], int *total_leidos) {
         return NULL;
     }
 
-jugador *array_jugador = NULL;
+    jugador *array_jugador = NULL;
     int cont = 0;
     char linea[300];
 
-    while (fgets(linea, sizeof(linea), f)) {
+    while (fgets(linea, sizeof(linea), f)){
+
         linea[strcspn(linea, "\r\n")] = 0;
         if (strlen(linea) == 0) continue;
 
-    array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
+        array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
 
 
         char *token = strtok(linea, "-");
@@ -44,8 +45,6 @@ jugador *array_jugador = NULL;
             token = strtok(NULL, "-");
         }
 
-
-
         cont++;
     }
 
@@ -55,43 +54,49 @@ jugador *array_jugador = NULL;
 }
     /*Entra en un jugador ya creado anteriormente comparando el nombre de usuario y la contraseña, devuelve un numero si existe, 
     si no existe devuelve 0*/
-    int iniciar_sesion(jugador *array_jugador, int total_leidos){
-        if(array_jugador == NULL){
-            printf("No hay jugadores disponibles");
-            return 0;
-        }else{
-            char nombre_usuario[11];
-            char contra_usuario[9];
+int iniciar_sesion(jugador *array_jugador, int total_leidos){
 
-            printf("Escribe el nombre de usuario: ");
-            fgets(nombre_usuario, sizeof(nombre_usuario), stdin);
+    if(array_jugador == NULL){
+        printf("No hay jugadores disponibles");
+        return 0;
+    }
+    
+    else{
+        char nombre_usuario[11];
+        char contra_usuario[9];
 
-            printf("Escribe la clave del usuario: ");
-            fgets(contra_usuario, sizeof(contra_usuario), stdin);
+        printf("Escribe el nombre de usuario: ");
+        fgets(nombre_usuario, sizeof(nombre_usuario), stdin);
 
-            int i;
-            for(i = 0; i < total_leidos; i++){
-                if (strcmp(array_jugador[i].Jugador, nombre_usuario) == 0 && strcmp(array_jugador[i].Contrasena, contra_usuario) == 0) {
+        printf("Escribe la clave del usuario: ");
+        fgets(contra_usuario, sizeof(contra_usuario), stdin);
+
+        int i;
+        for(i = 0; i < total_leidos; i++){
+            if (strcmp(array_jugador[i].Jugador, nombre_usuario) == 0 && strcmp(array_jugador[i].Contrasena, contra_usuario) == 0) {
             return i;
             }
         }
-        
     }    
 }
-    /*Añade jugadores a la string de jugadores, primero añade 1 jugador al total de leidos, luego se reserva memmoria para ese jugador 
-    luego se pone el array de jugadores a 0 igualandolo a reserva y se introducen los datos del nuevo jugador*/
-    jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
+/*Añade jugadores a la string de jugadores, primero añade 1 jugador al total de leidos, luego se reserva memmoria para ese jugador 
+luego se pone el array de jugadores a 0 igualandolo a reserva y se introducen los datos del nuevo jugador*/
+jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
+    
     int num_usr = *total_leidos; 
     
     (*total_leidos)++; 
 
     jugador *reserva = realloc(array_jugador, (*total_leidos) * sizeof(jugador));
-        (*total_leidos)++;
+    (*total_leidos)++;
+
     if (reserva == NULL) {
         printf("ERROR: No se pudo reservar memoria para el nuevo jugador.\n");
         (*total_leidos)--; 
         return array_jugador; 
-    }else{
+    }
+    
+    else{
 
         array_jugador = reserva; 
 
@@ -119,25 +124,25 @@ jugador *array_jugador = NULL;
 
         return array_jugador;
 
-    
     }
 }
-    /*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
-    void guardar_jugador(jugador *array_jugador, char *path, int total_leidos){
-        if(array_jugador == NULL){
-            printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
-        }
-        FILE *f = fopen(path, "w");
-        if(f == NULL){
-            printf("No se ha podido guardar el jugador o jugadores");
-        }
-        int i;
-        for(i = 0; i < total_leidos; i++){
-            fprintf(f, "%s-%s-%s-%s", array_jugador[i].Id_jugador, array_jugador[i].Nomb_jugador, array_jugador[i].Jugador, array_jugador[i].Contrasena);
-            fprintf(f, "\n");
-        }
-        fclose(f);
+
+/*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
+void guardar_jugador(jugador *array_jugador, char *path, int total_leidos){
+    if(array_jugador == NULL){
+        printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
     }
+    FILE *f = fopen(path, "w");
+    if(f == NULL){
+        printf("No se ha podido guardar el jugador o jugadores");
+    }
+    int i;
+    for(i = 0; i < total_leidos; i++){
+        fprintf(f, "%s-%s-%s-%s", array_jugador[i].Id_jugador, array_jugador[i].Nomb_jugador, array_jugador[i].Jugador, array_jugador[i].Contrasena);
+        fprintf(f, "\n");
+    }
+    fclose(f);
+}
     /*Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
     dentro de un blucle for el cual va buscando al jugador pasando por todos*/
     /*void estado_jugador(jugador *array_jugador, int total_leidos){
@@ -158,10 +163,9 @@ jugador *array_jugador = NULL;
         }
     }*/
 
-    //Borra el array de jugadores y lo deja vacio
-    void liberar_jugador(jugador *array_jugador) {
+//Borra el array de jugadores y lo deja vacio
+void liberar_jugador(jugador *array_jugador) {
     if (array_jugador != NULL) {
-    
         free(array_jugador);
     }
 }
