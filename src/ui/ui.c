@@ -34,6 +34,7 @@ int ui_menu_create(Menu menu_to_show){
     }
 
     //PEDIR UNA OPCIÓN AL USUARIO DENTRO DEL RANGO DE OPCIONES POSIBLES
+    
     do{
 
         printf("\nElige dentro del rango de opciones > ");
