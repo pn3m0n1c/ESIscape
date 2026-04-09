@@ -21,7 +21,6 @@ typedef struct{
 }array_puz;
 
 array_puz* cargar_puzles(char path[]);
-
 void liberar_puzles(array_puz *);
 
 #endif
