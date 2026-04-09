@@ -288,9 +288,9 @@ void ui_enter_sala(GameState *game_state){
     }
     
     else{
-
+    
         ui_clean_buffer();
-
+        
     }
 
     if(strcmp(sala_id_destino, "n") == 0 || strcmp(sala_id_destino, "") == 0){
@@ -615,8 +615,6 @@ void ui_solve_puzzle(GameState* game_state){
                 printf("%s\n\nIntroduce la solucion > ", puzzle_found->descrip);
 
                 char soluc[51];
-                
-                ui_clean_buffer();
                 fgets(soluc, 51, stdin);
                 if(soluc[strlen(soluc)-1] == '\n'){
 
