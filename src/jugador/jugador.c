@@ -1,5 +1,5 @@
 #include"jugador.h"
-
+//Carga los jugadores
 jugador* cargar_jugador(char path[], int *total_leidos) {
     FILE *f = fopen(path, "r"); 
     if (f == NULL) {
@@ -51,7 +51,7 @@ jugador *array_jugador = NULL;
     *total_leidos = cont;
     return array_jugador;
 }
-
+    //Entra en un jugador ya creado anteriormente, devuelve un numero si existe, si no existe devuelve 0
     int iniciar_sesion(jugador *array_jugador, int total_leidos){
         if(array_jugador == NULL){
             printf("No hay jugadores disponibles");
@@ -75,7 +75,7 @@ jugador *array_jugador = NULL;
         
     }    
 }
-
+    //Añade un nuevo jugador al array de jugadores
     jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
     int num_usr = *total_leidos; 
     
@@ -118,7 +118,7 @@ jugador *array_jugador = NULL;
     
     }
 }
-
+    //Guarda jugadores dentro del array de jugadores dentro del fichero "Jugadores.txt"
     void guardar_jugador(jugador *array_jugador, char *path, int total_leidos){
         if(array_jugador == NULL){
             printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
@@ -129,11 +129,13 @@ jugador *array_jugador = NULL;
         }
         int i;
         for(i = 0; i < total_leidos; i++){
-            //Falta escribir en el fichero
+            fprintf(f, "%s-%s-%s-%s", array_jugador[i].Id_jugador, array_jugador[i].Nomb_jugador, array_jugador[i].Jugador, array_jugador[i].Contrasena);
+            fprintf(f, "\n");
         }
+        fclose(f);
     }
     
-
+    //Borra el array de jugadores y lo deja vacio
     void liberar_jugador(jugador *array_jugador) {
     if (array_jugador != NULL) {
     
