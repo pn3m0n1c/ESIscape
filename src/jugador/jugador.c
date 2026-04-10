@@ -17,7 +17,7 @@ jugadores *cargar_jugadores(char path[]) {
 
         cargados_jugadores->arr_jugadores = NULL;
         int cont = 0;
-        char linea[300];
+        char linea[512];
 
         while (fgets(linea, sizeof(linea), f)){
 
@@ -39,6 +39,7 @@ jugadores *cargar_jugadores(char path[]) {
 
             token = strtok(NULL, "\0");
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Inventario_como_string, token);
+            else (cargados_jugadores->arr_jugadores)[cont].Inventario_como_string[0] = '\0';
 
             /*(cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
             token = strtok(NULL, "-");
@@ -103,7 +104,12 @@ void guardar_jugador(GameState *game_state, char *path){
         char player_id[3];
         snprintf(player_id, sizeof(player_id), "%02d", i+1);
 
-        fprintf(f, "%s-%s-%s-%s-%s", player_id, (game_state->players->arr_jugadores)[i].Nomb_jugador, (game_state->players->arr_jugadores)[i].Jugador, (game_state->players->arr_jugadores)[i].Contrasena, (game_state->players->arr_jugadores)[i].Inventario_como_string);
+        if(strlen((game_state->players->arr_jugadores)[i].Inventario_como_string) >= 1){
+            fprintf(f, "%s-%s-%s-%s-%s", player_id, (game_state->players->arr_jugadores)[i].Nomb_jugador, (game_state->players->arr_jugadores)[i].Jugador, (game_state->players->arr_jugadores)[i].Contrasena, (game_state->players->arr_jugadores)[i].Inventario_como_string);
+        }
+        else{
+            fprintf(f, "%s-%s-%s-%s", player_id, (game_state->players->arr_jugadores)[i].Nomb_jugador, (game_state->players->arr_jugadores)[i].Jugador, (game_state->players->arr_jugadores)[i].Contrasena);
+        }
     }
     fclose(f);
 }

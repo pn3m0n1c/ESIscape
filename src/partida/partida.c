@@ -136,26 +136,49 @@ void game_start(){
     GameState gamestate;
     gamestate.game_is_playing = 1;
 
-    gamestate.salas = salas_load_salas("./data/Salas.txt");
-    gamestate.conns = salas_load_conns("./data/Conexiones.txt");
-    gamestate.all_items = inv_load_items("./data/Objetos.txt");
-    gamestate.arr_puzles = cargar_puzles("./data/Puzles.txt");
     gamestate.players = cargar_jugadores("./data/Jugadores.txt");
+    gamestate.structs_already_loaded = 0; //PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
 
     ui_user_initial_menu(&gamestate);
 
+    while(1==1){
+
+        game_loop(&gamestate);
+
+    }
+    
+}
+
+void game_initial_struct_loading(GameState* game_state){
+
+    game_state->salas = salas_load_salas("./data/Salas.txt");
+    game_state->conns = salas_load_conns("./data/Conexiones.txt");
+    game_state->all_items = inv_load_items("./data/Objetos.txt");
+    game_state->arr_puzles = cargar_puzles("./data/Puzles.txt");
+
+    game_state->structs_already_loaded = 1;
+
+}
+
+void game_loop(GameState* game_state){
+
     switch(ui_main_menu()){
         case 0:
-            game_new(&gamestate);
+            game_initial_struct_loading(game_state);
+            game_new(game_state);
             break;
         case 1:
+            game_initial_struct_loading(game_state);
+
             //EN ESTE HUECO SE CARGARÍA LA PARTIDA
-            while(gamestate.game_is_playing){
-                game_hud(&gamestate);
+
+            while(game_state->game_is_playing){
+                game_hud(game_state);
             }
             break;
         case 2:
-            ui_exit_game();
+            ui_exit_game(game_state, 1);
             break;
     }
+
 }

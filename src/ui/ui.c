@@ -83,7 +83,34 @@ void ui_anykey_press(){
 
 }
 
-void ui_exit_game(){
+void ui_exit_game(GameState *game_state, int save_to_jugadores){
+
+    int obj_playersave_idx;
+
+    if(save_to_jugadores && game_state->structs_already_loaded){
+
+        strcpy(((game_state->player)->Inventario_como_string), "\0");
+
+        for(obj_playersave_idx = 0; obj_playersave_idx<((game_state->all_items)->size); obj_playersave_idx++){
+
+            if(strcmp(((game_state->all_items)->slot)[obj_playersave_idx].location, "Inventario") == 0){
+
+                strcat(((game_state->player)->Inventario_como_string), ((game_state->all_items)->slot)[obj_playersave_idx].id);
+                strcat(((game_state->player)->Inventario_como_string), "-");
+
+            }
+
+        }
+
+        if(((game_state->player)->Inventario_como_string)[strlen(((game_state->player)->Inventario_como_string))-1] == '-'){
+
+            ((game_state->player)->Inventario_como_string)[strlen(((game_state->player)->Inventario_como_string))-1] = '\0';
+
+        }
+
+        guardar_jugador(game_state, "./data/Jugadores.txt");
+
+    }
 
     printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero | 2026\n\n");
     exit(0);
@@ -170,13 +197,14 @@ void ui_user_initial_menu(GameState* game_state){
             }
 
             registrar_jugador(game_state, nombre_acceso, password, regis_nombrecompleto);
+            game_state->player = &((game_state->players)->arr_jugadores[(game_state->players)->total_leidos - 1]);
             guardar_jugador(game_state, "./data/Jugadores.txt");
 
         }
 
         else{
 
-            ui_exit_game();
+            ui_exit_game(game_state, 0);
 
         }
 
@@ -249,7 +277,7 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
             else{
 
-                ui_exit_game();
+                ui_exit_game(game_state, 1);
 
             }
 

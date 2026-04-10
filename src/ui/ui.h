@@ -58,10 +58,10 @@ int ui_confirmation();
 //POSTCONDICIÓN: Hace que el programa espera una entrada del teclado para poder visualizar información sin que pase sola
 void ui_anykey_press();
 
-//CABECERA: void ui_exit_game()
-//PRECONDICIÓN: 
-//POSTCONDICIÓN: Muestra los créditos y cierra el juego
-void ui_exit_game();
+//CABECERA: void ui_exit_game(GameState *game_state, int save_to_jugadores)
+//PRECONDICIÓN: game_state y save_to_jugadores preinicializados
+//POSTCONDICIÓN: Muestra los créditos y cierra el juego, guardando cuando save_to_jugadores esté a 1 los objetos y códigos poseídos
+void ui_exit_game(GameState*, int);
 
 //CABECERA: void ui_user_initial_menu(GameState* game_state)
 //PRECONDICIÓN: game_state preinicializado
