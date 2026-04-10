@@ -63,6 +63,11 @@ void ui_anykey_press();
 //POSTCONDICIÓN: Muestra los créditos y cierra el juego
 void ui_exit_game();
 
+//CABECERA: 
+//PRECONDICIÓN: 
+//POSTCONDICIÓN: 
+void ui_user_initial_menu(GameState*);
+
 //CABECERA: int ui_main_menu()
 //PRECONDICIÓN: 
 //POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.

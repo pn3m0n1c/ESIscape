@@ -8,14 +8,23 @@
 #include "../salas/salas.h"
 
 typedef struct{
+
     char Id_jugador[3];
     char Nomb_jugador[21];
     char Jugador[11];
     char Contrasena[9];
-    Inventory inv; 
-}jugador;
+    Inventory inv;
 
-jugador* cargar_jugador(char path[], int *total_leidos);
+} jugador;
+
+typedef struct{
+
+    jugador* arr_jugadores;
+    int total_leidos;
+
+} jugadores;
+
+jugadores *cargar_jugadores(char path[]);
 void liberar_jugador(jugador *array_jugador);
 int iniciar_sesion(jugador *array_jugador, int total_leidos);
 jugador *registrar_jugador(jugador *array_jugador, int *total_leidos);

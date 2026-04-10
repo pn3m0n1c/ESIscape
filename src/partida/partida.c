@@ -124,11 +124,6 @@ int game_hud(GameState *game_state){
 
 void game_new(GameState* gamestate){
 
-    gamestate->salas = salas_load_salas("./data/Salas.txt");
-    gamestate->conns = salas_load_conns("./data/Conexiones.txt");
-    gamestate->all_items = inv_load_items("./data/Objetos.txt");
-    gamestate->arr_puzles = cargar_puzles("./data/Puzles.txt");
-
     gamestate->current_sala = salas_get_sala_inicial(&(gamestate->salas));
     
     while(gamestate->game_is_playing){
@@ -137,14 +132,17 @@ void game_new(GameState* gamestate){
 }
 
 void game_start(){
+    
     GameState gamestate;
     gamestate.game_is_playing = 1;
 
-    switch(ui_user_initial_menu(&gamestate)){
+    gamestate.salas = salas_load_salas("./data/Salas.txt");
+    gamestate.conns = salas_load_conns("./data/Conexiones.txt");
+    gamestate.all_items = inv_load_items("./data/Objetos.txt");
+    gamestate.arr_puzles = cargar_puzles("./data/Puzles.txt");
+    gamestate.players = cargar_jugadores("./data/Jugadores.txt");
 
-        
-
-    }
+    ui_user_initial_menu(&gamestate);
 
     switch(ui_main_menu()){
         case 0:

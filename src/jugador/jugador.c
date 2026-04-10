@@ -1,54 +1,64 @@
 #include"jugador.h"
 
 /*Carga los jugadores y sus respectivos objetos*/
-jugador* cargar_jugador(char path[], int *total_leidos) {
+jugadores *cargar_jugadores(char path[]) {
+    
     FILE *f = fopen(path, "r"); 
+    
+    jugadores *cargados_jugadores = (jugadores*)malloc(sizeof(jugadores));
+
     if (f == NULL) {
         printf("ERROR: No se pudo abrir %s\n", path);
-        *total_leidos = 0;
+        cargados_jugadores->total_leidos = 0;
         return NULL;
     }
 
-    jugador *array_jugador = NULL;
-    int cont = 0;
-    char linea[300];
+    else{
 
-    while (fgets(linea, sizeof(linea), f)){
+        cargados_jugadores->arr_jugadores = NULL;
+        int cont = 0;
+        char linea[300];
 
-        linea[strcspn(linea, "\r\n")] = 0;
-        if (strlen(linea) == 0) continue;
+        while (fgets(linea, sizeof(linea), f)){
 
-        array_jugador = realloc(array_jugador, (cont + 1) * sizeof(jugador));
+            linea[strcspn(linea, "\r\n")] = 0;
+            if (strlen(linea) == 0) continue;
 
-        char *token = strtok(linea, "-");
-        if (token) strcpy(array_jugador[cont].Id_jugador, token);
+            (cargados_jugadores->arr_jugadores) = realloc((cargados_jugadores->arr_jugadores), (cont + 1) * sizeof(jugador));
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_jugador[cont].Nomb_jugador, token);
+            char *token = strtok(linea, "-");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Id_jugador, token);
 
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_jugador[cont].Jugador, token);
-
-        token = strtok(NULL, "-");
-        if (token) strcpy(array_jugador[cont].Contrasena, token);
-
-        array_jugador[cont].inv=inv_create_empty_inventory();
-        token = strtok(NULL, "-");
-        while (token != NULL){
-            Item objeto_temporal;
-            strcpy(objeto_temporal.id, token);
-            strcpy(objeto_temporal.location, "Inventario");
-            inv_add_item(objeto_temporal, &array_jugador[cont].inv);
-            
             token = strtok(NULL, "-");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Nomb_jugador, token);
+
+            token = strtok(NULL, "-");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Jugador, token);
+
+            token = strtok(NULL, "-");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Contrasena, token);
+
+            (cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
+            token = strtok(NULL, "-");
+            while (token != NULL){
+                Item objeto_temporal;
+                strcpy(objeto_temporal.id, token);
+                strcpy(objeto_temporal.location, "Inventario");
+                inv_add_item(objeto_temporal, &(cargados_jugadores->arr_jugadores)[cont].inv);
+                
+                token = strtok(NULL, "-");
+            }
+
+            cont++;
+
         }
 
-        cont++;
+        fclose(f);
+        (cargados_jugadores->total_leidos) = cont;
+        return cargados_jugadores;
+
     }
 
-    fclose(f);
-    *total_leidos = cont;
-    return array_jugador;
 }
     /*Entra en un jugador ya creado anteriormente comparando el nombre de usuario y la contraseña, devuelve un numero si existe, 
     si no existe devuelve 0*/
@@ -60,12 +70,13 @@ int iniciar_sesion(jugador *array_jugador, int total_leidos){
     }
     
     else{
+/*
         char nombre_usuario[11];
         char contra_usuario[9];
 
         printf("Escribe el nombre de usuario: ");
         fgets(nombre_usuario, sizeof(nombre_usuario), stdin);
-
+        
         printf("Escribe la clave del usuario: ");
         fgets(contra_usuario, sizeof(contra_usuario), stdin);
 
@@ -74,7 +85,7 @@ int iniciar_sesion(jugador *array_jugador, int total_leidos){
             if (strcmp(array_jugador[i].Jugador, nombre_usuario) == 0 && strcmp(array_jugador[i].Contrasena, contra_usuario) == 0) {
             return i;
             }
-        }
+        }*/
     }    
 }
 /*Añade jugadores a la string de jugadores, primero añade 1 jugador al total de leidos, luego se reserva memmoria para ese jugador 
@@ -86,7 +97,6 @@ jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
     (*total_leidos)++; 
 
     jugador *reserva = realloc(array_jugador, (*total_leidos) * sizeof(jugador));
-    (*total_leidos)++;
 
     if(reserva == NULL){
         printf("ERROR: No se pudo reservar memoria para el nuevo jugador.\n");
@@ -100,7 +110,7 @@ jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
 
         printf("\n----- REGISTRATE -----\n");
     
-        printf("Introduce un ID (2 numeros): ");
+        /*printf("Introduce un ID (2 numeros): ");
         fgets(array_jugador[num_usr].Id_jugador, sizeof(array_jugador[num_usr].Id_jugador), stdin);
         array_jugador[num_usr].Id_jugador[strcspn(array_jugador[num_usr].Id_jugador, "\n")] = 0;
 
@@ -118,7 +128,7 @@ jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
 
         array_jugador[num_usr].inv = inv_create_empty_inventory();
 
-        printf("\n¡Registro completado con exito! Bienvenido a ESI-ESCAPE.\n");
+        printf("\n¡Registro completado con exito! Bienvenido a ESI-ESCAPE.\n");*/
 
         return array_jugador;
 

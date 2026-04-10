@@ -89,9 +89,59 @@ void ui_exit_game(){
 
 }
 
-int ui_user_initial_menu(GameState* game_state){
+void ui_user_initial_menu(GameState* game_state){
 
+    char nombre_acceso[11];
+    char password[9];
+
+    ui_graphic_show_screen_separation();
+
+    printf(" - REGISTRO / INICIO DE SESION - \n\n");
+
+    printf("Introduce tu usuario > ");
+    fgets(nombre_acceso, 11, stdin);
+    if(nombre_acceso[strlen(nombre_acceso)-1] == '\n'){
+
+        nombre_acceso[strlen(nombre_acceso)-1] = '\0';
+
+    }
     
+    else{
+    
+        ui_clean_buffer();
+        
+    }
+
+    printf("Introduce tu contrasena > ");
+    fgets(password, 9, stdin);
+    if(password[strlen(password)-1] == '\n'){
+
+        password[strlen(password)-1] = '\0';
+
+    }
+    
+    else{
+    
+        ui_clean_buffer();
+        
+    }
+
+    //VEMOS SI EL JUGADOR YA ESTÁ REGISTRADO
+
+    int playeridx, encontrado = 0;
+
+    for(playeridx = 0; playeridx < game_state->players->total_leidos && !encontrado; playeridx++){
+
+        if(strcmp((game_state->players->arr_jugadores)[playeridx].Jugador, nombre_acceso) == 0 && strcmp((game_state->players->arr_jugadores)[playeridx].Contrasena, password) == 0){
+
+            encontrado = 1;
+            game_state->player = &((game_state->players->arr_jugadores)[playeridx]);
+
+        }
+
+    }
+
+    printf("\n\n%s\n\n", game_state->player->Jugador);
 
 }
 

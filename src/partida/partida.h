@@ -9,7 +9,8 @@
 //GAMESTATE
 typedef struct{
     int game_is_playing;
-    jugador player;
+    jugador *player;
+    jugadores *players;
     array_puz *arr_puzles;
     Salas salas;
     Sala* current_sala;
