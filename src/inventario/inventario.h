@@ -34,7 +34,7 @@ int inv_itemcmp(Item item_1, Item item_2);
 
 int inv_find_item(Item item, Inventory *inv);
 
-Item* inv_find_item_by_id(char wanted_id[4], Inventory *inv);
+Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv);
 
 int inv_write_items(FILE *file, Inventory *all_items);
 

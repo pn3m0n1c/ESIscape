@@ -67,6 +67,7 @@ int ui_confirmation(){
 
         printf("\n(S/N) > ");
         scanf(" %c", &answer_char);
+        getchar();
         answer_char = tolower(answer_char);
 
     }while(!(answer_char == 's' || answer_char == 'n'));
@@ -129,7 +130,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     //VEMOS SI EL JUGADOR YA ESTÁ REGISTRADO
 
-    int playeridx, encontrado = 0, contra_corr = 0;
+    int playeridx, encontrado = 0;
 
     for(playeridx = 0; playeridx < game_state->players->total_leidos; playeridx++){
 
@@ -154,8 +155,8 @@ void ui_user_initial_menu(GameState* game_state){
 
         if(ui_confirmation()){
 
-            printf("Introduce tu nombre completo > ");
-            fgets(regis_nombrecompleto, 9, stdin);
+            printf("\nIntroduce tu nombre completo > ");
+            fgets(regis_nombrecompleto, 21, stdin);
             if(regis_nombrecompleto[strlen(regis_nombrecompleto)-1] == '\n'){
 
                 regis_nombrecompleto[strlen(regis_nombrecompleto)-1] = '\0';
@@ -168,6 +169,9 @@ void ui_user_initial_menu(GameState* game_state){
                 
             }
 
+            registrar_jugador(game_state, nombre_acceso, password, regis_nombrecompleto);
+            guardar_jugador(game_state, "./data/Jugadores.txt");
+
         }
 
         else{
@@ -175,8 +179,6 @@ void ui_user_initial_menu(GameState* game_state){
             ui_exit_game();
 
         }
-
-        ui_clean_buffer();
 
     }
 

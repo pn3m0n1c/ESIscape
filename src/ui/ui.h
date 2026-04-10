@@ -63,9 +63,9 @@ void ui_anykey_press();
 //POSTCONDICIÓN: Muestra los créditos y cierra el juego
 void ui_exit_game();
 
-//CABECERA: 
-//PRECONDICIÓN: 
-//POSTCONDICIÓN: 
+//CABECERA: void ui_user_initial_menu(GameState* game_state)
+//PRECONDICIÓN: game_state preinicializado
+//POSTCONDICIÓN: Se le pide al usuario usuario y contraseña. Si se encuentran, se comienza con ese mismo jugador. Si no se encuentra un usuario con dicha contraseña, se ofrece hacer un registro con un nombre completo.
 void ui_user_initial_menu(GameState*);
 
 //CABECERA: int ui_main_menu()

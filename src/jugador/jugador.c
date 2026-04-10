@@ -1,5 +1,5 @@
+#include"../partida/partida.h"
 #include"jugador.h"
-
 /*Carga los jugadores y sus respectivos objetos*/
 jugadores *cargar_jugadores(char path[]) {
     
@@ -27,7 +27,6 @@ jugadores *cargar_jugadores(char path[]) {
             (cargados_jugadores->arr_jugadores) = realloc((cargados_jugadores->arr_jugadores), (cont + 1) * sizeof(jugador));
 
             char *token = strtok(linea, "-");
-            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Id_jugador, token);
 
             token = strtok(NULL, "-");
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Nomb_jugador, token);
@@ -38,7 +37,10 @@ jugadores *cargar_jugadores(char path[]) {
             token = strtok(NULL, "-");
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Contrasena, token);
 
-            (cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
+            token = strtok(NULL, "\0");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Inventario_como_string, token);
+
+            /*(cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
             token = strtok(NULL, "-");
             while (token != NULL){
                 Item objeto_temporal;
@@ -47,7 +49,7 @@ jugadores *cargar_jugadores(char path[]) {
                 inv_add_item(objeto_temporal, &(cargados_jugadores->arr_jugadores)[cont].inv);
                 
                 token = strtok(NULL, "-");
-            }
+            }*/
 
             cont++;
 
@@ -60,94 +62,48 @@ jugadores *cargar_jugadores(char path[]) {
     }
 
 }
-    /*Entra en un jugador ya creado anteriormente comparando el nombre de usuario y la contraseña, devuelve un numero si existe, 
-    si no existe devuelve 0*/
-int iniciar_sesion(jugador *array_jugador, int total_leidos){
 
-    if(array_jugador == NULL){
-        printf("No hay jugadores disponibles");
-        return 0;
-    }
+void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char *nom_completo){
     
-    else{
-/*
-        char nombre_usuario[11];
-        char contra_usuario[9];
+    game_state->players->arr_jugadores = realloc(game_state->players->arr_jugadores, (game_state->players->total_leidos + 1)*sizeof(jugador));
 
-        printf("Escribe el nombre de usuario: ");
-        fgets(nombre_usuario, sizeof(nombre_usuario), stdin);
-        
-        printf("Escribe la clave del usuario: ");
-        fgets(contra_usuario, sizeof(contra_usuario), stdin);
-
-        int i;
-        for(i = 0; i < total_leidos; i++){
-            if (strcmp(array_jugador[i].Jugador, nombre_usuario) == 0 && strcmp(array_jugador[i].Contrasena, contra_usuario) == 0) {
-            return i;
-            }
-        }*/
-    }    
-}
-/*Añade jugadores a la string de jugadores, primero añade 1 jugador al total de leidos, luego se reserva memmoria para ese jugador 
-luego se pone el array de jugadores a 0 igualandolo a reserva y se introducen los datos del nuevo jugador*/
-jugador *registrar_jugador(jugador *array_jugador, int *total_leidos){
-    
-    int num_usr = *total_leidos; 
-    
-    (*total_leidos)++; 
-
-    jugador *reserva = realloc(array_jugador, (*total_leidos) * sizeof(jugador));
-
-    if(reserva == NULL){
+    if(game_state->players->arr_jugadores == NULL){
         printf("ERROR: No se pudo reservar memoria para el nuevo jugador.\n");
-        (*total_leidos)--; 
-        return array_jugador; 
+        exit(1);
     }
     
     else{
 
-        array_jugador = reserva; 
+        game_state->players->total_leidos += 1;
 
-        printf("\n----- REGISTRATE -----\n");
-    
-        /*printf("Introduce un ID (2 numeros): ");
-        fgets(array_jugador[num_usr].Id_jugador, sizeof(array_jugador[num_usr].Id_jugador), stdin);
-        array_jugador[num_usr].Id_jugador[strcspn(array_jugador[num_usr].Id_jugador, "\n")] = 0;
-
-        printf("Introduce tu nombre: ");
-        fgets(array_jugador[num_usr].Nomb_jugador, sizeof(array_jugador[num_usr].Nomb_jugador), stdin);
-        array_jugador[num_usr].Nomb_jugador[strcspn(array_jugador[num_usr].Nomb_jugador, "\n")] = 0;
-
-        printf("Elige un nombre de usuario (max 10 letras): ");
-        fgets(array_jugador[num_usr].Jugador, sizeof(array_jugador[num_usr].Jugador), stdin);
-        array_jugador[num_usr].Jugador[strcspn(array_jugador[num_usr].Jugador, "\n")] = 0;
-
-        printf("Elige una contrasena (max 8 letras/numeros): ");
-        fgets(array_jugador[num_usr].Contrasena, sizeof(array_jugador[num_usr].Contrasena), stdin);
-        array_jugador[num_usr].Contrasena[strcspn(array_jugador[num_usr].Contrasena, "\n")] = 0;
-
-        array_jugador[num_usr].inv = inv_create_empty_inventory();
-
-        printf("\n¡Registro completado con exito! Bienvenido a ESI-ESCAPE.\n");*/
-
-        return array_jugador;
+        strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Jugador, nom);
+        strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Nomb_jugador, nom_completo);
+        strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Contrasena, contrasena);
+        strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Inventario_como_string, "\0");
 
     }
+
 }
 
 /*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
-void guardar_jugador(jugador *array_jugador, char *path, int total_leidos){
-    if(array_jugador == NULL){
+void guardar_jugador(GameState *game_state, char *path){
+    if((game_state->players->arr_jugadores) == NULL){
         printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
+        return;
     }
     FILE *f = fopen(path, "w");
     if(f == NULL){
         printf("No se ha podido guardar el jugador o jugadores");
+        exit(1);
     }
     int i;
-    for(i = 0; i < total_leidos; i++){
-        fprintf(f, "%s-%s-%s-%s", array_jugador[i].Id_jugador, array_jugador[i].Nomb_jugador, array_jugador[i].Jugador, array_jugador[i].Contrasena);
-        fprintf(f, "\n");
+    for(i = 0; i < game_state->players->total_leidos; i++){
+        if(i>0){ fprintf(f, "\n"); }
+        
+        char player_id[3];
+        snprintf(player_id, sizeof(player_id), "%02d", i+1);
+
+        fprintf(f, "%s-%s-%s-%s-%s", player_id, (game_state->players->arr_jugadores)[i].Nomb_jugador, (game_state->players->arr_jugadores)[i].Jugador, (game_state->players->arr_jugadores)[i].Contrasena, (game_state->players->arr_jugadores)[i].Inventario_como_string);
     }
     fclose(f);
 }

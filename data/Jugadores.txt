@@ -1,2 +1,2 @@
-01-Alumno ESI-alumno0001-pass1234
-02-Profesor MP-profesor02-admin_00-OB01
+01-Alumno ESI-alumno0001-pass1234-
+02-Profesor MP-profesor02-admin_00-

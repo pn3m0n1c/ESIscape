@@ -7,7 +7,7 @@
 #include "../jugador/jugador.h"
 
 //GAMESTATE
-typedef struct{
+typedef struct GameState{
     int game_is_playing;
     jugador *player;
     jugadores *players;

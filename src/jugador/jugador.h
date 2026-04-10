@@ -7,13 +7,14 @@
 #include "../inventario/inventario.h"
 #include "../salas/salas.h"
 
+typedef struct GameState GameState;
+
 typedef struct{
 
-    char Id_jugador[3];
     char Nomb_jugador[21];
     char Jugador[11];
     char Contrasena[9];
-    Inventory inv;
+    char Inventario_como_string[512];
 
 } jugador;
 
@@ -25,11 +26,12 @@ typedef struct{
 } jugadores;
 
 jugadores *cargar_jugadores(char path[]);
+
+void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char *nom_completo);
+void guardar_jugador(GameState *game_state, char *path);
+
 void liberar_jugador(jugador *array_jugador);
-int iniciar_sesion(jugador *array_jugador, int total_leidos);
-jugador *registrar_jugador(jugador *array_jugador, int *total_leidos);
-void guardar_jugador(jugador *array_jugador, char *path, int total_leidos);
-void estado_jugador(jugador *array_jugador, int total_leidos);
+
 
 
 #endif
