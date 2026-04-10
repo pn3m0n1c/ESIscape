@@ -150,12 +150,10 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
         case INICIAL:
             printf(" - Te encuentras en la sala inicial.");
-            ui_clean_buffer();
             ui_anykey_press();
             break;
         case NORMAL:
             printf(" - Te encuentras en una sala normal.");
-            ui_clean_buffer();
             ui_anykey_press();
             break;
         case SALIDA:
@@ -266,7 +264,6 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_show_filter_connections(&(game_state->conns), &(game_state->salas), sala_to_examine->sala_id);
 
-    ui_clean_buffer();
     ui_anykey_press();
 
 }
@@ -285,7 +282,6 @@ void ui_enter_sala(GameState *game_state){
 
     printf("\n\nIntroduce el ID de la sala a la que quieres dirigirte (escribe \'n\' para salir de esta decision) > ");
     
-    ui_clean_buffer();
     fgets(sala_id_destino, 3, stdin);
     
     if(sala_id_destino[strlen(sala_id_destino)-1] == '\n'){
@@ -326,7 +322,6 @@ void ui_enter_sala(GameState *game_state){
             if(!game_update_sala(game_state, salida_destino)){
 
                 printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s.", salida_destino.conn_id_cond);
-                ui_clean_buffer();
                 ui_anykey_press();
 
             }
@@ -334,7 +329,6 @@ void ui_enter_sala(GameState *game_state){
         else{
 
             printf("\n\nNO HAY NINGUNA SALIDA A ESA SALA, O NO EXISTE!");
-            ui_clean_buffer();
             ui_anykey_press();
 
         }
@@ -343,7 +337,7 @@ void ui_enter_sala(GameState *game_state){
 
 }
 
-void ui_grab_pick_object(GameState* game_state, int pick){
+void ui_pick_drop_object(GameState* game_state, int pick){
 
     ui_graphic_show_screen_separation();
 
@@ -370,8 +364,6 @@ void ui_grab_pick_object(GameState* game_state, int pick){
 
     if(pick) printf("\nIntroduce el ID del objeto que quieres agarrar (escribe \'n\' para salir de esta decision) > ");
     else printf("\nIntroduce el ID del objeto que quieres soltar (escribe \'n\' para salir de esta decision) > ");
-
-    ui_clean_buffer();
 
     fgets(id_object_to_pick, 5, stdin);
 
@@ -435,7 +427,6 @@ void ui_show_player_inventory(GameState* game_state){
 
     ui_show_filter_inventory(game_state->all_items, "Inventario");
 
-    ui_clean_buffer();
     ui_anykey_press();
 
 }
@@ -452,8 +443,6 @@ void ui_use_object(GameState* game_state){
     int skip_dothethings_object = 0;
 
     printf("\nIntroduce el ID del objeto que quieres usar (escribe \'n\' para salir de esta decision) > ");
-
-    ui_clean_buffer();
 
     fgets(id_object_to_use, 5, stdin);
 
@@ -547,8 +536,6 @@ void ui_solve_puzzle(GameState* game_state){
     int skip_dothethings_puzle = 0;
 
     printf("\nIntroduce el ID del puzle que quieres resolver (escribe \'n\' para salir de esta decision) > ");
-
-    ui_clean_buffer();
 
     fgets(id_puzzle_to_solve, 4, stdin);
 

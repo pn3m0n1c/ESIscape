@@ -90,11 +90,11 @@ int game_hud(GameState *game_state){
             break;
 
         case 3:
-            ui_grab_pick_object(game_state, 1);
+            ui_pick_drop_object(game_state, 1);
             break;
 
         case 4:
-            ui_grab_pick_object(game_state, 0);
+            ui_pick_drop_object(game_state, 0);
             break;
 
         case 5:
