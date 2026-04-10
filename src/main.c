@@ -4,7 +4,7 @@ int main(){
 
     while(1==1){
 
-        partida_game_start();
+        game_start();
 
     }
     

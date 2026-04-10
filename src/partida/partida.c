@@ -1,6 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "partida.h"
+#include "../ui/ui.h"
+#include "../inventario/inventario.h"
 
-int partida_game_loop_start_menu(GameState *game_state){
+int game_update_sala(GameState* game_state, Conn salida_destino){
+    if(salida_destino.conn_block){
+        return 0;
+    } else {
+        game_state->current_sala = salas_get_sala_from_id(salida_destino.conn_sala_to_id, &(game_state->salas));
+        return 1;
+    }
+}
+
+int game_hud(GameState *game_state){
 
     Menu menu_game_loop_start;
     int answer;
@@ -104,10 +118,12 @@ int partida_game_loop_start_menu(GameState *game_state){
     free(menu_game_loop_start.entries);
 
     return(answer);
-
 }
 
-void partida_game_start(){
+void game_new(GameState* gamestate){
+    gamestate->salas = salas_load_salas("./data/Salas.txt");
+    gamestate->conns = salas_load_conns("./data/Conexiones.txt");
+    gamestate->all_items = inv_load_items("./data/Objetos.txt");
 
     GameState game_state;
     game_state.game_is_playing = 1;
@@ -115,39 +131,32 @@ void partida_game_start(){
     //WE LOAD DATA FROM FILES
     game_state.salas = salas_load_salas("./data/Salas.txt");
     game_state.conns = salas_load_conns("./data/Conexiones.txt");
-    game_state.inventory = inv_read_items("./data/Objetos.txt");
+    game_state.all_items = inv_load_items("./data/Objetos.txt");
     game_state.arr_puzles = cargar_puzles("./data/Puzles.txt");
 
     game_state.current_sala = salas_get_sala_inicial(&game_state.salas);
     
-    switch(ui_main_menu()){
-
-        case 0:
-
-            //EN ESTE HUECO SE CREARÍA LA NUEVA PARTIDA
-
-            while(game_state.game_is_playing){
-                partida_game_loop_start_menu(&game_state);
-            }
-
-            break;
-
-        case 1:
-
-            //EN ESTE HUECO SE CARGARÍA LA PARTIDA
-
-            while(game_state.game_is_playing){
-                partida_game_loop_start_menu(&game_state);
-            }
-
-            break;
-
-        case 2:
-
-            ui_exit_game();
-
-            break;
-
+    while(gamestate->game_is_playing){
+        game_hud(gamestate);
     }
+}
 
+void game_start(){
+    GameState gamestate;
+    gamestate.game_is_playing = 1;
+
+    switch(ui_main_menu()){
+        case 0:
+            game_new(&gamestate);
+            break;
+        case 1:
+            //EN ESTE HUECO SE CARGARÍA LA PARTIDA
+            while(gamestate.game_is_playing){
+                game_hud(&gamestate);
+            }
+            break;
+        case 2:
+            ui_exit_game();
+            break;
+    }
 }

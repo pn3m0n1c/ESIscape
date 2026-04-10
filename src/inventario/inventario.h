@@ -1,5 +1,5 @@
-#ifndef INVENTARIO_H
-#define INVENTARIO_H
+#ifndef INVENTARIO
+#define INVENTARIO
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +22,7 @@ typedef struct {
     int size;
 } Inventory;
 
-Inventory* inv_read_items(char path[]);
+Inventory* inv_load_items(char path[]);
 
 Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv);
 
@@ -33,6 +33,10 @@ Inventory inv_create_empty_inventory();
 int inv_itemcmp(Item item_1, Item item_2);
 
 int inv_find_item(Item item, Inventory *inv);
+
+Item* inv_find_item_by_id(char wanted_id[4], Inventory *inv);
+
+int inv_write_items(FILE *file, Inventory *all_items);
 
 int inv_add_item(Item item, Inventory *inv);
 

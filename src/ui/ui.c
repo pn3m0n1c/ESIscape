@@ -255,7 +255,7 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     printf("OBJETOS EN LA SALA ACTUAL: #################\n\n");
 
-    ui_show_filter_inventory(game_state->inventory, sala_to_examine->sala_id);
+    ui_show_filter_inventory(game_state->all_items, sala_to_examine->sala_id);
     
     printf("\n\nSALIDAS DE LA SALA ACTUAL: #################\n\n");
 
@@ -318,19 +318,13 @@ void ui_enter_sala(GameState *game_state){
 
         if(salida_exists_here){
 
-            if(salida_destino.conn_block){
+            if(!game_update_sala(game_state, salida_destino)){
 
                 printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s.", salida_destino.conn_id_cond);
                 ui_clean_buffer();
                 ui_anykey_press();
 
             }
-            else{
-
-                game_state->current_sala = salas_get_sala_from_id(salida_destino.conn_sala_to_id, &(game_state->salas));
-
-            }
-
         }
         else{
 
@@ -363,7 +357,7 @@ void ui_grab_pick_object(GameState* game_state, int pick){
     if(pick) printf("OBJETOS EN LA SALA ACTUAL: #################\n\n");
     else printf("OBJETOS EN TU INVENTARIO: #################\n\n");
 
-    ui_show_filter_inventory(game_state->inventory, id_from);
+    ui_show_filter_inventory(game_state->all_items, id_from);
 
     char id_object_to_pick[5];
     Item *object_found;
@@ -396,7 +390,7 @@ void ui_grab_pick_object(GameState* game_state, int pick){
 
     if(!skip_dothethings_object){
 
-        object_found = inv_find_item_by_id(id_object_to_pick, game_state->inventory);
+        object_found = inv_find_item_by_id(id_object_to_pick, game_state->all_items);
 
         if(object_found == NULL){
 
@@ -434,7 +428,7 @@ void ui_show_player_inventory(GameState* game_state){
 
     printf("INVENTARIO: #################\n\n");
 
-    ui_show_filter_inventory(game_state->inventory, "Inventario");
+    ui_show_filter_inventory(game_state->all_items, "Inventario");
 
     ui_clean_buffer();
     ui_anykey_press();
@@ -446,7 +440,7 @@ void ui_use_object(GameState* game_state){
     ui_graphic_show_screen_separation();
 
     printf("OBJETOS EN TU INVENTARIO: #################\n\n");
-    ui_show_filter_inventory(game_state->inventory, "Inventario");
+    ui_show_filter_inventory(game_state->all_items, "Inventario");
 
     char id_object_to_use[5];
     Item *object_found;
@@ -478,7 +472,7 @@ void ui_use_object(GameState* game_state){
 
     if(!skip_dothethings_object){
 
-        object_found = inv_find_item_by_id(id_object_to_use, game_state->inventory);
+        object_found = inv_find_item_by_id(id_object_to_use, game_state->all_items);
 
         if(object_found == NULL){
 

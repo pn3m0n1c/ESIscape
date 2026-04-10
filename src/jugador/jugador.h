@@ -5,7 +5,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include "../inventario/inventario.h"
-#include"../salas/salas.h"
+#include "../salas/salas.h"
 
 typedef struct{
     char Id_jugador[3];

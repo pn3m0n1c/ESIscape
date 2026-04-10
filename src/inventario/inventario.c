@@ -12,25 +12,6 @@
     ui_show_filter_inventory(all_items); 
 */
 
-/* Recibe una línea, extrae sus componentes y devuelve el item "construido" */
-Item build_item(char line[]) {
-    Item item;
-
-    if(line[strlen(line)-1] == '\n'){
-
-        line[strlen(line)-1] = '\0';
-
-    }
-
-    strcpy(item.id, strtok(line, "-"));
-    strcpy(item.name, strtok(NULL, "-"));
-    strcpy(item.description, strtok(NULL, "-"));
-    strcpy(item.location, strtok(NULL, "-"));
-
-    return item;
-}
-
-/* Recibe un archivo y comprueba si puede abrirse */
 int check_file(FILE *file){
     if (file == NULL) {
         printf("Error al abrir el fichero\n");
@@ -40,10 +21,27 @@ int check_file(FILE *file){
     return 1;
 }
 
+/* Recibe una línea, extrae sus componentes y rellena item.
+ * Devuelve 1 si tuvo éxito, 0 si la línea está mal formada (faltan campos). */
+int build_item(char line[], Item *item) {
+    if(line[strlen(line)-1] == '\n'){
+        line[strlen(line)-1] = '\0';
+    }
+
+    char *tok;
+
+    tok = strtok(line, "-"); if(tok == NULL) return 0; strcpy(item->id, tok);
+    tok = strtok(NULL, "-"); if(tok == NULL) return 0; strcpy(item->name, tok);
+    tok = strtok(NULL, "-"); if(tok == NULL) return 0; strcpy(item->description, tok);
+    tok = strtok(NULL, "-"); if(tok == NULL) return 0; strcpy(item->location, tok);
+
+    return 1;
+}
+
 /* Lee los objetos del inventario del archivo correspondiente y devuelve un
  * "Inventario" con todos los objetos ya extraidos y organizados en forma 
  * de Item. */
-Inventory* inv_read_items(char path[]) {
+Inventory* inv_load_items(char path[]) {
     FILE *file = fopen(path, "r");
 
     if(!check_file(file)) return NULL;
@@ -62,7 +60,11 @@ Inventory* inv_read_items(char path[]) {
         );
 
         /*Añadelo e indica el nuevo tamaño*/
-        all_items->slot[i] = build_item(line);
+        if(!build_item(line, &all_items->slot[i])){
+            printf("Error: objeto mal formado en línea %d de Objetos.txt. El objeto NO se incluirá\n", i + 1);
+            all_items->slot = realloc(all_items->slot, i * sizeof(Item));
+            continue;
+        }
         all_items->size = i + 1;
 
         i++;
@@ -91,6 +93,8 @@ int inv_itemcmp(Item item_1, Item item_2){
  * Al devolver la posición creo que se le puede sacar mas 
  * provecho a esta función. */
 int inv_find_item(Item item, Inventory *inv){
+    int i;
+
     for (int i = 0; i < inv->size; i++) {
         if(inv_itemcmp(item, inv->slot[i]) == 0) return i;
     }
@@ -104,7 +108,9 @@ int inv_find_item(Item item, Inventory *inv){
 int inv_write_items(FILE *file, Inventory *all_items){
     if(file == NULL || all_items == NULL) return 0;
 
-    for(int i = 0; i < all_items->size; i++){
+    int i;
+
+    for(i = 0; i < all_items->size; i++){
         if(fprintf(file, "OBJETO: %s-%s\n",
             all_items->slot[i].id,
             all_items->slot[i].location) < 0) return 0;
@@ -116,10 +122,13 @@ int inv_write_items(FILE *file, Inventory *all_items){
 /* Busca un item en un inventario en base a su ID. Si lo encuentra devuelve
  * un puntero al Item. Si no lo encuentra, devuelve NULL. */
 Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
-    for (int i = 0; i < inv->size; i++) {
+    int i;
+
+    for (i = 0; i < inv->size; i++) {
         if (strcmp(inv->slot[i].id, wanted_id) == 0)
             return &inv->slot[i];
     }
+
     return NULL;
 }
 
