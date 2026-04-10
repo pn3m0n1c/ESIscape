@@ -121,10 +121,6 @@ int game_hud(GameState *game_state){
 }
 
 void game_new(GameState* gamestate){
-    gamestate->salas = salas_load_salas("./data/Salas.txt");
-    gamestate->conns = salas_load_conns("./data/Conexiones.txt");
-    gamestate->all_items = inv_load_items("./data/Objetos.txt");
-
     GameState game_state;
     game_state.game_is_playing = 1;
 
