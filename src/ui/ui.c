@@ -24,7 +24,8 @@ void ui_graphic_show_screen_separation(){
 
 int ui_menu_create(Menu menu_to_show){
 
-    int i, decision;
+    int i, k, is_number = 1, decision_to_number;
+    char decision[128];
 
     //MOSTRAR ENTRIES U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
@@ -38,20 +39,24 @@ int ui_menu_create(Menu menu_to_show){
     do{
 
         printf("\nElige dentro del rango de opciones > ");
-        scanf("%i", &decision);
-        decision--;
 
-    } while(!((decision >= 0) && (decision <= menu_to_show.number_of_entries-1)));
+        fgets(decision, 128, stdin);
+
+        decision_to_number = atoi(decision);
+        decision_to_number--;
+
+
+    } while(!((decision_to_number >= 0) && (decision_to_number <= menu_to_show.number_of_entries-1)));
     
     //EJECUTAR UNA ACCIÓN SI ÉSTA NO ES NULA
-    if(menu_to_show.entries[decision].action != NULL){
+    if(menu_to_show.entries[decision_to_number].action != NULL){
 
-        menu_to_show.entries[decision].action();
+        menu_to_show.entries[decision_to_number].action();
 
     }
 
     //DEVOLVER EL ÍNDICE DE LA DECISIÓN TOMADA
-    return decision;
+    return decision_to_number;
 
 }
 
