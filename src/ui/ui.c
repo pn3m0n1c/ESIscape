@@ -93,6 +93,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     char nombre_acceso[11];
     char password[9];
+    char regis_nombrecompleto[21];
 
     ui_graphic_show_screen_separation();
 
@@ -128,9 +129,9 @@ void ui_user_initial_menu(GameState* game_state){
 
     //VEMOS SI EL JUGADOR YA ESTÁ REGISTRADO
 
-    int playeridx, encontrado = 0;
+    int playeridx, encontrado = 0, contra_corr = 0;
 
-    for(playeridx = 0; playeridx < game_state->players->total_leidos && !encontrado; playeridx++){
+    for(playeridx = 0; playeridx < game_state->players->total_leidos; playeridx++){
 
         if(strcmp((game_state->players->arr_jugadores)[playeridx].Jugador, nombre_acceso) == 0 && strcmp((game_state->players->arr_jugadores)[playeridx].Contrasena, password) == 0){
 
@@ -141,7 +142,45 @@ void ui_user_initial_menu(GameState* game_state){
 
     }
 
-    printf("\n\n%s\n\n", game_state->player->Jugador);
+    if(encontrado){
+
+        printf("\nJugador con contrasena ENCONTRADO!!");
+
+    }
+
+    else{
+
+        printf("\nJugador NO ENCONTRADO!!!\n\nTe quieres registrar?");
+
+        if(ui_confirmation()){
+
+            printf("Introduce tu nombre completo > ");
+            fgets(regis_nombrecompleto, 9, stdin);
+            if(regis_nombrecompleto[strlen(regis_nombrecompleto)-1] == '\n'){
+
+                regis_nombrecompleto[strlen(regis_nombrecompleto)-1] = '\0';
+
+            }
+            
+            else{
+            
+                ui_clean_buffer();
+                
+            }
+
+        }
+
+        else{
+
+            ui_exit_game();
+
+        }
+
+        ui_clean_buffer();
+
+    }
+
+    printf("\nTe damos la bienvenida a:\n");
 
 }
 
