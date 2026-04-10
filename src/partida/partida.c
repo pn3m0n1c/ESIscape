@@ -75,7 +75,9 @@ int game_hud(GameState *game_state){
     ui_graphic_show_screen_separation();
     printf("\nSala: %s\n\n", game_state->current_sala->sala_name);
 
-    switch(ui_menu_create(menu_game_loop_start)){
+    answer = ui_menu_create(menu_game_loop_start);
+
+    switch(answer){
 
         case 0:
             ui_describe_sala(game_state->current_sala, game_state);
@@ -137,6 +139,12 @@ void game_new(GameState* gamestate){
 void game_start(){
     GameState gamestate;
     gamestate.game_is_playing = 1;
+
+    switch(ui_user_initial_menu(&gamestate)){
+
+        
+
+    }
 
     switch(ui_main_menu()){
         case 0:

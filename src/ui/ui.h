@@ -68,11 +68,6 @@ void ui_exit_game();
 //POSTCONDICIÓN: Llama y muestra el main menu, llamando a las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
 int ui_main_menu();
 
-//CABECERA: void ui_ask_for_player_info()
-//PRECONDICIÓN:
-//POSTCONDICIÓN: Lee la información del jugador, y posteriormente llama a la función de creado de jugadores de su módulo correspondiente
-void ui_ask_for_player_info();
-
 //CABECERA: void ui_describe_sala(Sala* sala_to_describe, Gamestate *game_state)
 //PRECONDICIÓN: sala_to_describe y game_state preinicializado
 //POSTCONDICIÓN: Describe la sala especificada por el argumento. Si se trata de la sala final, se da la enhorabuena al jugador, y se le pregunta si quiere volver al menu principal

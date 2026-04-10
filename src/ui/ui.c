@@ -89,6 +89,12 @@ void ui_exit_game(){
 
 }
 
+int ui_user_initial_menu(GameState* game_state){
+
+    
+
+}
+
 int ui_main_menu(){
 
     Menu menu_start;
@@ -120,23 +126,6 @@ int ui_main_menu(){
 
     return(answer);
 
-}
-
-void ui_ask_for_player_info(){
-
-    ui_graphic_show_screen_separation();
-
-    char InfoPlayer_FullName[21];
-    char InfoPlayer_AccessName[11];
-    char InfoPlayer_Password[9];
-
-    printf("Introduce el nombre completo para el jugador: ");
-    fgets(InfoPlayer_FullName, 21, stdin);
-    printf("Introduce el nombre de acceso para el jugador: ");
-    fgets(InfoPlayer_AccessName, 11, stdin);
-    printf("Introduce una contrasena para el jugador: ");
-    fgets(InfoPlayer_Password, 9, stdin);
-    
 }
 
 void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
