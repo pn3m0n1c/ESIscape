@@ -102,6 +102,8 @@ Salas salas_load_salas(char *file_path){
 
                 loaded_salas.salas[loaded_salas.number_of_salas-1] = sala_currentlyreading;
 
+                //printf("\n%s\n%s\n%s\n%i\n", sala_currentlyreading.sala_id, sala_currentlyreading.sala_name, sala_currentlyreading.sala_desc, sala_currentlyreading.sala_type);
+
             }
 
         }
