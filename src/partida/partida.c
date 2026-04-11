@@ -36,25 +36,61 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
     }
 }
 
+int game_overwrite(GameState *gamestate, char path[100], int line){
+    FILE *file_overw = fopen(path, "r+");
+
+    fclose(file_overw);
+    return 0;
+}
+
+
+int game_write(GameState *gamestate, char path[100]){
+
+    // Mínima salvaguarda para evitar crasheos.
+    if(gamestate->player == NULL || gamestate->current_sala == NULL){
+        printf("Error: no hay partida activa para guardar\n");
+        ui_anykey_press();
+        return 0;
+    }
+
+    FILE *savegame = fopen(path, "a");
+    int i;
+    
+    fprintf(savegame, "\n\nJUGADOR: %s\n", gamestate->player->id);
+    fprintf(savegame, "SALA: %s\n", gamestate->current_sala->sala_id);
+    inv_write_items(savegame, gamestate->all_items);
+    for(i = 0; i < gamestate->conns.number_of_conns; i++){
+        Conn c = gamestate->conns.conns[i];
+        fprintf(savegame, "CONEXION: %s-%s\n", c.conn_id, c.conn_block ? "Bloqueada" : "Activa");
+    }
+    for(i = 0; i < gamestate->arr_puzles->total_leidos; i++){
+        puzle p = gamestate->arr_puzles->unidad[i];
+        fprintf(savegame, "PUZLE: %s-%s\n", p.id_puzle, p.resuelto ? "Resuelto" : "Pendiente");
+    }
+
+    fclose(savegame);
+    return 1;
+}
+
 /*Recibe un gamestate y un archivo que va a escanear. Si encuentra el id del jugador 
  * que está intentando guardar la partida devolverá 1, significando que ese jugador tiene
  * una partida guardada. De lo contrario, devolverá 0. */
-int game_save_exists(GameState *gamestate, FILE *file){
-    puts("Comprobando si existe la partida");
-    ui_anykey_press();
-    char line[100];
+int save_exists(GameState *gamestate, FILE *file){
+    int line_number = 0;
+    char line_content[100];
     char current_id[3];
 
     game_print_debug(gamestate);
 
-    while(fgets(line, 100, file) != NULL){
+    while(fgets(line_content, 100, file) != NULL){
         current_id[0] = '\0';
+        line_number++;
         
         // Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
-        sscanf(line, "JUGADOR: %s", current_id);
+        sscanf(line_content, "JUGADOR: %s", current_id);
 
         if(strcmp(current_id, gamestate->player->id) == 0){
-            return 1;
+            return line_number;
         }
     }
 
@@ -62,25 +98,38 @@ int game_save_exists(GameState *gamestate, FILE *file){
 }
 
 
-int game_save(GameState* gamestate, char path[200]){
+int game_save(GameState* gamestate, char path[100]){
     FILE *file = fopen(path, "r");
 
     if(file == NULL) {
         printf("Error, no se ha podido abrir %s", path);
         ui_anykey_press();
         return 0;
-    }  
-
-    if(game_save_exists(gamestate, file) == 1){
-        if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
-            puts("Aqui se sobreescribe la partida");
-        }
     }
-    
-    // Si no existe crea una nueva entrada con los datos
-    printf("%s", "No existe partida guardada");
+
+    int save_line = save_exists(gamestate, file);
 
     fclose(file);
+
+    if(save_line > 0){
+        if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
+            /* if(game_overwrite(gamestate, path, save_line) == 1){
+                puts("¡Partida sobreescrita con éxito!");
+            }; */
+            puts("Sobreescribir está pendiente...");
+            ui_anykey_press();
+        }
+
+        return 1;
+    } else {
+        // Si no existe crea una nueva entrada con los datos
+        puts("No existe partida guardada. Guardando partida...");
+        if(game_write(gamestate, path) == 1 ){
+            puts("¡Partida guardada con éxito!");
+            ui_anykey_press();
+        };
+    }
+
     return 0;
 }
 
