@@ -2,6 +2,31 @@
 #include "../ui/ui.h"
 
 
+void game_print_debug(GameState *gs) {
+    printf("=== GAMESTATE DEBUG ===\n");
+    printf("game_is_playing: %d\n", gs->game_is_playing);
+    printf("structs_already_loaded: %d\n", gs->structs_already_loaded);
+
+    if (gs->player) {
+        printf("player->id: %s\n", gs->player->id);
+        printf("player->Jugador: %s\n", gs->player->Jugador);
+        printf("player->Nomb_jugador: %s\n", gs->player->Nomb_jugador);
+        printf("player->Inventario_como_string: %s\n", gs->player->Inventario_como_string);
+    } else {
+        printf("player: NULL\n");
+    }
+
+    if (gs->current_sala) {
+        printf("current_sala->sala_id: %s\n", gs->current_sala->sala_id);
+        printf("current_sala->sala_nombre: %s\n", gs->current_sala->sala_name);
+    } else {
+        printf("current_sala: NULL\n");
+    }
+
+    printf("total jugadores cargados: %d\n", gs->players ? gs->players->total_leidos : -1);
+    printf("=======================\n");
+}
+
 int game_update_sala(GameState* game_state, Conn salida_destino){
     if(salida_destino.conn_block){
         return 0;
@@ -11,52 +36,51 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
     }
 }
 
-int game_write(GameState *gamestate){
-    FILE *f = fopen("./data/Partida.txt", "w");
-    if(f == NULL) return 0;
+/*Recibe un gamestate y un archivo que va a escanear. Si encuentra el id del jugador 
+ * que está intentando guardar la partida devolverá 1, significando que ese jugador tiene
+ * una partida guardada. De lo contrario, devolverá 0. */
+int game_save_exists(GameState *gamestate, FILE *file){
+    puts("Comprobando si existe la partida");
+    ui_anykey_press();
+    char line[100];
+    char current_id[3];
 
-    // JUGADOR: id
-    fprintf(f, "JUGADOR: %s\n", gamestate->player.Id_jugador);
+    game_print_debug(gamestate);
 
-    // SALA: id  
-    fprintf(f, "SALA: %s\n", gamestate->current_sala->sala_id);
+    while(fgets(line, 100, file) != NULL){
+        current_id[0] = '\0';
+        
+        // Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
+        sscanf(line, "JUGADOR: %s", current_id);
 
-    // OBJETO: OB01-Inventario  → ya existe esta función
-    inv_write_items(f, gamestate->all_items);
-
-    // CONEXIÓN: C07-Activa  → no hay función, hay que escribirlo aquí
-    int i;
-    for(i = 0; i < gamestate->conns.number_of_conns; i++){
-        Conn c = gamestate->conns.conns[i];
-        fprintf(f, "CONEXIÓN: %s-%s\n", c.conn_id, c.conn_block ? "Bloqueada" : "Activa");
+        if(strcmp(current_id, gamestate->player->id) == 0){
+            return 1;
+        }
     }
 
-    // PUZLE: P01-Resuelto  → tampoco hay función
-    for(i = 0; i < gamestate->arr_puzles->total_leidos; i++){
-        puzle p = gamestate->arr_puzles->unidad[i];
-        fprintf(f, "PUZLE: %s-%s\n", p.id_puzle, p.resuelto ? "Resuelto" : "Pendiente");
-    }
-
-    fclose(f);
-    return 1;
+    return 0;
 }
 
-int game_save(GameState* gamestate){
-    FILE *f = fopen("./data/Partida.txt", "w");
-    if(f == NULL) return 0;
 
-    // Compruebo si el jugador que guarda la partida existe
-    if(player_exists(gamestate->player.Id_jugador, gamestate->all_players)){
-        // Si existe, sobreescribe la partida pero informa antes
-        if(ui_confirmation("Ya existe una partida guardada, ¿Sobreescribir?")){
-            // sobreescribir
+int game_save(GameState* gamestate, char path[200]){
+    FILE *file = fopen(path, "r");
 
+    if(file == NULL) {
+        printf("Error, no se ha podido abrir %s", path);
+        ui_anykey_press();
+        return 0;
+    }  
+
+    if(game_save_exists(gamestate, file) == 1){
+        if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
+            puts("Aqui se sobreescribe la partida");
         }
     }
     
     // Si no existe crea una nueva entrada con los datos
+    printf("%s", "No existe partida guardada");
 
-
+    fclose(file);
     return 0;
 }
 
@@ -156,6 +180,10 @@ int game_hud(GameState *game_state){
         case 7:
             ui_solve_puzzle(game_state);
             break;
+        
+        case 8:
+            game_save(game_state, "./data/Partida.txt");
+            break;
             
         case 9:
             game_state->game_is_playing = 0;
@@ -167,8 +195,6 @@ int game_hud(GameState *game_state){
 
     return(answer);
 }
-
-
 
 void game_new(GameState* gamestate){
 
