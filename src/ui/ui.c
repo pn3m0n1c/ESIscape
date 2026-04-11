@@ -1,5 +1,4 @@
 #include "ui.h"
-#include <cstdio>
 
 void ui_clean_buffer(){
 
