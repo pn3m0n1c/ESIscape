@@ -1,4 +1,5 @@
 #include "ui.h"
+#include <cstdio>
 
 void ui_clean_buffer(){
 
@@ -60,9 +61,12 @@ int ui_menu_create(Menu menu_to_show){
 
 }
 
-int ui_confirmation(){
+int ui_confirmation(char text[200]){
 
     char answer_char;
+
+    printf("%s", text);
+    
     do{
 
         printf("\n(S/N) > ");

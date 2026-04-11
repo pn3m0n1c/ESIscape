@@ -1,6 +1,9 @@
 #ifndef PARTIDA
 #define PARTIDA
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../salas/salas.h"
 #include "../inventario/inventario.h"
 #include "../puzles/puzles.h"
@@ -19,11 +22,14 @@ typedef struct GameState{
     Conns conns;
 } GameState;
 
-//CABECERA: int partida_game_loop_start_menu(GameState *game_state)
+//CABECERA: int game_hud(GameState *game_state)
 //PRECONDICIÓN: game_state preinicializado
-//POSTCONDICIÓN: Llama y muestra el menu de comienzo del bucle de juego, y ejecuta las acciones correspondientes si las hay, y devolviendo el índice del elemento elegido.
+//POSTCONDICIÓN: Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
 int game_hud(GameState*);
 
+//CABECERA: int game_update_sala(GameState *game_state, Conn salida_destino)
+//PRECONDICIÓN: game_state preinicializado, salida_destino es una conexión válida
+//POSTCONDICIÓN: Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
 int game_update_sala(GameState* game_state, Conn salida_destino);
 
 //CABECERA: void game_start()

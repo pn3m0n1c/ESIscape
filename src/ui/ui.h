@@ -51,7 +51,7 @@ int ui_menu_create(Menu);
 //CABECERA: int ui_confirmation()
 //PRECONDICIÓN:
 //POSTCONDICIÓN: Devuelve 1 si el usuario introduce S o s, y 0 si el usuario introduce N o n. Repetirá la solicitud hasta obtener una respuesta válida.
-int ui_confirmation();
+int ui_confirmation(char text[200]);
 
 //CABECERA: void ui_anykey_press()
 //PRECONDICIÓN:

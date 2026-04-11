@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "partida.h"
 #include "../ui/ui.h"
-#include "../inventario/inventario.h"
+
 
 int game_update_sala(GameState* game_state, Conn salida_destino){
     if(salida_destino.conn_block){
@@ -12,6 +9,55 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
         game_state->current_sala = salas_get_sala_from_id(salida_destino.conn_sala_to_id, &(game_state->salas));
         return 1;
     }
+}
+
+int game_write(GameState *gamestate){
+    FILE *f = fopen("./data/Partida.txt", "w");
+    if(f == NULL) return 0;
+
+    // JUGADOR: id
+    fprintf(f, "JUGADOR: %s\n", gamestate->player.Id_jugador);
+
+    // SALA: id  
+    fprintf(f, "SALA: %s\n", gamestate->current_sala->sala_id);
+
+    // OBJETO: OB01-Inventario  → ya existe esta función
+    inv_write_items(f, gamestate->all_items);
+
+    // CONEXIÓN: C07-Activa  → no hay función, hay que escribirlo aquí
+    int i;
+    for(i = 0; i < gamestate->conns.number_of_conns; i++){
+        Conn c = gamestate->conns.conns[i];
+        fprintf(f, "CONEXIÓN: %s-%s\n", c.conn_id, c.conn_block ? "Bloqueada" : "Activa");
+    }
+
+    // PUZLE: P01-Resuelto  → tampoco hay función
+    for(i = 0; i < gamestate->arr_puzles->total_leidos; i++){
+        puzle p = gamestate->arr_puzles->unidad[i];
+        fprintf(f, "PUZLE: %s-%s\n", p.id_puzle, p.resuelto ? "Resuelto" : "Pendiente");
+    }
+
+    fclose(f);
+    return 1;
+}
+
+int game_save(GameState* gamestate){
+    FILE *f = fopen("./data/Partida.txt", "w");
+    if(f == NULL) return 0;
+
+    // Compruebo si el jugador que guarda la partida existe
+    if(player_exists(gamestate->player.Id_jugador, gamestate->all_players)){
+        // Si existe, sobreescribe la partida pero informa antes
+        if(ui_confirmation("Ya existe una partida guardada, ¿Sobreescribir?")){
+            // sobreescribir
+
+        }
+    }
+    
+    // Si no existe crea una nueva entrada con los datos
+
+
+    return 0;
 }
 
 int game_hud(GameState *game_state){
@@ -121,6 +167,8 @@ int game_hud(GameState *game_state){
 
     return(answer);
 }
+
+
 
 void game_new(GameState* gamestate){
 
