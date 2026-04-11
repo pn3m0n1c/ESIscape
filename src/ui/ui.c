@@ -183,9 +183,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     else{
 
-        printf("\nJugador NO ENCONTRADO!!!\n\nTe quieres registrar?");
-
-        if(ui_confirmation()){
+        if(ui_confirmation("\nJugador NO ENCONTRADO!!!\n\nTe quieres registrar?")){
 
             printf("\nIntroduce tu nombre completo > ");
             fgets(regis_nombrecompleto, 21, stdin);
@@ -272,9 +270,8 @@ void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
         case SALIDA:
             printf("\n##     ## ####  ######  ########  #######  ########  ####    ###    #### \n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##    ## ##   #### \n##     ##  ##  ##          ##    ##     ## ##     ##  ##   ##   ##  #### \n##     ##  ##  ##          ##    ##     ## ########   ##  ##     ##  ##  \n ##   ##   ##  ##          ##    ##     ## ##   ##    ##  #########      \n  ## ##    ##  ##    ##    ##    ##     ## ##    ##   ##  ##     ## #### \n   ###    ####  ######     ##     #######  ##     ## #### ##     ## #### ");
             printf("\n\nHas completado ESI-Escape!!!");
-            printf("\nQuieres regresar al menu principal?");
             
-            if(ui_confirmation()){
+            if(ui_confirmation("¿Quieres regresar al menu principal?")){
 
                 game_state->game_is_playing = 0;
 
