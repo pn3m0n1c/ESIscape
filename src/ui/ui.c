@@ -119,7 +119,7 @@ void ui_exit_game(GameState *game_state, int save_to_jugadores){
 
 void ui_user_initial_menu(GameState* game_state){
 
-    printf("\x1B[2J\x1B[H"); //ANSI Escape Code para vaciar la pantalla
+    //printf("\x1B[2J\x1B[H"); //ANSI Escape Code para vaciar la pantalla
 
     char nombre_acceso[11];
     char password[9];
