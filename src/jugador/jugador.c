@@ -27,6 +27,7 @@ jugadores *cargar_jugadores(char path[]) {
             (cargados_jugadores->arr_jugadores) = realloc((cargados_jugadores->arr_jugadores), (cont + 1) * sizeof(jugador));
 
             char *token = strtok(linea, "-");
+            if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].id, token);
 
             token = strtok(NULL, "-");
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Nomb_jugador, token);
@@ -76,7 +77,8 @@ void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char 
     else{
 
         game_state->players->total_leidos += 1;
-
+        // EL ID del jugador se calcula en este punto
+        snprintf((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].id, 3, "%02d", game_state->players->total_leidos);
         strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Jugador, nom);
         strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Nomb_jugador, nom_completo);
         strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Contrasena, contrasena);
@@ -103,6 +105,7 @@ void guardar_jugador(GameState *game_state, char *path){
         
         char player_id[3];
         snprintf(player_id, sizeof(player_id), "%02d", i+1);
+        strcpy((game_state->players->arr_jugadores)[i].id, player_id);
 
         if(strlen((game_state->players->arr_jugadores)[i].Inventario_como_string) >= 1){
             fprintf(f, "%s-%s-%s-%s-%s", player_id, (game_state->players->arr_jugadores)[i].Nomb_jugador, (game_state->players->arr_jugadores)[i].Jugador, (game_state->players->arr_jugadores)[i].Contrasena, (game_state->players->arr_jugadores)[i].Inventario_como_string);
@@ -132,6 +135,18 @@ void guardar_jugador(GameState *game_state, char *path){
             }
         }
     }*/
+
+jugador* encontrar_jugador(char name[21], char pass[9], jugadores* all_players){
+    int i;
+
+    for (i = 0; i < all_players->total_leidos; i++) {
+        if (strcmp(all_players->arr_jugadores[i].Nomb_jugador, name) == 0 
+            && strcmp(all_players->arr_jugadores[i].Contrasena, pass) == 0)
+            return &all_players->arr_jugadores[i];
+    }
+
+    return 0;
+}
 
 //Borra el array de jugadores y lo deja vacio
 void liberar_jugador(jugador *array_jugador) {
