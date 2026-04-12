@@ -1,6 +1,6 @@
 #include "puzles.h"
 
-array_puz* puzzles_loadpuzzles(char path[]){
+array_puz* puzzle_loadpuzzles(char path[]){
     
     FILE *f = fopen(path, "r");
     if (f == NULL) {
