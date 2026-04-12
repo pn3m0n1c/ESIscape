@@ -1,7 +1,6 @@
 #include "partida.h"
 #include "../ui/ui.h"
 
-
 void game_print_debug(GameState *gs) {
     printf("=== GAMESTATE DEBUG ===\n");
     printf("game_is_playing: %d\n", gs->game_is_playing);
@@ -36,14 +35,6 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
     }
 }
 
-int game_overwrite(GameState *gamestate, char path[100], int line){
-    FILE *file_overw = fopen(path, "r+");
-
-    fclose(file_overw);
-    return 0;
-}
-
-
 int game_write(GameState *gamestate, char path[100]){
 
     //! Mínima salvaguarda para evitar crasheos.
@@ -72,7 +63,45 @@ int game_write(GameState *gamestate, char path[100]){
     return 1;
 }
 
-/*Recibe un gamestate y un archivo que va a escanear. Si encuentra el id del jugador 
+int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
+    char savegame_path[20] = "./data/save.txt";
+
+    // Crea un fichero llamado save.txt
+    FILE *new_save = fopen(savegame_path, "w");
+    // Escribe línea a línea saltando los contenidos del jugador buscado
+    FILE *old_save = fopen(path, "r");
+
+    char old_line[150];
+    char found_id[3] = "";
+
+    // Leer el fichero entero hasta encontrar el jugador.
+    while(fgets(old_line, sizeof(old_line), old_save) != NULL){
+        // Truco para buscar el patrón "JUGADOR: id" con sscanf
+        sscanf(old_line, "JUGADOR: %s", found_id);
+        if (strcmp(found_id, player_id) != 0) {
+            /* Mientras el id de jugador encontrado y el id del jugador actual
+            sean distintos, escribimos en save.txt. Es decir, cuando sean iguales,
+            No se escribirá
+            */
+            fputs(old_line, new_save);
+        }
+    }
+
+    fclose(old_save);
+    fclose(new_save);
+
+    // Al terminar de escribir, elimina partida.txt usando su path.
+    remove(path);
+    // Renombrar save.txt a partida.txt
+    rename(savegame_path, path);
+
+    // Usar game_write para guardar partida al final
+    game_write(gamestate, path);
+    
+    return 0;
+}
+
+/* Recibe un gamestate y un archivo que va a escanear. Si encuentra el id del jugador 
  * que está intentando guardar la partida devolverá 1, significando que ese jugador tiene
  * una partida guardada. De lo contrario, devolverá 0. */
 int save_exists(GameState *gamestate, FILE *file){
@@ -113,10 +142,8 @@ int game_save(GameState* gamestate, char path[100]){
 
     if(save_line > 0){
         if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
-            /* if(game_overwrite(gamestate, path, save_line) == 1){
-                puts("¡Partida sobreescrita con éxito!");
-            }; */
-            puts("Sobreescribir está pendiente...");
+            game_overwrite(gamestate, path, gamestate->player->id);
+            puts("¡Partida sobreescrita con éxito!");
             ui_anykey_press();
         }
 
