@@ -259,7 +259,7 @@ void game_start(){
     GameState gamestate;
     gamestate.game_is_playing = 1;
 
-    gamestate.players = cargar_jugadores("./data/Jugadores.txt");
+    gamestate.players = player_loadplayer("./data/Jugadores.txt");
     gamestate.structs_already_loaded = 0; //PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
 
     ui_user_initial_menu(&gamestate);
@@ -277,7 +277,7 @@ void game_initial_struct_loading(GameState* game_state){
     game_state->salas = salas_load_salas("./data/Salas.txt");
     game_state->conns = salas_load_conns("./data/Conexiones.txt");
     game_state->all_items = inv_load_items("./data/Objetos.txt");
-    game_state->arr_puzles = cargar_puzles("./data/Puzles.txt");
+    game_state->arr_puzles = puzzle_loadpuzzles("./data/Puzles.txt");
 
     game_state->structs_already_loaded = 1;
 
