@@ -53,7 +53,7 @@ array_puz* puzzle_loadpuzzles(char path[]){
 
 }
 
-void puzzles_freepuzzles(array_puz *arr_puzles) {
+void puzzle_freepuzzles(array_puz *arr_puzles) {
     if ((arr_puzles) != NULL) {
         if ((arr_puzles->unidad) != NULL) {
             free(arr_puzles->unidad);

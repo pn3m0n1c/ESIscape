@@ -32,7 +32,7 @@ void player_saveplayer(GameState *game_state, char *path);
 
 jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players);
 
-void player_freeplayer(jugador *array_jugador);
+void player_freeplayer(jugadores *jugadores_borrar);
 
 
 #endif

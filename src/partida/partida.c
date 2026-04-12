@@ -46,7 +46,7 @@ int game_overwrite(GameState *gamestate, char path[100], int line){
 
 int game_write(GameState *gamestate, char path[100]){
 
-    // Mínima salvaguarda para evitar crasheos.
+    //! Mínima salvaguarda para evitar crasheos.
     if(gamestate->player == NULL || gamestate->current_sala == NULL){
         printf("Error: no hay partida activa para guardar\n");
         ui_anykey_press();
@@ -86,7 +86,7 @@ int save_exists(GameState *gamestate, FILE *file){
         current_id[0] = '\0';
         line_number++;
         
-        // Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
+        //! Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
         sscanf(line_content, "JUGADOR: %s", current_id);
 
         if(strcmp(current_id, gamestate->player->id) == 0){
@@ -122,7 +122,7 @@ int game_save(GameState* gamestate, char path[100]){
 
         return 1;
     } else {
-        // Si no existe crea una nueva entrada con los datos
+        //! Si no existe crea una nueva entrada con los datos
         puts("No existe partida guardada. Guardando partida...");
         if(game_write(gamestate, path) == 1 ){
             puts("¡Partida guardada con éxito!");
@@ -260,7 +260,7 @@ void game_start(){
     gamestate.game_is_playing = 1;
 
     gamestate.players = player_loadplayer("./data/Jugadores.txt");
-    gamestate.structs_already_loaded = 0; //PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
+    gamestate.structs_already_loaded = 0; //!PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
 
     ui_user_initial_menu(&gamestate);
 
@@ -293,7 +293,7 @@ void game_loop(GameState* game_state){
         case 1:
             game_initial_struct_loading(game_state);
 
-            //EN ESTE HUECO SE CARGARÍA LA PARTIDA
+            //!EN ESTE HUECO SE CARGARÍA LA PARTIDA
 
             while(game_state->game_is_playing){
                 game_hud(game_state);

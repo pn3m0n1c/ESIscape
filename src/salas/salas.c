@@ -1,6 +1,6 @@
 #include "salas.h"
 
-//OBTENGO EL PUNTERO A SALA DE LA ID PASADA POR PARÁMETRO
+//!OBTENGO EL PUNTERO A SALA DE LA ID PASADA POR PARÁMETRO
 Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
     int i;
@@ -20,7 +20,7 @@ Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
 }
 
-//OBTENEMOS LA SALA INICIAL DE LAS ACTUALES
+//!OBTENEMOS LA SALA INICIAL DE LAS ACTUALES
 Sala* salas_get_sala_inicial(Salas* arr_salas){
 
     int i;
@@ -40,7 +40,7 @@ Sala* salas_get_sala_inicial(Salas* arr_salas){
 
 }
 
-//CARGO LAS SALAS
+//!CARGO LAS SALAS
 Salas salas_load_salas(char *file_path){
 
     FILE* f;
@@ -48,7 +48,7 @@ Salas salas_load_salas(char *file_path){
     loaded_salas.salas = NULL;
     loaded_salas.number_of_salas = 0;
     
-    //OBTENGO Salas.txt
+    //!OBTENGO Salas.txt
     if((f=fopen(file_path, "r")) == NULL){
 
         printf("Error al cargar salas. Archivo de texto de salas no cargado.");
@@ -58,13 +58,13 @@ Salas salas_load_salas(char *file_path){
 
     else{
 
-        char current_row[512];  //FILA ACTUAL EN LECTURA
+        char current_row[512];  //!FILA ACTUAL EN LECTURA
 
-        while(fgets(current_row, 512, f) != NULL){ //LEO FILA A FILA
+        while(fgets(current_row, 512, f) != NULL){ //!LEO FILA A FILA
 
             if(current_row[0] != '\n'){
 
-                //AÑADIMOS HUECO PARA LA NUEVA SALA
+                //!AÑADIMOS HUECO PARA LA NUEVA SALA
                 loaded_salas.number_of_salas++;
                 loaded_salas.salas = (Sala*)realloc(loaded_salas.salas, sizeof(Sala)*loaded_salas.number_of_salas);
 
@@ -76,13 +76,13 @@ Salas salas_load_salas(char *file_path){
                 }
 
                 Sala sala_currentlyreading;
-                strcpy(sala_currentlyreading.sala_id, strtok(current_row, "-")); //ID
-                strcpy(sala_currentlyreading.sala_name, strtok(NULL, "-")); //NOMBRE
+                strcpy(sala_currentlyreading.sala_id, strtok(current_row, "-")); //!ID
+                strcpy(sala_currentlyreading.sala_name, strtok(NULL, "-")); //!NOMBRE
 
-                char sala_string_type[100]; //TIPO DE SALA EN FORMA DE CADENA, NO DE ENUM
+                char sala_string_type[100]; //!TIPO DE SALA EN FORMA DE CADENA, NO DE ENUM
                 strcpy(sala_string_type, strtok(NULL, "-"));
 
-                //TIPO DE SALA EN FORMA DE ENUM
+                //!TIPO DE SALA EN FORMA DE ENUM
                 if(strcmp(sala_string_type, "INICIAL") == 0){
                     sala_currentlyreading.sala_type = INICIAL;
                 }
@@ -99,14 +99,14 @@ Salas salas_load_salas(char *file_path){
 
                 }
                 
-                strcpy(sala_currentlyreading.sala_desc, strtok(NULL, "-")); //DESCRIPCIÓN
+                strcpy(sala_currentlyreading.sala_desc, strtok(NULL, "-")); //!DESCRIPCIÓN
                 if(sala_currentlyreading.sala_desc[strlen(sala_currentlyreading.sala_desc)-1] == '\n'){
 
-                    sala_currentlyreading.sala_desc[strlen(sala_currentlyreading.sala_desc)-1] = '\0'; //ELIMINO EL \n DEL FINAL DE LÍNEA
+                    sala_currentlyreading.sala_desc[strlen(sala_currentlyreading.sala_desc)-1] = '\0'; //!ELIMINO EL \n DEL FINAL DE LÍNEA
                     
                 }
 
-                //CARGO LA SALA ACTUAL LEIDA EN EL ARRAY
+                //!CARGO LA SALA ACTUAL LEIDA EN EL ARRAY
                 loaded_salas.salas[loaded_salas.number_of_salas-1] = sala_currentlyreading;
 
             }
@@ -121,7 +121,7 @@ Salas salas_load_salas(char *file_path){
 
 }
 
-//CARGO LAS CONEXIONES
+//!CARGO LAS CONEXIONES
 Conns salas_load_conns(char *file_path){
 
     FILE* f;
@@ -129,7 +129,7 @@ Conns salas_load_conns(char *file_path){
     loaded_conns.conns = NULL;
     loaded_conns.number_of_conns = 0;
     
-    //OBTENGO Salas.txt
+    //!OBTENGO Salas.txt
     if((f=fopen(file_path, "r")) == NULL){
 
         printf("Error al cargar conexiones. Archivo de texto de conexiones no cargado.");
@@ -139,13 +139,13 @@ Conns salas_load_conns(char *file_path){
 
     else{
 
-        char current_row[512];  //FILA ACTUAL EN LECTURA
+        char current_row[512];  //!FILA ACTUAL EN LECTURA
 
-        while(fgets(current_row, 512, f) != NULL){ //LEO FILA A FILA
+        while(fgets(current_row, 512, f) != NULL){ //!LEO FILA A FILA
 
             if(current_row[0] != '\n'){
 
-                //AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
+                //!AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
                 loaded_conns.number_of_conns++;
                 loaded_conns.conns = (Conn*)realloc(loaded_conns.conns, sizeof(Conn)*loaded_conns.number_of_conns);
 
@@ -157,13 +157,13 @@ Conns salas_load_conns(char *file_path){
                 }
 
                 Conn conn_currentlyreading;
-                strcpy(conn_currentlyreading.conn_id, strtok(current_row, "-")); //ID
-                strcpy(conn_currentlyreading.conn_sala_from_id, strtok(NULL, "-")); //ID FROM
-                strcpy(conn_currentlyreading.conn_sala_to_id, strtok(NULL, "-")); //ID TO
+                strcpy(conn_currentlyreading.conn_id, strtok(current_row, "-")); //!ID
+                strcpy(conn_currentlyreading.conn_sala_from_id, strtok(NULL, "-")); //!ID FROM
+                strcpy(conn_currentlyreading.conn_sala_to_id, strtok(NULL, "-")); //!ID TO
 
                 char blocked_string[11];
-                strcpy(blocked_string, strtok(NULL, "-")); //ACTIVA O BLOQUEDA EN FORMATO STRING
-                //ACTIVA O BLOQUEDA EN 0 SI ACTIVA Y 1 SI BLOQUEADA
+                strcpy(blocked_string, strtok(NULL, "-")); //!ACTIVA O BLOQUEDA EN FORMATO STRING
+                //!ACTIVA O BLOQUEDA EN 0 SI ACTIVA Y 1 SI BLOQUEADA
                 if(strcmp(blocked_string, "Bloqueada") == 0){
 
                     conn_currentlyreading.conn_block = 1;
@@ -181,14 +181,14 @@ Conns salas_load_conns(char *file_path){
 
                 }
                 
-                strcpy(conn_currentlyreading.conn_id_cond, strtok(NULL, "-")); //ID DEL OBJETO O PUZLE PARA DESBLOQUEAR
+                strcpy(conn_currentlyreading.conn_id_cond, strtok(NULL, "-")); //!ID DEL OBJETO O PUZLE PARA DESBLOQUEAR
                 if(conn_currentlyreading.conn_id_cond[strlen(conn_currentlyreading.conn_id_cond)-1] == '\n'){
 
-                    conn_currentlyreading.conn_id_cond[strlen(conn_currentlyreading.conn_id_cond)-1] = '\0'; //ELIMINO EL \n DEL FINAL DE LÍNEA
+                    conn_currentlyreading.conn_id_cond[strlen(conn_currentlyreading.conn_id_cond)-1] = '\0'; //!ELIMINO EL \n DEL FINAL DE LÍNEA
                     
                 }
 
-                //CARGO LA CONEXIÓN ACTUAL LEIDA EN EL ARRAY
+                //!CARGO LA CONEXIÓN ACTUAL LEIDA EN EL ARRAY
                 loaded_conns.conns[loaded_conns.number_of_conns-1] = conn_currentlyreading;
 
             }
@@ -203,7 +203,7 @@ Conns salas_load_conns(char *file_path){
 
 }
 
-//LIBERO LAS SALAS
+//!LIBERO LAS SALAS
 void salas_free_salas(Salas* salas){
 
     if(salas->salas != NULL){
@@ -214,7 +214,7 @@ void salas_free_salas(Salas* salas){
 
 }
 
-//LIBERO LAS CONEXIONES
+//!LIBERO LAS CONEXIONES
 void salas_free_conns(Conns* conns){
 
     if(conns->conns != NULL){

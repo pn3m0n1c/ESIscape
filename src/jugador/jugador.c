@@ -77,7 +77,7 @@ void player_registerplayer(GameState *game_state, char *nom, char *contrasena, c
     else{
 
         game_state->players->total_leidos += 1;
-        // EL ID del jugador se calcula en este punto
+        //! EL ID del jugador se calcula en este punto
         snprintf((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].id, 3, "%02d", game_state->players->total_leidos);
         strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Jugador, nom);
         strcpy((game_state->players->arr_jugadores)[game_state->players->total_leidos-1].Nomb_jugador, nom_completo);
@@ -130,8 +130,8 @@ void player_saveplayer(GameState *game_state, char *path){
                 printf("----DETALLES DE TU JUGADOR----");
                 printf("El nombre de tu usuario es: %s", array_jugador[i].Nomb_jugador);
                 printf("El nombre de tu jugador es: %s", array_jugador[i].Jugador);
-               // printf("Tienes una cantidad de %i objetos", ); //Preguntar en clase
-               // printf("Estas en la sala %s", ); //Preguntar en clase
+               // printf("Tienes una cantidad de %i objetos", ); //!Preguntar en clase
+               // printf("Estas en la sala %s", ); //!Preguntar en clase
             }
         }
     }*/
@@ -148,7 +148,7 @@ jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
     return 0;
 }
 
-//Borra el array de jugadores y lo deja vacio
+//!Borra el array de jugadores y lo deja vacio
 void player_freeplayer(jugadores *jugadores_borrar) {
     if ((jugadores_borrar) != NULL) {
         if ((jugadores_borrar->arr_jugadores) != NULL) {

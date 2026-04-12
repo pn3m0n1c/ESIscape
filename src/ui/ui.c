@@ -1,6 +1,6 @@
 #include "ui.h"
 
-//Vacío el buffer de entrada
+//!Vacío el buffer de entrada
 void ui_clean_buffer(){
 
     int c;
@@ -8,7 +8,7 @@ void ui_clean_buffer(){
 
 }
 
-//Muestro el nombre del juego en pantalla
+//!Muestro el nombre del juego en pantalla
 void ui_graphic_show_game_name(){
 
     char graphic_game_name[604] = "\n _______  _______  ___          _______  _______  _______  _______  _______  _______ \n|       ||       ||   |        |       ||       ||       ||   _   ||       ||       |\n|    ___||  _____||   |  ____  |    ___||  _____||       ||  |_|  ||    _  ||    ___|\n|   |___ | |_____ |   | |____| |   |___ | |_____ |       ||       ||   |_| ||   |___ \n|    ___||_____  ||   |        |    ___||_____  ||      _||       ||    ___||    ___|\n|   |___  _____| ||   |        |   |___  _____| ||     |_ |   _   ||   |    |   |___ \n|_______||_______||___|        |_______||_______||_______||__| |__||___|    |_______|\n";
@@ -16,7 +16,7 @@ void ui_graphic_show_game_name(){
 
 }
 
-//Muestra una separación en la pantalla
+//!Muestra una separación en la pantalla
 void ui_graphic_show_screen_separation(){
 
     char graphic_screen_separation[65] = "________________________________________________________________";
@@ -25,20 +25,20 @@ void ui_graphic_show_screen_separation(){
 
 }
 
-//Crea un menú en pantalla con varias opciones
+//!Crea un menú en pantalla con varias opciones
 int ui_menu_create(Menu menu_to_show){
 
     int i, k, is_number = 1, decision_to_number;
     char decision[128];
 
-    //MOSTRAR ENTRIES U OPCIONES
+    //!MOSTRAR ENTRIES U OPCIONES
     for(i = 0; i < menu_to_show.number_of_entries; i++){
 
         printf("%i:\t%s\n", i+1, menu_to_show.entries[i].name);
 
     }
 
-    //PEDIR UNA OPCIÓN AL USUARIO DENTRO DEL RANGO DE OPCIONES POSIBLES
+    //!PEDIR UNA OPCIÓN AL USUARIO DENTRO DEL RANGO DE OPCIONES POSIBLES
     
     do{
 
@@ -52,26 +52,26 @@ int ui_menu_create(Menu menu_to_show){
 
     } while(!((decision_to_number >= 0) && (decision_to_number <= menu_to_show.number_of_entries-1)));
     
-    //EJECUTAR UNA ACCIÓN SI ÉSTA NO ES NULA
+    //!EJECUTAR UNA ACCIÓN SI ÉSTA NO ES NULA
     if(menu_to_show.entries[decision_to_number].action != NULL){
 
         menu_to_show.entries[decision_to_number].action();
 
     }
 
-    //DEVOLVER EL ÍNDICE DE LA DECISIÓN TOMADA
+    //!DEVOLVER EL ÍNDICE DE LA DECISIÓN TOMADA
     return decision_to_number;
 
 }
 
-//Pide una confirmación al usuario de SÍ/NO antes de realizar alguna opción
+//!Pide una confirmación al usuario de SÍ/NO antes de realizar alguna opción
 int ui_confirmation(char text[200]){
 
     char answer_char;
 
     printf("%s", text);
     
-    //LEE LA ENTRADA TANTO EN MINÚSCULAS COMO EN MAYÚSCULAS PARA ASEGURAR QUE EL USUARIO NO SE CONFUNDA
+    //!LEE LA ENTRADA TANTO EN MINÚSCULAS COMO EN MAYÚSCULAS PARA ASEGURAR QUE EL USUARIO NO SE CONFUNDA
     do{
 
         printf("\n(S/N) > ");
@@ -85,7 +85,7 @@ int ui_confirmation(char text[200]){
 
 }
 
-//ESPERA UNA ENTRADA DE TECLADO DEL USUARIO PARA FACILITAR LA LECTURA DE DATOS SIN QUE SE PIERDAN DE VISTA
+//!ESPERA UNA ENTRADA DE TECLADO DEL USUARIO PARA FACILITAR LA LECTURA DE DATOS SIN QUE SE PIERDAN DE VISTA
 void ui_anykey_press(){
 
     printf("\n\nPulsa cualquier tecla... ");
@@ -93,16 +93,16 @@ void ui_anykey_press(){
 
 }
 
-//CIERRA EL JUEGO GUARDANDO LOS DATOS DEL JUGADOR A Jugadores.txt, Y LIBERA TODA LA MEMORIA DINÁMICA
+//!CIERRA EL JUEGO GUARDANDO LOS DATOS DEL JUGADOR A Jugadores.txt, Y LIBERA TODA LA MEMORIA DINÁMICA
 void ui_exit_game(GameState *game_state, int save_to_jugadores){
 
     int obj_playersave_idx;
 
     if(save_to_jugadores && game_state->structs_already_loaded){
 
-        strcpy(((game_state->player)->Inventario_como_string), "\0"); //POR DEFECTO PONGO EL INVENTARIO VACÍO PARA A PARTIR DE AHÍ IR RELLENANDO CON LOS OBJETOS DEL INVENTARIO
+        strcpy(((game_state->player)->Inventario_como_string), "\0"); //!POR DEFECTO PONGO EL INVENTARIO VACÍO PARA A PARTIR DE AHÍ IR RELLENANDO CON LOS OBJETOS DEL INVENTARIO
 
-        //AÑADO LOS OBJETOS DEL INVENTARIO
+        //!AÑADO LOS OBJETOS DEL INVENTARIO
         for(obj_playersave_idx = 0; obj_playersave_idx<((game_state->all_items)->size); obj_playersave_idx++){
 
             if(strcmp(((game_state->all_items)->slot)[obj_playersave_idx].location, "Inventario") == 0){
@@ -114,7 +114,7 @@ void ui_exit_game(GameState *game_state, int save_to_jugadores){
 
         }
 
-        //ELIMINO EL "-" DEL FINAL PARA QUE LA LÍNEA TERMINE EN EL ÚLTIMO OBJETO
+        //!ELIMINO EL "-" DEL FINAL PARA QUE LA LÍNEA TERMINE EN EL ÚLTIMO OBJETO
         if(((game_state->player)->Inventario_como_string)[strlen(((game_state->player)->Inventario_como_string))-1] == '-'){
 
             ((game_state->player)->Inventario_como_string)[strlen(((game_state->player)->Inventario_como_string))-1] = '\0';
@@ -125,9 +125,9 @@ void ui_exit_game(GameState *game_state, int save_to_jugadores){
 
     }
 
-    //LIBERO MEMORIA DINÁMICA
-    salas_free_salas((game_state->salas).salas);
-    salas_load_conns((game_state->conns).conns);
+    //!LIBERO MEMORIA DINÁMICA
+    salas_free_salas(&((game_state->salas)));
+    salas_free_conns(&((game_state->conns)));
     player_freeplayer(game_state->players);
     inv_free_inventory(game_state->all_items);
     puzzle_freepuzzles(game_state->arr_puzles);
@@ -145,7 +145,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     ui_graphic_show_screen_separation();
 
-    //PEDIMOS USUARIO Y CONTRASEÑA
+    //!PEDIMOS USUARIO Y CONTRASEÑA
 
     printf(" - REGISTRO / INICIO DE SESION - \n\n");
 
@@ -177,7 +177,7 @@ void ui_user_initial_menu(GameState* game_state){
         
     }
 
-    //VEMOS SI EL JUGADOR YA ESTÁ REGISTRADO
+    //!VEMOS SI EL JUGADOR YA ESTÁ REGISTRADO
 
     int playeridx, encontrado = 0;
 
@@ -192,7 +192,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     }
 
-    //JUGADOR ENCONTRADO
+    //!JUGADOR ENCONTRADO
 
     if(encontrado){
 
@@ -202,7 +202,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     else{
 
-        //REGISTRAMOS AL USUARIO CON SU NOMBRE COMPLETO
+        //!REGISTRAMOS AL USUARIO CON SU NOMBRE COMPLETO
 
         if(ui_confirmation("\nJugador NO ENCONTRADO!!!\n\nTe quieres registrar?")){
 
@@ -220,7 +220,7 @@ void ui_user_initial_menu(GameState* game_state){
                 
             }
 
-            //REGISTRO EL JUGADOR Y LO ESTABLEZCO COMO JUGADOR
+            //!REGISTRO EL JUGADOR Y LO ESTABLEZCO COMO JUGADOR
             player_registerplayer(game_state, nombre_acceso, password, regis_nombrecompleto);
             game_state->player = &((game_state->players)->arr_jugadores[(game_state->players)->total_leidos - 1]);
             player_saveplayer(game_state, "./data/Jugadores.txt");
@@ -229,7 +229,7 @@ void ui_user_initial_menu(GameState* game_state){
 
         else{
 
-            //SINO, SALGO DEL JUEGO
+            //!SINO, SALGO DEL JUEGO
             ui_exit_game(game_state, 0);
 
         }
@@ -240,7 +240,7 @@ void ui_user_initial_menu(GameState* game_state){
 
 }
 
-//CREO EL MENÚ PRINCIPAL Y DEVUELVO EL ÍNDICE DE LA OPCIÓN ELEGIDA
+//!CREO EL MENÚ PRINCIPAL Y DEVUELVO EL ÍNDICE DE LA OPCIÓN ELEGIDA
 
 int ui_main_menu(){
 
@@ -275,7 +275,7 @@ int ui_main_menu(){
 
 }
 
-//DESCRIBIMOS LA SALA PASADA POR PARÁMETRO
+//!DESCRIBIMOS LA SALA PASADA POR PARÁMETRO
 void ui_describe_sala(Sala* sala_to_describe, GameState *game_state){
 
     ui_graphic_show_screen_separation();
@@ -320,7 +320,7 @@ void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter
     int i;
     for(i = 0; i<conns->number_of_conns; i++){
 
-        //MUESTRO LAS CONEXIONES QUE COINCIDAN CON EL FILTRO PASADO POR PARÁMETRO
+        //!MUESTRO LAS CONEXIONES QUE COINCIDAN CON EL FILTRO PASADO POR PARÁMETRO
         if(strcmp((conns->conns)[i].conn_sala_from_id, sala_id_filter) == 0){
 
             Sala *sala_destino = salas_get_sala_from_id((conns->conns)[i].conn_sala_to_id, salas);
@@ -328,7 +328,7 @@ void ui_show_filter_connections(Conns *conns, Salas *salas, char *sala_id_filter
             char condicion_texto[128] = "";
             if(strcmp((conns->conns)[i].conn_id_cond, "0") != 0){
                 
-                //SI TIENE CONDICIÓN DE BLOQUEO SE MUESTRA SI ESTÁ BLOQUEADA O NO Y LA CONDICIÓN DE DESBLOQUEO
+                //!SI TIENE CONDICIÓN DE BLOQUEO SE MUESTRA SI ESTÁ BLOQUEADA O NO Y LA CONDICIÓN DE DESBLOQUEO
                 char *bloqueado_texto = ((conns->conns)[i].conn_block) ? " | Salida BLOQUEADA\t" : " | Salida no bloqueada\t";
                 strcat(condicion_texto, bloqueado_texto);
                 strcat(condicion_texto, " | Condicion: ");
@@ -349,7 +349,7 @@ void ui_show_filter_inventory(Inventory* inv, char *location_filter){
 
     for(i = 0; i < inv->size; i++){
 
-        //MUESTRO LOS ELEMENTOS DEL FILTRO ESPECIFICADO, Y SI ESTÁ VACÍO EL FILTRO, MUESTRO TODO
+        //!MUESTRO LOS ELEMENTOS DEL FILTRO ESPECIFICADO, Y SI ESTÁ VACÍO EL FILTRO, MUESTRO TODO
         if(strcmp(inv->slot[i].location, location_filter) == 0 || strcmp(location_filter, "") == 0){
 
             count++;
@@ -374,7 +374,7 @@ void ui_show_filter_puzles(array_puz* arr_puzles, char *location_filter){
 
     for(i = 0; i < arr_puzles->total_leidos; i++){
 
-        //MUESTRO LOS PUZLES DEL FILTRO ESPECIFICADO, Y SI ESTÁ VACÍO EL FILTRO, MUESTRO TODO
+        //!MUESTRO LOS PUZLES DEL FILTRO ESPECIFICADO, Y SI ESTÁ VACÍO EL FILTRO, MUESTRO TODO
         if(strcmp((arr_puzles->unidad)[i].id_sala, location_filter) == 0 || strcmp(location_filter, "") == 0){
 
             count++;
@@ -392,7 +392,7 @@ void ui_show_filter_puzles(array_puz* arr_puzles, char *location_filter){
 
 }
 
-//EXAMINO LOS OBJETOS Y CONEXIONES DE LA SALA PASADA POR PARÁMETRO
+//!EXAMINO LOS OBJETOS Y CONEXIONES DE LA SALA PASADA POR PARÁMETRO
 void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
     ui_graphic_show_screen_separation();
@@ -409,7 +409,7 @@ void ui_examine_sala(Sala* sala_to_examine, GameState *game_state){
 
 }
 
-//ENTRO EN UNA SALA ADYACENTE
+//!ENTRO EN UNA SALA ADYACENTE
 void ui_enter_sala(GameState *game_state){
 
     ui_graphic_show_screen_separation();
@@ -438,7 +438,7 @@ void ui_enter_sala(GameState *game_state){
         
     }
 
-    //CANCELO SI EL USUARIO DICE QUE NO QUIERE IR A ESA SALA
+    //!CANCELO SI EL USUARIO DICE QUE NO QUIERE IR A ESA SALA
     if(strcmp(sala_id_destino, "n") == 0 || strcmp(sala_id_destino, "") == 0){
 
         skip_enter_sala = 1;
@@ -449,7 +449,7 @@ void ui_enter_sala(GameState *game_state){
 
         for(i = 0; i<((game_state->conns).number_of_conns); i++){
 
-            //COMPROBAMOS SI LA SALIDA POR LA QUE QUEREMOS SALIR EXISTE
+            //!COMPROBAMOS SI LA SALIDA POR LA QUE QUEREMOS SALIR EXISTE
             if(strcmp(((game_state->conns).conns)[i].conn_sala_from_id, game_state->current_sala->sala_id) == 0 && 
             strcmp(((game_state->conns).conns)[i].conn_sala_to_id, sala_id_destino) == 0){
 
@@ -462,7 +462,7 @@ void ui_enter_sala(GameState *game_state){
 
         if(salida_exists_here){
 
-            //SI LA SALIDA ESTÁ BLOQUEADA, SE COMUNICA
+            //!SI LA SALIDA ESTÁ BLOQUEADA, SE COMUNICA
             if(!game_update_sala(game_state, salida_destino)){
 
                 printf("\n\nSALIDA BLOQUEADA!\nSe requiere %s.", salida_destino.conn_id_cond);
@@ -485,7 +485,7 @@ void ui_pick_drop_object(GameState* game_state, int pick){
 
     ui_graphic_show_screen_separation();
 
-    //DEBIDO A QUE AGARRAR Y SOLTAR FUNCIONAN EXACTAMENTE IGUAL, SIMPLEMENTE INTERCAMBIAREMOS EL DESTINO Y ORIGEN ACORDE A LO QUE QUERAMOS
+    //!DEBIDO A QUE AGARRAR Y SOLTAR FUNCIONAN EXACTAMENTE IGUAL, SIMPLEMENTE INTERCAMBIAREMOS EL DESTINO Y ORIGEN ACORDE A LO QUE QUERAMOS
     char id_from[256];
     char id_to[256];
 
@@ -524,7 +524,7 @@ void ui_pick_drop_object(GameState* game_state, int pick){
 
     }
 
-    //CANCELO SI EL USUARIO NO QUIERE HACERLO
+    //!CANCELO SI EL USUARIO NO QUIERE HACERLO
     if(strcmp(id_object_to_pick, "n") == 0 || strcmp(id_object_to_pick, "") == 0){
 
         skip_dothethings_object = 1;
@@ -555,8 +555,21 @@ void ui_pick_drop_object(GameState* game_state, int pick){
 
             else{
 
-                //SE LLEVA EL OBJETO O BIEN A LA SALA O AL INVENTARIO
+                //!SE LLEVA EL OBJETO O BIEN A LA SALA O AL INVENTARIO
                 strcpy(object_found->location, id_to);
+
+                if(pick){
+                    
+                    printf("\nObjeto %s recogido!", object_found->id);
+                    ui_anykey_press();
+                
+                }
+                else{
+                    
+                    printf("\nObjeto %s soltado!", object_found->id);
+                    ui_anykey_press();
+                
+                }
 
             }
 
@@ -566,7 +579,7 @@ void ui_pick_drop_object(GameState* game_state, int pick){
 
 }
 
-//MUESTRO EL INVENTARIO DEL JUGADOR
+//!MUESTRO EL INVENTARIO DEL JUGADOR
 void ui_show_player_inventory(GameState* game_state){
 
     ui_graphic_show_screen_separation();
@@ -579,7 +592,7 @@ void ui_show_player_inventory(GameState* game_state){
 
 }
 
-//USO EL OBJETO QUE EL USUARIO QUIERA USAR
+//!USO EL OBJETO QUE EL USUARIO QUIERA USAR
 void ui_use_object(GameState* game_state){
 
     ui_graphic_show_screen_separation();
@@ -607,7 +620,7 @@ void ui_use_object(GameState* game_state){
 
     }
 
-    //CANCELO SI EL USUARIO NO QUIERE HACERLO
+    //!CANCELO SI EL USUARIO NO QUIERE HACERLO
     if(strcmp(id_object_to_use, "n") == 0 || strcmp(id_object_to_use, "") == 0){
 
         skip_dothethings_object = 1;
@@ -642,10 +655,10 @@ void ui_use_object(GameState* game_state){
 
                 for(i = 0; i < (game_state->conns).number_of_conns; i++){
 
-                    //COMPRUEBO LAS SALAS QUE PUEDO DESBLOQUEAR CON LA ID DE CONDICION Y DE SALA ACTUAL
+                    //!COMPRUEBO LAS SALAS QUE PUEDO DESBLOQUEAR CON LA ID DE CONDICION Y DE SALA ACTUAL
                     if(strcmp(((game_state->conns).conns)[i].conn_id_cond, object_found->id) == 0 && strcmp(((game_state->conns).conns)[i].conn_sala_from_id, game_state->current_sala->sala_id) == 0){
 
-                        //SI ESTÁ BLOQUEADA LA SALIDA, LA DESBLOQUEO
+                        //!SI ESTÁ BLOQUEADA LA SALIDA, LA DESBLOQUEO
                         vecesaplicadas++;
                         if(((game_state->conns).conns)[i].conn_block == 1){
 
@@ -660,7 +673,7 @@ void ui_use_object(GameState* game_state){
 
                 }
 
-                //NO SE HA DESBLOQUEADO NINGUNA SALA, ES QUE NO SE PUEDE UTILIZAR AQUÍ
+                //!NO SE HA DESBLOQUEADO NINGUNA SALA, ES QUE NO SE PUEDE UTILIZAR AQUÍ
                 if(vecesaplicadas == 0){
 
                     printf("ESTE OBJETO NO LO PUEDES APLICAR AQUI!");
@@ -704,7 +717,7 @@ void ui_solve_puzzle(GameState* game_state){
 
     }
 
-    //CANCELO SI EL USUARIO NO QUIERE HACERLO
+    //!CANCELO SI EL USUARIO NO QUIERE HACERLO
     if(strcmp(id_puzzle_to_solve, "n") == 0 || strcmp(id_puzzle_to_solve, "") == 0){
 
         skip_dothethings_puzle = 1;
@@ -715,7 +728,7 @@ void ui_solve_puzzle(GameState* game_state){
 
         int puzidx;
 
-        //BUSCO EL PUZLE QUE EL USUARIO HA INTRODUCIDO
+        //!BUSCO EL PUZLE QUE EL USUARIO HA INTRODUCIDO
         for(puzidx = 0; puzidx < game_state->arr_puzles->total_leidos; puzidx++){
 
             if(strcmp((game_state->arr_puzles->unidad)[puzidx].id_puzle, id_puzzle_to_solve) == 0){
@@ -785,7 +798,7 @@ void ui_solve_puzzle(GameState* game_state){
 
                         if(strcmp(((game_state->conns).conns)[i].conn_id_cond, puzzle_found->id_puzle) == 0){
 
-                            //SI UNA SALA ESTÁ BLOQUEADA POR ESE PUZLE, LA DESBLOQUEO
+                            //!SI UNA SALA ESTÁ BLOQUEADA POR ESE PUZLE, LA DESBLOQUEO
                             if(((game_state->conns).conns)[i].conn_block == 1){
 
                                 Sala *sala_destino = salas_get_sala_from_id(((game_state->conns).conns)[i].conn_sala_to_id, &(game_state->salas));
