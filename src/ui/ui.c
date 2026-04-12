@@ -126,11 +126,17 @@ void ui_exit_game(GameState *game_state, int save_to_jugadores){
     }
 
     //!LIBERO MEMORIA DINÁMICA
-    salas_free_salas(&((game_state->salas)));
-    salas_free_conns(&((game_state->conns)));
+
+    if(game_state->structs_already_loaded){
+
+        salas_free_salas(&((game_state->salas)));
+        salas_free_conns(&((game_state->conns)));
+        inv_free_inventory(game_state->all_items);
+        puzzle_freepuzzles(game_state->arr_puzles);
+
+    }
+
     player_freeplayer(game_state->players);
-    inv_free_inventory(game_state->all_items);
-    puzzle_freepuzzles(game_state->arr_puzles);
 
     printf("\nESI-Escape creado por Christian Romero Oliva, Javier Munoz Arillo y Jose Miguel Perez Tejero | 2026\n\n");
     exit(0);
