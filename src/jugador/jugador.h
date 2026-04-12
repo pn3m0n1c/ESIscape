@@ -25,14 +25,14 @@ typedef struct{
 
 } jugadores;
 
-jugadores *cargar_jugadores(char path[]);
+jugadores *player_loadplayer(char path[]);
 
-void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char *nom_completo);
-void guardar_jugador(GameState *game_state, char *path);
+void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo);
+void player_saveplayer(GameState *game_state, char *path);
 
-jugador* encontrar_jugador(char name[21], char pass[9], jugadores* all_players);
+jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players);
 
-void liberar_jugador(jugador *array_jugador);
+void player_freeplayer(jugador *array_jugador);
 
 
 #endif

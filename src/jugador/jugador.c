@@ -1,7 +1,7 @@
 #include"../partida/partida.h"
 #include"jugador.h"
 /*Carga los jugadores y sus respectivos objetos*/
-jugadores *cargar_jugadores(char path[]) {
+jugadores *player_loadplayer(char path[]) {
     
     FILE *f = fopen(path, "r"); 
     
@@ -65,7 +65,7 @@ jugadores *cargar_jugadores(char path[]) {
 
 }
 
-void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char *nom_completo){
+void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo){
     
     game_state->players->arr_jugadores = realloc(game_state->players->arr_jugadores, (game_state->players->total_leidos + 1)*sizeof(jugador));
 
@@ -89,7 +89,7 @@ void registrar_jugador(GameState *game_state, char *nom, char *contrasena, char 
 }
 
 /*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
-void guardar_jugador(GameState *game_state, char *path){
+void player_saveplayer(GameState *game_state, char *path){
     if((game_state->players->arr_jugadores) == NULL){
         printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
         return;
@@ -136,7 +136,7 @@ void guardar_jugador(GameState *game_state, char *path){
         }
     }*/
 
-jugador* encontrar_jugador(char name[21], char pass[9], jugadores* all_players){
+jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
     int i;
 
     for (i = 0; i < all_players->total_leidos; i++) {
@@ -149,7 +149,7 @@ jugador* encontrar_jugador(char name[21], char pass[9], jugadores* all_players){
 }
 
 //Borra el array de jugadores y lo deja vacio
-void liberar_jugador(jugador *array_jugador) {
+void player_freeplayer(jugador *array_jugador) {
     if (array_jugador != NULL) {
         free(array_jugador);
     }

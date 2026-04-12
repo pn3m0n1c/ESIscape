@@ -1,6 +1,6 @@
 #include "puzles.h"
 
-array_puz* cargar_puzles(char path[]){
+array_puz* puzzles_loadpuzzles(char path[]){
     
     FILE *f = fopen(path, "r");
     if (f == NULL) {
@@ -53,7 +53,7 @@ array_puz* cargar_puzles(char path[]){
 
 }
 
-void liberar_puzles(array_puz *arr_puzles) {
+void puzzles_freepuzzles(array_puz *arr_puzles) {
     if ((arr_puzles) != NULL) {
         if ((arr_puzles->unidad) != NULL) {
             free(arr_puzles->unidad);

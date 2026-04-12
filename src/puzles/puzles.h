@@ -20,7 +20,7 @@ typedef struct{
     int total_leidos;
 }array_puz;
 
-array_puz* cargar_puzles(char path[]);
-void liberar_puzles(array_puz *);
+array_puz* puzzle_loadpuzzles(char path[]);
+void puzzle_freepuzzles(array_puz *);
 
 #endif

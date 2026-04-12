@@ -199,7 +199,7 @@ void ui_user_initial_menu(GameState* game_state){
                 
             }
 
-            registrar_jugador(game_state, nombre_acceso, password, regis_nombrecompleto);
+            player_registerplayer(game_state, nombre_acceso, password, regis_nombrecompleto);
             game_state->player = &((game_state->players)->arr_jugadores[(game_state->players)->total_leidos - 1]);
             guardar_jugador(game_state, "./data/Jugadores.txt");
 
