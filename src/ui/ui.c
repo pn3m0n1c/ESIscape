@@ -111,7 +111,7 @@ void ui_exit_game(GameState *game_state, int save_to_jugadores){
 
         }
 
-        guardar_jugador(game_state, "./data/Jugadores.txt");
+        player_saveplayer(game_state, "./data/Jugadores.txt");
 
     }
 
@@ -201,7 +201,7 @@ void ui_user_initial_menu(GameState* game_state){
 
             player_registerplayer(game_state, nombre_acceso, password, regis_nombrecompleto);
             game_state->player = &((game_state->players)->arr_jugadores[(game_state->players)->total_leidos - 1]);
-            guardar_jugador(game_state, "./data/Jugadores.txt");
+            player_saveplayer(game_state, "./data/Jugadores.txt");
 
         }
 
