@@ -1,5 +1,6 @@
 #include "salas.h"
 
+//OBTENGO EL PUNTERO A SALA DE LA ID PASADA POR PARÁMETRO
 Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
     int i;
@@ -19,6 +20,7 @@ Sala* salas_get_sala_from_id(char* id_to_search, Salas* arr_salas){
 
 }
 
+//OBTENEMOS LA SALA INICIAL DE LAS ACTUALES
 Sala* salas_get_sala_inicial(Salas* arr_salas){
 
     int i;
@@ -38,6 +40,7 @@ Sala* salas_get_sala_inicial(Salas* arr_salas){
 
 }
 
+//CARGO LAS SALAS
 Salas salas_load_salas(char *file_path){
 
     FILE* f;
@@ -55,19 +58,22 @@ Salas salas_load_salas(char *file_path){
 
     else{
 
-        //printf("\n##### SALAS #####\n");
-
         char current_row[512];  //FILA ACTUAL EN LECTURA
 
         while(fgets(current_row, 512, f) != NULL){ //LEO FILA A FILA
 
             if(current_row[0] != '\n'){
 
-                //printf("\n\nFila leida: %s: ", current_row);
-
                 //AÑADIMOS HUECO PARA LA NUEVA SALA
                 loaded_salas.number_of_salas++;
                 loaded_salas.salas = (Sala*)realloc(loaded_salas.salas, sizeof(Sala)*loaded_salas.number_of_salas);
+
+                if(loaded_salas.salas == NULL){
+
+                    printf("Error al alocar salas.");
+                    exit(1);
+
+                }
 
                 Sala sala_currentlyreading;
                 strcpy(sala_currentlyreading.sala_id, strtok(current_row, "-")); //ID
@@ -100,9 +106,8 @@ Salas salas_load_salas(char *file_path){
                     
                 }
 
+                //CARGO LA SALA ACTUAL LEIDA EN EL ARRAY
                 loaded_salas.salas[loaded_salas.number_of_salas-1] = sala_currentlyreading;
-
-                //printf("\n%s\n%s\n%s\n%i\n", sala_currentlyreading.sala_id, sala_currentlyreading.sala_name, sala_currentlyreading.sala_desc, sala_currentlyreading.sala_type);
 
             }
 
@@ -116,6 +121,7 @@ Salas salas_load_salas(char *file_path){
 
 }
 
+//CARGO LAS CONEXIONES
 Conns salas_load_conns(char *file_path){
 
     FILE* f;
@@ -126,14 +132,12 @@ Conns salas_load_conns(char *file_path){
     //OBTENGO Salas.txt
     if((f=fopen(file_path, "r")) == NULL){
 
-        printf("Error al cargar salas. Archivo de texto de conexiones no cargado.");
+        printf("Error al cargar conexiones. Archivo de texto de conexiones no cargado.");
         exit(1);
 
     }
 
     else{
-
-        //printf("\n##### CONEXIONES #####\n");
 
         char current_row[512];  //FILA ACTUAL EN LECTURA
 
@@ -141,11 +145,16 @@ Conns salas_load_conns(char *file_path){
 
             if(current_row[0] != '\n'){
 
-                //printf("\n\nFila leida: %s: ", current_row);
-
                 //AÑADIMOS HUECO PARA LA NUEVA CONEXIÓN
                 loaded_conns.number_of_conns++;
                 loaded_conns.conns = (Conn*)realloc(loaded_conns.conns, sizeof(Conn)*loaded_conns.number_of_conns);
+
+                if(loaded_conns.conns == NULL){
+
+                    printf("Error al alocar conexiones.");
+                    exit(1);
+
+                }
 
                 Conn conn_currentlyreading;
                 strcpy(conn_currentlyreading.conn_id, strtok(current_row, "-")); //ID
@@ -179,6 +188,7 @@ Conns salas_load_conns(char *file_path){
                     
                 }
 
+                //CARGO LA CONEXIÓN ACTUAL LEIDA EN EL ARRAY
                 loaded_conns.conns[loaded_conns.number_of_conns-1] = conn_currentlyreading;
 
             }
@@ -193,14 +203,24 @@ Conns salas_load_conns(char *file_path){
 
 }
 
+//LIBERO LAS SALAS
 void salas_free_salas(Salas* salas){
 
-    free(salas->salas);
+    if(salas->salas != NULL){
+
+        free(salas->salas);
+
+    }
 
 }
 
+//LIBERO LAS CONEXIONES
 void salas_free_conns(Conns* conns){
 
-    free(conns->conns);
+    if(conns->conns != NULL){
+
+        free(conns->conns);
+
+    }
 
 }

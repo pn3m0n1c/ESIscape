@@ -69,8 +69,6 @@ Inventory* inv_load_items(char path[]) {
 
         i++;
     }
-
-    /* Pendiente un free, entiendo que será al final del juego - Christian*/
     
     fclose(file);
     return all_items;
@@ -187,4 +185,15 @@ int inv_remove_item(Item item, Inventory *inv){
     };
 
     return 0;
+}
+
+void inv_free_inventory(Inventory *inv_to_free){
+
+    if ((inv_to_free) != NULL) {
+        if ((inv_to_free->slot) != NULL) {
+            free(inv_to_free->slot);
+        }
+        free(inv_to_free);
+    }
+
 }

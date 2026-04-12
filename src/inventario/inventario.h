@@ -63,4 +63,9 @@ int inv_add_item(Item item, Inventory *inv);
 //POSTCONDICIÓN: Elimina la primera ocurrencia del item en el inventario. Devuelve 1 si se eliminó, 0 si no se encontró
 int inv_remove_item(Item item, Inventory *inv);
 
+//CABECERA: void inv_free_inventory(Inventory *inv_to_free)
+//PRECONDICIÓN: 
+//POSTCONDICIÓN: Libera la memoria del inventario
+void inv_free_inventory(Inventory *);
+
 #endif

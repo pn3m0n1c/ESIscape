@@ -149,8 +149,11 @@ jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
 }
 
 //Borra el array de jugadores y lo deja vacio
-void player_freeplayer(jugador *array_jugador) {
-    if (array_jugador != NULL) {
-        free(array_jugador);
+void player_freeplayer(jugadores *jugadores_borrar) {
+    if ((jugadores_borrar) != NULL) {
+        if ((jugadores_borrar->arr_jugadores) != NULL) {
+            free(jugadores_borrar->arr_jugadores);
+        }
+        free(jugadores_borrar);
     }
 }
