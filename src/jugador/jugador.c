@@ -1,6 +1,6 @@
 #include"../partida/partida.h"
 #include"jugador.h"
-/*Carga los jugadores y sus respectivos objetos*/
+/*!Carga los jugadores y sus respectivos objetos*/
 jugadores *player_loadplayer(char path[]) {
     
     FILE *f = fopen(path, "r"); 
@@ -42,7 +42,7 @@ jugadores *player_loadplayer(char path[]) {
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Inventario_como_string, token);
             else (cargados_jugadores->arr_jugadores)[cont].Inventario_como_string[0] = '\0';
 
-            /*(cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
+            /*!(cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
             token = strtok(NULL, "-");
             while (token != NULL){
                 Item objeto_temporal;
@@ -88,7 +88,7 @@ void player_registerplayer(GameState *game_state, char *nom, char *contrasena, c
 
 }
 
-/*Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
+/*!Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
 void player_saveplayer(GameState *game_state, char *path){
     if((game_state->players->arr_jugadores) == NULL){
         printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
@@ -116,9 +116,9 @@ void player_saveplayer(GameState *game_state, char *path){
     }
     fclose(f);
 }
-    /*Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
+    /*!Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
     dentro de un blucle for el cual va buscando al jugador pasando por todos*/
-    /*void estado_jugador(jugador *array_jugador, int total_leidos){
+    /*!void estado_jugador(jugador *array_jugador, int total_leidos){
         char comparador[3];
         printf("Escribe el ID de tu jugador para ver los detalles de tu jugador: ");
         fgets(comparador, sizeof(comparador), stdin);

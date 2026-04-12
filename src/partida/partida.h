@@ -18,7 +18,7 @@ typedef struct GameState{
     array_puz *arr_puzles;
     Salas salas;
     Sala* current_sala;
-    Inventory* all_items;  /* Todos los objetos del juego (location actualizada en tiempo de ejecución) */
+    Inventory* all_items;  /*! Todos los objetos del juego (location actualizada en tiempo de ejecución) */
     Conns conns;
 } GameState;
 
