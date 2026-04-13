@@ -9,6 +9,7 @@ ESI-Escape
 # Directorios de build
 build/
 bin/
+docs/
 
 # Editores
 .vscode/
