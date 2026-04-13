@@ -2,10 +2,11 @@
 #include "../ui/ui.h"
 
 /**
+ * @brief Imprime por pantalla el estado completo del GameState para depuración.
  * @par CABECERA
  * void game_print_debug(GameState *gs)
- * @pre PRECONDICION: gs preinicializado
- * @post POSTCONDICION: Imprime por pantalla el estado completo del GameState para depuración
+ * @pre gs preinicializado
+ * @post Imprime por pantalla el estado completo del GameState para depuración
  */
 void game_print_debug(GameState *gs) {
     printf("=== GAMESTATE DEBUG ===\n");
@@ -33,10 +34,11 @@ void game_print_debug(GameState *gs) {
 }
 
 /**
+ * @brief Actualiza la sala actual del jugador si la conexión no está bloqueada.
  * @par CABECERA
  * int game_update_sala(GameState *game_state, Conn salida_destino)
- * @pre PRECONDICION: game_state preinicializado, salida_destino es una conexión válida
- * @post POSTCONDICION: Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
+ * @pre game_state preinicializado, salida_destino es una conexión válida
+ * @post Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
  */
 int game_update_sala(GameState* game_state, Conn salida_destino){
     if(salida_destino.conn_block){
@@ -48,10 +50,11 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
 }
 
 /**
+ * @brief Escribe la partida del jugador actual al fichero indicado en modo append.
  * @par CABECERA
  * int game_write(GameState *gamestate, char path[100])
- * @pre PRECONDICION: gamestate con player y current_sala preinicializados, path es una ruta válida
- * @post POSTCONDICION: Añade al fichero una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
+ * @pre gamestate con player y current_sala preinicializados, path es una ruta válida
+ * @post Añade al fichero una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
  */
 int game_write(GameState *gamestate, char path[100]){
 
@@ -82,10 +85,11 @@ int game_write(GameState *gamestate, char path[100]){
 }
 
 /**
+ * @brief Sobreescribe la partida de un jugador eliminando su bloque anterior y guardando el estado actual.
  * @par CABECERA
  * int game_overwrite(GameState *gamestate, char path[100], char player_id[3])
- * @pre PRECONDICION: gamestate preinicializado, path válido, player_id es el ID del jugador a sobreescribir
- * @post POSTCONDICION: Elimina el bloque del jugador indicado del fichero de partidas y guarda la partida actualizada con game_write
+ * @pre gamestate preinicializado, path válido, player_id es el ID del jugador a sobreescribir
+ * @post Elimina el bloque del jugador indicado del fichero de partidas y guarda la partida actualizada con game_write
  */
 int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
     char savegame_path[20] = "./data/save.txt";
@@ -126,10 +130,11 @@ int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
 }
 
 /**
+ * @brief Comprueba si existe una partida guardada para el jugador activo.
  * @par CABECERA
  * int save_exists(GameState *gamestate, FILE *file)
- * @pre PRECONDICION: gamestate con player preinicializado, file abierto en lectura
- * @post POSTCONDICION: Devuelve el número de línea donde se encontró el ID del jugador, o 0 si no existe partida guardada
+ * @pre gamestate con player preinicializado, file abierto en lectura
+ * @post Devuelve el número de línea donde se encontró el ID del jugador, o 0 si no existe partida guardada
  */
 int save_exists(GameState *gamestate, FILE *file){
     int line_number = 0;
@@ -154,10 +159,11 @@ int save_exists(GameState *gamestate, FILE *file){
 }
 
 /**
+ * @brief Gestiona el guardado de partida, preguntando si sobreescribir en caso de que ya exista.
  * @par CABECERA
  * int game_save(GameState *gamestate, char path[100])
- * @pre PRECONDICION: gamestate con player preinicializado, path es una ruta válida a Partida.txt
- * @post POSTCONDICION: Si ya existe partida guardada pregunta si sobreescribir. Si no existe, crea una nueva entrada. Devuelve 1 si ya existía, 0 si es nueva
+ * @pre gamestate con player preinicializado, path es una ruta válida a Partida.txt
+ * @post Si ya existe partida guardada pregunta si sobreescribir. Si no existe, crea una nueva entrada. Devuelve 1 si ya existía, 0 si es nueva
  */
 int game_save(GameState* gamestate, char path[100]){
     FILE *file = fopen(path, "r");
@@ -191,10 +197,11 @@ int game_save(GameState* gamestate, char path[100]){
 }
 
 /**
+ * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA
  * int game_hud(GameState *game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
+ * @pre game_state preinicializado
+ * @post Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
  */
 int game_hud(GameState *game_state){
 
@@ -309,10 +316,11 @@ int game_hud(GameState *game_state){
 }
 
 /**
+ * @brief Establece la sala inicial y entra en el bucle de juego.
  * @par CABECERA
  * void game_new(GameState *gamestate)
- * @pre PRECONDICION: gamestate con salas preinicializadas
- * @post POSTCONDICION: Establece la sala inicial y entra en el bucle de juego hasta que game_is_playing sea 0
+ * @pre gamestate con salas preinicializadas
+ * @post Establece la sala inicial y entra en el bucle de juego hasta que game_is_playing sea 0
  */
 void game_new(GameState* gamestate){
 
@@ -324,10 +332,11 @@ void game_new(GameState* gamestate){
 }
 
 /**
+ * @brief Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego.
  * @par CABECERA
  * void game_start()
- * @pre PRECONDICION: ninguna
- * @post POSTCONDICION: Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego
+ * @pre ninguna
+ * @post Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego
  */
 void game_start(){
 
@@ -348,10 +357,11 @@ void game_start(){
 }
 
 /**
+ * @brief Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros.
  * @par CABECERA
  * void game_initial_struct_loading(GameState *game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros correspondientes
+ * @pre game_state preinicializado
+ * @post Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros correspondientes
  */
 void game_initial_struct_loading(GameState* game_state){
 
@@ -365,10 +375,11 @@ void game_initial_struct_loading(GameState* game_state){
 }
 
 /**
+ * @brief Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir.
  * @par CABECERA
  * void game_loop(GameState *game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir
+ * @pre game_state preinicializado
+ * @post Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir
  */
 void game_loop(GameState* game_state){
 

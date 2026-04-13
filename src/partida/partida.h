@@ -9,6 +9,12 @@
 #include "../puzles/puzles.h"
 #include "../jugador/jugador.h"
 
+/**
+ * @defgroup partida Módulo Partida
+ * @brief Gestión del estado y flujo de la partida
+ * @{
+ */
+
 /** @brief Estado global del juego. Agrupa todos los datos necesarios durante una partida activa. */
 typedef struct GameState{
     int game_is_playing;         /**< 1 si la partida está en curso, 0 si debe terminar */
@@ -23,43 +29,50 @@ typedef struct GameState{
 } GameState;
 
 /**
+ * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA
  * int game_hud(GameState *game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
+ * @pre game_state preinicializado
+ * @post Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
  */
 int game_hud(GameState*);
 
 /**
+ * @brief Actualiza la sala actual del jugador si la conexión no está bloqueada.
  * @par CABECERA
  * int game_update_sala(GameState *game_state, Conn salida_destino)
- * @pre PRECONDICION: game_state preinicializado, salida_destino es una conexión válida
- * @post POSTCONDICION: Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
+ * @pre game_state preinicializado, salida_destino es una conexión válida
+ * @post Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
  */
 int game_update_sala(GameState* game_state, Conn salida_destino);
 
 /**
+ * @brief Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego.
  * @par CABECERA
  * void game_start()
- * @pre PRECONDICION: ninguna
- * @post POSTCONDICION: Es la función que comienza el juego
+ * @pre ninguna
+ * @post Es la función que comienza el juego
  */
 void game_start();
 
 /**
+ * @brief Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros.
  * @par CABECERA
  * void game_initial_struct_loading(GameState* game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Carga los contenidos básicos de una partida antes de cargarla o comenzar una nueva
+ * @pre game_state preinicializado
+ * @post Carga los contenidos básicos de una partida antes de cargarla o comenzar una nueva
  */
 void game_initial_struct_loading(GameState*);
 
 /**
+ * @brief Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir.
  * @par CABECERA
  * void game_loop(GameState* game_state)
- * @pre PRECONDICION: game_state preinicializado
- * @post POSTCONDICION: Es la función que contiene el bucle del juego tras entrar en un jugador
+ * @pre game_state preinicializado
+ * @post Es la función que contiene el bucle del juego tras entrar en un jugador
  */
 void game_loop(GameState*);
+
+/** @} */
 
 #endif

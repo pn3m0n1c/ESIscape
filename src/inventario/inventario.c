@@ -13,10 +13,11 @@
 */
 
 /**
+ * @brief Comprueba si un fichero se ha podido abrir correctamente.
  * @par CABECERA
  * check_file(FILE *file)
- * @pre PRECONDICION: file es el resultado de un fopen()
- * @post POSTCONDICION: Devuelve 1 si el fichero es válido, 0 si es NULL
+ * @pre file es el resultado de un fopen()
+ * @post Devuelve 1 si el fichero es válido, 0 si es NULL
  */
 int check_file(FILE *file){
     if (file == NULL) {
@@ -28,10 +29,11 @@ int check_file(FILE *file){
 }
 
 /**
+ * @brief Parsea una línea del fichero de objetos y rellena un Item.
  * @par CABECERA
  * build_item(char line[], Item *item)
- * @pre PRECONDICION: line tiene formato Id-Nombre-Descripción-Localización, item preinicializado
- * @post POSTCONDICION: Devuelve 1 si tuvo éxito, 0 si la línea está mal formada (faltan campos)
+ * @pre line tiene formato Id-Nombre-Descripción-Localización, item preinicializado
+ * @post Devuelve 1 si tuvo éxito, 0 si la línea está mal formada (faltan campos)
  */
 int build_item(char line[], Item *item) {
     if(line[strlen(line)-1] == '\n'){
@@ -49,10 +51,11 @@ int build_item(char line[], Item *item) {
 }
 
 /**
+ * @brief Lee los objetos del fichero indicado y los devuelve organizados en un Inventory.
  * @par CABECERA
  * inv_load_items(char path[])
- * @pre PRECONDICION: path es una ruta válida a un fichero con formato Id-Nombre-Descripción-Localización
- * @post POSTCONDICION: Devuelve un Inventory* con todos los objetos ya extraídos y organizados en forma de Item, o NULL si no se pudo abrir el fichero
+ * @pre path es una ruta válida a un fichero con formato Id-Nombre-Descripción-Localización
+ * @post Devuelve un Inventory* con todos los objetos ya extraídos y organizados en forma de Item, o NULL si no se pudo abrir el fichero
  */
 Inventory* inv_load_items(char path[]) {
     FILE *file = fopen(path, "r");
@@ -88,10 +91,11 @@ Inventory* inv_load_items(char path[]) {
 }
 
 /**
+ * @brief Compara dos items campo a campo, al igual que strcmp().
  * @par CABECERA
  * inv_itemcmp(Item item_1, Item item_2)
- * @pre PRECONDICION: item_1 e item_2 preinicializados
- * @post POSTCONDICION: Al igual que strcmp(), devuelve 1 si dos items NO son iguales y 0 si efectivamente lo son
+ * @pre item_1 e item_2 preinicializados
+ * @post Al igual que strcmp(), devuelve 1 si dos items NO son iguales y 0 si efectivamente lo son
  */
 int inv_itemcmp(Item item_1, Item item_2){
     if(
@@ -105,10 +109,11 @@ int inv_itemcmp(Item item_1, Item item_2){
 }
 
 /**
+ * @brief Busca un item en un inventario y devuelve su posición.
  * @par CABECERA
  * inv_find_item(Item item, Inventory *inv)
- * @pre PRECONDICION: item e inv preinicializados
- * @post POSTCONDICION: Busca un item en un inventario. Devuelve su posición en el array, o -1 si no se encuentra.
+ * @pre item e inv preinicializados
+ * @post Busca un item en un inventario. Devuelve su posición en el array, o -1 si no se encuentra.
  * Se devuelve -1 en lugar de 0 por si el item está en la posición 0
  */
 int inv_find_item(Item item, Inventory *inv){
@@ -122,10 +127,11 @@ int inv_find_item(Item item, Inventory *inv){
 }
 
 /**
+ * @brief Escribe las líneas OBJETO de todos los items al fichero abierto recibido.
  * @par CABECERA
  * inv_write_items(FILE *file, Inventory *all_items)
- * @pre PRECONDICION: file abierto en escritura, all_items preinicializado
- * @post POSTCONDICION: Escribe las líneas OBJETO de todos los items al fichero con formato "OBJETO: Id_obj-Localiz". Devuelve 1 si éxito, 0 en otro caso
+ * @pre file abierto en escritura, all_items preinicializado
+ * @post Escribe las líneas OBJETO de todos los items al fichero con formato "OBJETO: Id_obj-Localiz". Devuelve 1 si éxito, 0 en otro caso
  */
 int inv_write_items(FILE *file, Inventory *all_items){
     if(file == NULL || all_items == NULL) return 0;
@@ -144,10 +150,11 @@ int inv_write_items(FILE *file, Inventory *all_items){
 }
 
 /**
+ * @brief Busca un item en un inventario en base a su ID.
  * @par CABECERA
  * inv_find_item_by_id(char wanted_id[5], Inventory *inv)
- * @pre PRECONDICION: wanted_id e inv preinicializados
- * @post POSTCONDICION: Busca un item en un inventario en base a su ID. Devuelve un puntero al Item, o NULL si no lo encuentra
+ * @pre wanted_id e inv preinicializados
+ * @post Busca un item en un inventario en base a su ID. Devuelve un puntero al Item, o NULL si no lo encuentra
  */
 Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
     int i;
@@ -161,10 +168,11 @@ Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
 }
 
 /**
+ * @brief Crea un inventario vacío, útil para inicializar un jugador en una nueva partida.
  * @par CABECERA
  * inv_create_empty_inventory()
- * @pre PRECONDICION: ninguna
- * @post POSTCONDICION: Crea un inventario vacío con slot NULL y size 0. Útil para crear un jugador en una nueva partida
+ * @pre ninguna
+ * @post Crea un inventario vacío con slot NULL y size 0. Útil para crear un jugador en una nueva partida
  */
 Inventory inv_create_empty_inventory(){
     Inventory inventory;
@@ -176,10 +184,11 @@ Inventory inv_create_empty_inventory(){
 }
 
 /**
+ * @brief Intenta añadir un Item a un Inventory.
  * @par CABECERA
  * inv_add_item(Item item, Inventory *inv)
- * @pre PRECONDICION: item e inv preinicializados
- * @post POSTCONDICION: Intenta añadir un Item a un Inventory. Devuelve 1 si lo añadió con éxito o 0 en otro caso
+ * @pre item e inv preinicializados
+ * @post Intenta añadir un Item a un Inventory. Devuelve 1 si lo añadió con éxito o 0 en otro caso
  */
 int inv_add_item(Item item, Inventory *inv){
     inv->slot = realloc(
@@ -198,10 +207,11 @@ int inv_add_item(Item item, Inventory *inv){
 }
 
 /**
+ * @brief Elimina la primera ocurrencia de un item en el inventario.
  * @par CABECERA
  * inv_remove_item(Item item, Inventory *inv)
- * @pre PRECONDICION: item e inv preinicializados
- * @post POSTCONDICION: Elimina la primera ocurrencia del item copiando el último item a su posición y reduciendo el tamaño. Devuelve 1 si se eliminó, 0 si no se encontró
+ * @pre item e inv preinicializados
+ * @post Elimina la primera ocurrencia del item copiando el último item a su posición y reduciendo el tamaño. Devuelve 1 si se eliminó, 0 si no se encontró
  */
 int inv_remove_item(Item item, Inventory *inv){
 
@@ -228,10 +238,11 @@ int inv_remove_item(Item item, Inventory *inv){
 }
 
 /**
+ * @brief Libera la memoria del inventario y de su array de slots.
  * @par CABECERA
  * inv_free_inventory(Inventory *inv_to_free)
- * @pre PRECONDICION: inv_to_free preinicializado
- * @post POSTCONDICION: Libera la memoria del inventario y de su array de slots
+ * @pre inv_to_free preinicializado
+ * @post Libera la memoria del inventario y de su array de slots
  */
 void inv_free_inventory(Inventory *inv_to_free){
 
