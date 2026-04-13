@@ -50,13 +50,13 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
 }
 
 /**
- * @brief Escribe la partida del jugador actual al fichero indicado en modo append.
+ * @brief Escribe la partida del jugador actual a SAVE_PATH en modo append.
  * @par CABECERA
- * int game_write(GameState *gamestate, char path[100])
- * @pre gamestate con player y current_sala preinicializados, path es una ruta válida
+ * int game_write(GameState *gamestate)
+ * @pre gamestate con player y current_sala preinicializados
  * @post Añade al fichero una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
  */
-int game_write(GameState *gamestate, char path[100]){
+int game_write(GameState *gamestate){
 
     //! Mínima salvaguarda para evitar crasheos.
     if(gamestate->player == NULL || gamestate->current_sala == NULL){
@@ -65,7 +65,7 @@ int game_write(GameState *gamestate, char path[100]){
         return 0;
     }
 
-    FILE *savegame = fopen(path, "a");
+    FILE *savegame = fopen(SAVE_PATH, "a");
     int i;
 
     fprintf(savegame, "\n\nJUGADOR: %s\n", gamestate->player->id);
@@ -85,19 +85,19 @@ int game_write(GameState *gamestate, char path[100]){
 }
 
 /**
- * @brief Sobreescribe la partida de un jugador eliminando su bloque anterior y guardando el estado actual.
+ * @brief Sobreescribe la partida del jugador activo eliminando su bloque anterior y guardando el estado actual.
  * @par CABECERA
- * int game_overwrite(GameState *gamestate, char path[100], char player_id[3])
- * @pre gamestate preinicializado, path válido, player_id es el ID del jugador a sobreescribir
- * @post Elimina el bloque del jugador indicado del fichero de partidas y guarda la partida actualizada con game_write
+ * int game_overwrite(GameState *gamestate)
+ * @pre gamestate con player preinicializado
+ * @post Elimina el bloque del jugador activo de SAVE_PATH y guarda la partida actualizada con game_write
  */
-int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
+int game_overwrite(GameState *gamestate){
     char savegame_path[20] = "./data/save.txt";
 
     //! Crea un fichero llamado save.txt
     FILE *new_save = fopen(savegame_path, "w");
     //! Escribe línea a línea saltando los contenidos del jugador buscado
-    FILE *old_save = fopen(path, "r");
+    FILE *old_save = fopen(SAVE_PATH, "r");
 
     char old_line[150];
     char found_id[3] = "";
@@ -106,7 +106,7 @@ int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
     while(fgets(old_line, sizeof(old_line), old_save) != NULL){
         //! Truco para buscar el patrón "JUGADOR: id" con sscanf
         sscanf(old_line, "JUGADOR: %s", found_id);
-        if (strcmp(found_id, player_id) != 0) {
+        if (strcmp(found_id, gamestate->player->id) != 0) {
             /*! Mientras el id de jugador encontrado y el id del jugador actual
             sean distintos, escribimos en save.txt. Es decir, cuando sean iguales,
             No se escribirá
@@ -119,29 +119,29 @@ int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
     fclose(new_save);
 
     //! Al terminar de escribir, elimina partida.txt usando su path.
-    remove(path);
+    remove(SAVE_PATH);
     //! Renombrar save.txt a partida.txt
-    rename(savegame_path, path);
+    rename(savegame_path, SAVE_PATH);
 
     //! Usar game_write para guardar partida al final
-    game_write(gamestate, path);
+    game_write(gamestate);
 
     return 0;
 }
 
 /**
- * @brief Comprueba si existe una partida guardada para el jugador activo.
+ * @brief Comprueba si existe una partida guardada para el ID de jugador indicado.
  * @par CABECERA
- * int save_exists(GameState *gamestate, FILE *file)
- * @pre gamestate con player preinicializado, file abierto en lectura
- * @post Devuelve el número de línea donde se encontró el ID del jugador, o 0 si no existe partida guardada
+ * int save_exists(char id[3])
+ * @pre id preinicializado
+ * @post Devuelve el número de línea donde se encontró el ID del jugador en SAVE_PATH, o 0 si no existe
  */
-int save_exists(GameState *gamestate, FILE *file){
+int save_exists(char id[3]){
+    FILE *file = fopen(SAVE_PATH, "r");
+
     int line_number = 0;
     char line_content[100];
     char current_id[3];
-
-    game_print_debug(gamestate);
 
     while(fgets(line_content, 100, file) != NULL){
         current_id[0] = '\0';
@@ -150,7 +150,7 @@ int save_exists(GameState *gamestate, FILE *file){
         //! Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
         sscanf(line_content, "JUGADOR: %s", current_id);
 
-        if(strcmp(current_id, gamestate->player->id) == 0){
+        if(strcmp(current_id, id) == 0){
             return line_number;
         }
     }
@@ -161,33 +161,22 @@ int save_exists(GameState *gamestate, FILE *file){
 /**
  * @brief Gestiona el guardado de partida, preguntando si sobreescribir en caso de que ya exista.
  * @par CABECERA
- * int game_save(GameState *gamestate, char path[100])
- * @pre gamestate con player preinicializado, path es una ruta válida a Partida.txt
- * @post Si ya existe partida guardada pregunta si sobreescribir. Si no existe, crea una nueva entrada. Devuelve 1 si ya existía, 0 si es nueva
+ * int game_save(GameState *gamestate)
+ * @pre gamestate con player preinicializado
+ * @post Si ya existe partida guardada pregunta si sobreescribir. Si no existe, crea una nueva entrada en SAVE_PATH
  */
-int game_save(GameState* gamestate, char path[100]){
-    FILE *file = fopen(path, "r");
+int game_save(GameState* gamestate){
 
-    if(file == NULL) {
-        printf("Error, no se ha podido abrir %s", path);
-        ui_anykey_press();
-        return 0;
-    }
-
-    int save_line = save_exists(gamestate, file);
-
-    fclose(file);
-
-    if(save_line > 0){
+    if(save_exists(gamestate->player->id) > 0){
         if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
-            game_overwrite(gamestate, path, gamestate->player->id);
+            game_overwrite(gamestate);
             puts("¡Partida sobreescrita con éxito!");
             ui_anykey_press();
         }
     } else {
         //! Si no existe crea una nueva entrada con los datos
         puts("No existe partida guardada. Guardando partida...");
-        if(game_write(gamestate, path) == 1 ){
+        if(game_write(gamestate) == 1 ){
             puts("¡Partida guardada con éxito!");
             ui_anykey_press();
         };
@@ -301,7 +290,7 @@ int game_hud(GameState *game_state){
             break;
 
         case 8:
-            game_save(game_state, "./data/Partida.txt");
+            game_save(game_state);
             break;
 
         case 9:
@@ -390,6 +379,10 @@ void game_loop(GameState* game_state){
             break;
         case 1:
             game_initial_struct_loading(game_state);
+
+            if(save_exists(game_state->player->id) == 0){
+                puts("¡No existen datos que cargar para este jugador!");
+            }
 
             //!EN ESTE HUECO SE CARGARÍA LA PARTIDA
 

@@ -9,6 +9,8 @@
 #include "../puzles/puzles.h"
 #include "../jugador/jugador.h"
 
+#define SAVE_PATH "./data/Partida.txt"
+
 /**
  * @defgroup partida Módulo Partida
  * @brief Gestión del estado y flujo de la partida
@@ -72,6 +74,24 @@ void game_initial_struct_loading(GameState*);
  * @post Es la función que contiene el bucle del juego tras entrar en un jugador
  */
 void game_loop(GameState*);
+
+/**
+ * @brief Comprueba si existe una partida guardada para el ID de jugador indicado.
+ * @par CABECERA
+ * int save_exists(char *player_id)
+ * @pre player_id preinicializado
+ * @post Devuelve 1 si existe partida guardada para ese jugador, 0 si no
+ */
+int save_exists(char *player_id);
+
+/**
+ * @brief Carga la partida guardada del jugador activo y restaura el estado del juego.
+ * @par CABECERA
+ * int game_load(GameState *gamestate)
+ * @pre gamestate con player y estructuras preinicializadas
+ * @post Restaura sala, objetos, conexiones y puzles al estado guardado. Devuelve 1 si éxito, 0 si no existe partida
+ */
+int game_load(GameState *gamestate);
 
 /** @} */
 
