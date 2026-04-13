@@ -259,7 +259,7 @@ void game_start(){
     GameState gamestate;
     gamestate.game_is_playing = 1;
 
-    gamestate.players = cargar_jugadores("./data/Jugadores.txt");
+    gamestate.players = player_loadplayer("./data/Jugadores.txt");
     gamestate.structs_already_loaded = 0; //PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
 
     ui_user_initial_menu(&gamestate);
