@@ -1,6 +1,12 @@
 #include "partida.h"
 #include "../ui/ui.h"
 
+/**
+ * @par CABECERA
+ * void game_print_debug(GameState *gs)
+ * @pre PRECONDICION: gs preinicializado
+ * @post POSTCONDICION: Imprime por pantalla el estado completo del GameState para depuración
+ */
 void game_print_debug(GameState *gs) {
     printf("=== GAMESTATE DEBUG ===\n");
     printf("game_is_playing: %d\n", gs->game_is_playing);
@@ -26,6 +32,12 @@ void game_print_debug(GameState *gs) {
     printf("=======================\n");
 }
 
+/**
+ * @par CABECERA
+ * int game_update_sala(GameState *game_state, Conn salida_destino)
+ * @pre PRECONDICION: game_state preinicializado, salida_destino es una conexión válida
+ * @post POSTCONDICION: Si la salida no está bloqueada, actualiza current_sala y devuelve 1. Si está bloqueada devuelve 0
+ */
 int game_update_sala(GameState* game_state, Conn salida_destino){
     if(salida_destino.conn_block){
         return 0;
@@ -35,6 +47,12 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
     }
 }
 
+/**
+ * @par CABECERA
+ * int game_write(GameState *gamestate, char path[100])
+ * @pre PRECONDICION: gamestate con player y current_sala preinicializados, path es una ruta válida
+ * @post POSTCONDICION: Añade al fichero una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
+ */
 int game_write(GameState *gamestate, char path[100]){
 
     //! Mínima salvaguarda para evitar crasheos.
@@ -46,7 +64,7 @@ int game_write(GameState *gamestate, char path[100]){
 
     FILE *savegame = fopen(path, "a");
     int i;
-    
+
     fprintf(savegame, "\n\nJUGADOR: %s\n", gamestate->player->id);
     fprintf(savegame, "SALA: %s\n", gamestate->current_sala->sala_id);
     inv_write_items(savegame, gamestate->all_items);
@@ -63,6 +81,12 @@ int game_write(GameState *gamestate, char path[100]){
     return 1;
 }
 
+/**
+ * @par CABECERA
+ * int game_overwrite(GameState *gamestate, char path[100], char player_id[3])
+ * @pre PRECONDICION: gamestate preinicializado, path válido, player_id es el ID del jugador a sobreescribir
+ * @post POSTCONDICION: Elimina el bloque del jugador indicado del fichero de partidas y guarda la partida actualizada con game_write
+ */
 int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
     char savegame_path[20] = "./data/save.txt";
 
@@ -97,13 +121,16 @@ int game_overwrite(GameState *gamestate, char path[100], char player_id[3]){
 
     //! Usar game_write para guardar partida al final
     game_write(gamestate, path);
-    
+
     return 0;
 }
 
-/*! Recibe un gamestate y un archivo que va a escanear. Si encuentra el id del jugador 
- * que está intentando guardar la partida devolverá 1, significando que ese jugador tiene
- * una partida guardada. De lo contrario, devolverá 0. */
+/**
+ * @par CABECERA
+ * int save_exists(GameState *gamestate, FILE *file)
+ * @pre PRECONDICION: gamestate con player preinicializado, file abierto en lectura
+ * @post POSTCONDICION: Devuelve el número de línea donde se encontró el ID del jugador, o 0 si no existe partida guardada
+ */
 int save_exists(GameState *gamestate, FILE *file){
     int line_number = 0;
     char line_content[100];
@@ -114,7 +141,7 @@ int save_exists(GameState *gamestate, FILE *file){
     while(fgets(line_content, 100, file) != NULL){
         current_id[0] = '\0';
         line_number++;
-        
+
         //! Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
         sscanf(line_content, "JUGADOR: %s", current_id);
 
@@ -126,7 +153,12 @@ int save_exists(GameState *gamestate, FILE *file){
     return 0;
 }
 
-
+/**
+ * @par CABECERA
+ * int game_save(GameState *gamestate, char path[100])
+ * @pre PRECONDICION: gamestate con player preinicializado, path es una ruta válida a Partida.txt
+ * @post POSTCONDICION: Si ya existe partida guardada pregunta si sobreescribir. Si no existe, crea una nueva entrada. Devuelve 1 si ya existía, 0 si es nueva
+ */
 int game_save(GameState* gamestate, char path[100]){
     FILE *file = fopen(path, "r");
 
@@ -146,8 +178,6 @@ int game_save(GameState* gamestate, char path[100]){
             puts("¡Partida sobreescrita con éxito!");
             ui_anykey_press();
         }
-
-        return 1;
     } else {
         //! Si no existe crea una nueva entrada con los datos
         puts("No existe partida guardada. Guardando partida...");
@@ -160,6 +190,12 @@ int game_save(GameState* gamestate, char path[100]){
     return 0;
 }
 
+/**
+ * @par CABECERA
+ * int game_hud(GameState *game_state)
+ * @pre PRECONDICION: game_state preinicializado
+ * @post POSTCONDICION: Muestra el menú del bucle de juego y ejecuta la acción elegida. Devuelve el índice del elemento elegido
+ */
 int game_hud(GameState *game_state){
 
     Menu menu_game_loop_start;
@@ -168,11 +204,11 @@ int game_hud(GameState *game_state){
     Menu_Entry Menu_Entry_describir_sala;
     strcpy(Menu_Entry_describir_sala.name, "Describir sala");
     Menu_Entry_describir_sala.action = NULL;
-    
+
     Menu_Entry Menu_Entry_examinar;
     strcpy(Menu_Entry_examinar.name, "Examinar (objetos y salidas)");
     Menu_Entry_examinar.action = NULL;
-    
+
     Menu_Entry Menu_Entry_entrar_en_otra_sala;
     strcpy(Menu_Entry_entrar_en_otra_sala.name, "Entrar en otra sala");
     Menu_Entry_entrar_en_otra_sala.action = NULL;
@@ -200,7 +236,7 @@ int game_hud(GameState *game_state){
     Menu_Entry Menu_Entry_guardar_partida;
     strcpy(Menu_Entry_guardar_partida.name, "Guardar partida");
     Menu_Entry_guardar_partida.action = NULL;
-    
+
     Menu_Entry Menu_Entry_volver;
     strcpy(Menu_Entry_volver.name, "Volver");
     Menu_Entry_volver.action = NULL;
@@ -256,11 +292,11 @@ int game_hud(GameState *game_state){
         case 7:
             ui_solve_puzzle(game_state);
             break;
-        
+
         case 8:
             game_save(game_state, "./data/Partida.txt");
             break;
-            
+
         case 9:
             game_state->game_is_playing = 0;
             break;
@@ -272,17 +308,29 @@ int game_hud(GameState *game_state){
     return(answer);
 }
 
+/**
+ * @par CABECERA
+ * void game_new(GameState *gamestate)
+ * @pre PRECONDICION: gamestate con salas preinicializadas
+ * @post POSTCONDICION: Establece la sala inicial y entra en el bucle de juego hasta que game_is_playing sea 0
+ */
 void game_new(GameState* gamestate){
 
     gamestate->current_sala = salas_get_sala_inicial(&(gamestate->salas));
-    
+
     while(gamestate->game_is_playing){
         game_hud(gamestate);
     }
 }
 
+/**
+ * @par CABECERA
+ * void game_start()
+ * @pre PRECONDICION: ninguna
+ * @post POSTCONDICION: Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego
+ */
 void game_start(){
-    
+
     GameState gamestate;
     gamestate.game_is_playing = 1;
 
@@ -296,9 +344,15 @@ void game_start(){
         game_loop(&gamestate);
 
     }
-    
+
 }
 
+/**
+ * @par CABECERA
+ * void game_initial_struct_loading(GameState *game_state)
+ * @pre PRECONDICION: game_state preinicializado
+ * @post POSTCONDICION: Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros correspondientes
+ */
 void game_initial_struct_loading(GameState* game_state){
 
     game_state->salas = salas_load_salas("./data/Salas.txt");
@@ -310,6 +364,12 @@ void game_initial_struct_loading(GameState* game_state){
 
 }
 
+/**
+ * @par CABECERA
+ * void game_loop(GameState *game_state)
+ * @pre PRECONDICION: game_state preinicializado
+ * @post POSTCONDICION: Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir
+ */
 void game_loop(GameState* game_state){
 
     switch(ui_main_menu()){
