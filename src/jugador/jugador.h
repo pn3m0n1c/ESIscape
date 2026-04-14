@@ -47,7 +47,7 @@ jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players);
 
 //!Cabecera:  void player_freeplayer(jugadores *jugadores_borrar)
 //!Precondicion:
-//!Postcondicion: Vacia la memoria de arr_jugadores
+//!Postcondicion: Vacia la memoria de arr_jugadores 
 void player_freeplayer(jugadores *jugadores_borrar);
 
 

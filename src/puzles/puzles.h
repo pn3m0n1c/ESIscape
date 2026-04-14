@@ -27,7 +27,7 @@ array_puz* puzzle_loadpuzzles(char path[]);
 
 //!Cabecera: void puzzle_freepuzzles(array_puz *)
 //!Precondicion:
-//!Postcondicion: Vacia la memoria del array de los puzles
+//!Postcondicion: Vacia la memoria del array de los puzles 
 void puzzle_freepuzzles(array_puz *);
 
 #endif
