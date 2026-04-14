@@ -30,6 +30,11 @@ array_puz* puzzle_loadpuzzles(char path[]);
 //!Postcondicion: Si la respuesta es correcta, cambia 'resuelto' a 1 y devuelve 1. 
 int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador);
 
+//!Cabecera: puzle* puzzle_find_by_id(char* wanted_id, array_puz* arr)
+//!Precondicion: wanted_id y arr preinicializados
+//!Postcondicion: Devuelve un puntero al puzle con el id especificado, o NULL si no existe
+puzle* puzzle_find_by_id(char*, array_puz*);
+
 //!Cabecera: void puzzle_freepuzzles(array_puz *)
 //!Precondicion:
 //!Postcondicion: Vacia la memoria del array de los puzles 

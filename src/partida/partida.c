@@ -186,6 +186,47 @@ int game_save(GameState* gamestate){
 }
 
 /**
+ * @brief Carga la partida guardada del jugador activo y restaura el estado del juego.
+ * @par CABECERA
+ * int game_load(GameState *gamestate)
+ * @pre gamestate con player y estructuras preinicializadas
+ * @post Restaura sala, objetos, conexiones y puzles al estado guardado. Devuelve 0 siempre
+ */
+int game_load(GameState* gamestate){
+    FILE *saves_file = fopen(SAVE_PATH, "r");
+    
+    char line[150];
+	Savegame data;
+    
+    //! Leer el fichero hasta encontrar el jugador.
+    while(fgets(line, sizeof(line), saves_file) != NULL){
+        //! De nuevo el truquito para buscar el patrón "JUGADOR: id" con sscanf
+        sscanf(line, "JUGADOR: %s", data.player_id);
+        if (strcmp(data.player_id, gamestate->player->id) == 0) {
+            //! Jugador encontrado, vamos actualizando el gamestate
+            //! Por cada "tipo de línea" que encuentres, actualizala.
+			if(sscanf(line, "SALA: %s", data.sala_id) == 1){
+				gamestate->current_sala = salas_get_sala_from_id(data.sala_id, &gamestate->salas);
+			}
+			else if(sscanf(line, "OBJETO: %[^-]-%s", data.obj_id, data.obj_location) == 2){
+				Item* item = inv_find_item_by_id(data.obj_id, gamestate->all_items);
+				inv_update_item_loc(item, data.obj_location);
+    		}
+			else if(sscanf(line, "CONEXION: %[^-]-%s", data.conn_id, data.conn_state) == 2){
+				Conn* conn = salas_find_conn_by_id(data.conn_id, &gamestate->conns);
+				if(conn != NULL) conn->conn_block = strcmp(data.conn_state, "Bloqueada") == 0 ? 1 : 0;
+			}
+			else if(sscanf(line, "PUZLE: %[^-]-%s", data.puzz_id, data.puzz_state) == 2){
+				puzle* puzz = puzzle_find_by_id(data.puzz_id, gamestate->arr_puzles);
+				if(puzz != NULL) puzz->resuelto = strcmp(data.puzz_state, "Resuelto") == 0 ? 1 : 0;
+			}
+        }
+    }
+
+	return 0;
+}
+
+/**
  * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA
  * int game_hud(GameState *game_state)
@@ -381,10 +422,13 @@ void game_loop(GameState* game_state){
             game_initial_struct_loading(game_state);
 
             if(save_exists(game_state->player->id) == 0){
-                puts("¡No existen datos que cargar para este jugador!");
+				puts("¡No existen datos que cargar para este jugador!");
+				ui_anykey_press();
+				break;
             }
 
-            //!EN ESTE HUECO SE CARGARÍA LA PARTIDA
+            if(game_load(game_state) ==  0)
+				puts("¡Partida cargada con éxito!");
 
             while(game_state->game_is_playing){
                 game_hud(game_state);

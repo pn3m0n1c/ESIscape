@@ -67,6 +67,11 @@ Salas salas_load_salas(char*);
 //!POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las conexiones cargadas desde su archivo
 Conns salas_load_conns(char*);
 
+//!CABECERA: Conn* salas_find_conn_by_id(char* wanted_id, Conns* conns)
+//!PRECONDICIÓN: wanted_id y conns preinicializados
+//!POSTCONDICIÓN: Devuelve un puntero a la Conn con el id especificado, o NULL si no existe
+Conn* salas_find_conn_by_id(char*, Conns*);
+
 //!CABECERA:         void salas_free_salas(Salas* salas)
 //!PRECONDICIÓN:     
 //!POSTCONDICIÓN:    libera la memoria dinámica de las salas cargadas

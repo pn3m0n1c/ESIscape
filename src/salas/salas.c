@@ -203,6 +203,15 @@ Conns salas_load_conns(char *file_path){
 
 }
 
+Conn* salas_find_conn_by_id(char* wanted_id, Conns* conns){
+    int i;
+    for(i = 0; i < conns->number_of_conns; i++){
+        if(strcmp(conns->conns[i].conn_id, wanted_id) == 0)
+            return &conns->conns[i];
+    }
+    return NULL;
+}
+
 //!LIBERO LAS SALAS
 void salas_free_salas(Salas* salas){
 

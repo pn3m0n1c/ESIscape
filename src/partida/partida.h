@@ -30,6 +30,18 @@ typedef struct GameState{
     Conns conns;                 /**< Conjunto de conexiones entre salas */
 } GameState;
 
+/** @brief Estructura auxiliar para parsear líneas del fichero de partida guardada. */
+typedef struct{
+    char player_id[3];           /**< ID del jugador leído de una línea JUGADOR */
+    char sala_id[3];             /**< ID de sala leído de una línea SALA */
+    char obj_id[MAX_ID_ITEM];    /**< ID de objeto leído de una línea OBJETO */
+    char obj_location[MAX_LOCATION]; /**< Localización del objeto leída de una línea OBJETO */
+    char conn_id[4];             /**< ID de conexión leído de una línea CONEXION */
+    char conn_state[10];         /**< Estado de conexión ("Bloqueada" o "Activa") */
+    char puzz_id[4];             /**< ID de puzle leído de una línea PUZLE */
+    char puzz_state[10];         /**< Estado del puzle ("Resuelto" o "Pendiente") */
+} Savegame;
+
 /**
  * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA

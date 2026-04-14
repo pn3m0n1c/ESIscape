@@ -53,6 +53,16 @@ array_puz* puzzle_loadpuzzles(char path[]){
     return arr_puzles;
 
 }
+
+puzle* puzzle_find_by_id(char* wanted_id, array_puz* arr){
+    int i;
+    for(i = 0; i < arr->total_leidos; i++){
+        if(strcmp(arr->unidad[i].id_puzle, wanted_id) == 0)
+            return &arr->unidad[i];
+    }
+    return NULL;
+}
+
 //!Si el puzle esta completado devuelve 1 y si no esta completado devuelve 0
 int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador){
     
