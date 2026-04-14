@@ -1,7 +1,6 @@
 #include "partida.h"
 #include "../ui/ui.h"
 
-
 /**
  * @brief Imprime por pantalla el estado completo del GameState para depuración.
  * @par CABECERA
