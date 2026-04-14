@@ -25,6 +25,11 @@ typedef struct{
 //!Postcondicion: Devuelve puntero a la estructura array_puz y actualiza el contador total leidos
 array_puz* puzzle_loadpuzzles(char path[]);
 
+//!Cabecera: Comprueba si la respuesta del jugador coincide con la solución del puzle.
+//!Precondicion: El array de puzles debe estar inicializado y los parámetros no ser nulos.
+//!Postcondicion: Si la respuesta es correcta, cambia 'resuelto' a 1 y devuelve 1. 
+int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador);
+
 //!Cabecera: void puzzle_freepuzzles(array_puz *)
 //!Precondicion:
 //!Postcondicion: Vacia la memoria del array de los puzles 

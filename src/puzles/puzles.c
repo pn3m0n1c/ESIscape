@@ -1,5 +1,6 @@
 #include "puzles.h"
 
+//!Carga los puzles
 array_puz* puzzle_loadpuzzles(char path[]){
     
     FILE *f = fopen(path, "r");
@@ -52,6 +53,37 @@ array_puz* puzzle_loadpuzzles(char path[]){
     return arr_puzles;
 
 }
+//!Si el puzle esta completado devuelve 1 y si no esta completado devuelve 0
+int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador){
+    
+    if (arr_puzles == NULL || arr_puzles->unidad == NULL) {
+         return -1;
+    }
+
+    int i;
+    for (i = 0; i < arr_puzles->total_leidos; i++) {
+        
+        if (strcmp(arr_puzles->unidad[i].id_puzle, id_puzle_objetivo) == 0) {
+            
+            if (arr_puzles->unidad[i].resuelto == 1) {
+                return 1; 
+            }
+
+            if (strcmp(arr_puzles->unidad[i].sol, respuesta_jugador) == 0) {
+                
+                arr_puzles->unidad[i].resuelto = 1;
+                return 1; 
+                
+            } else {
+                return 0; 
+            }
+        }
+    }
+
+    return -1; 
+}
+
+
 
 void puzzle_freepuzzles(array_puz *arr_puzles) {
     if ((arr_puzles) != NULL) {
