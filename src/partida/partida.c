@@ -1,6 +1,7 @@
 #include "partida.h"
 #include "../ui/ui.h"
 
+
 /**
  * @brief Imprime por pantalla el estado completo del GameState para depuración.
  * @par CABECERA
@@ -119,9 +120,13 @@ int game_overwrite(GameState *gamestate){
     fclose(new_save);
 
     //! Al terminar de escribir, elimina partida.txt usando su path.
-    remove(SAVE_PATH);
-    //! Renombrar save.txt a partida.txt
-    rename(savegame_path, SAVE_PATH);
+	if(remove(SAVE_PATH) != 0){
+    	puts("remove falló");
+	}
+	//! Renombrar save.txt a partida.txt
+	if(rename(savegame_path, SAVE_PATH) != 0){
+		puts("rename falló");
+	}
 
     //! Usar game_write para guardar partida al final
     game_write(gamestate);
@@ -154,6 +159,8 @@ int save_exists(char id[3]){
             return line_number;
         }
     }
+
+	fclose(file);
 
     return 0;
 }
