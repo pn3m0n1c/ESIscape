@@ -111,6 +111,8 @@ int inv_remove_item(Item item, Inventory *inv);
  */
 void inv_free_inventory(Inventory *);
 
+void inv_update_item_loc(Item* item, char location[13]);
+
 /** @} */
 
 #endif

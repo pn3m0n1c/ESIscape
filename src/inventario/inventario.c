@@ -139,11 +139,9 @@ int inv_write_items(FILE *file, Inventory *all_items){
     int i;
 
     for(i = 0; i < all_items->size; i++){
-        if(strcmp(all_items->slot[i].location, "Inventario") == 0){
-            if(fprintf(file, "OBJETO: %s-%s\n",
-                all_items->slot[i].id,
-                all_items->slot[i].location) < 0) return 0;
-        }
+		if(fprintf(file, "OBJETO: %s-%s\n",
+			all_items->slot[i].id,
+			all_items->slot[i].location) < 0) return 0;
     }
 
     return 1;
@@ -181,6 +179,10 @@ Inventory inv_create_empty_inventory(){
     inventory.size = 0;
 
     return inventory;
+}
+
+void inv_update_item_loc(Item* item, char location[13]){
+	strcpy(item->location, location);
 }
 
 /**
