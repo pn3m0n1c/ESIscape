@@ -138,30 +138,29 @@ int game_overwrite(GameState *gamestate){
  * @par CABECERA
  * int save_exists(char id[3])
  * @pre id preinicializado
- * @post Devuelve el número de línea donde se encontró el ID del jugador en SAVE_PATH, o 0 si no existe
+ * @post Devuelve 1 si se encontró el ID del jugador en SAVE_PATH, o 0 si no existe.
  */
 int save_exists(char id[3]){
     FILE *file = fopen(SAVE_PATH, "r");
 
-    int line_number = 0;
+	int exists = 0;
     char line_content[100];
     char current_id[3];
 
     while(fgets(line_content, 100, file) != NULL){
         current_id[0] = '\0';
-        line_number++;
 
         //! Busca la cadena que empieza por JUGADOR, la cual contiene el ID del mismo.
         sscanf(line_content, "JUGADOR: %s", current_id);
 
         if(strcmp(current_id, id) == 0){
-            return line_number;
+			exists = 1;
         }
     }
 
 	fclose(file);
 
-    return 0;
+    return exists;
 }
 
 /**
@@ -173,7 +172,7 @@ int save_exists(char id[3]){
  */
 int game_save(GameState* gamestate){
 
-    if(save_exists(gamestate->player->id) > 0){
+    if(save_exists(gamestate->player->id) == 1){
         if(ui_confirmation("ATENCIÓN: Ya existe una partida guardada, ¿Sobreescribir?")){
             game_overwrite(gamestate);
             puts("¡Partida sobreescrita con éxito!");
