@@ -1,6 +1,5 @@
 #include "partida.h"
 #include "../ui/ui.h"
-#include <cstdio>
 
 /**
  * @brief Imprime por pantalla el estado completo del GameState para depuración.
@@ -379,7 +378,6 @@ void game_new(GameState* gamestate){
 void game_start(){
 
     GameState gamestate;
-    gamestate.game_is_playing = 1;
 
     gamestate.players = player_loadplayer("./data/Jugadores.txt");
     gamestate.structs_already_loaded = 0; //!PARA EL CASO EN EL QUE EL JUGADOR SE SALGA DEL JUEGO SIN HABER CARGADO ANTES LOS OBJETOS, COMPROBAREMOS QUE SEA NULL PARA QUE ASI NO SE BLOQUEE EL PROGRAMA
@@ -409,6 +407,7 @@ void game_initial_struct_loading(GameState* game_state){
     game_state->arr_puzles = puzzle_loadpuzzles("./data/Puzles.txt");
 
     game_state->structs_already_loaded = 1;
+    game_state->game_is_playing = 1;
 
 }
 
