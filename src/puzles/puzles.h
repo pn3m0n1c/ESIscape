@@ -20,7 +20,14 @@ typedef struct{
     int total_leidos;
 }array_puz;
 
+//!Cabecera: array_puz* puzzle_loadpuzzles(char path[])
+//!Precondicion:
+//!Postcondicion: Devuelve puntero a la estructura array_puz y actualiza el contador total leidos
 array_puz* puzzle_loadpuzzles(char path[]);
+
+//!Cabecera: void puzzle_freepuzzles(array_puz *)
+//!Precondicion:
+//!Postcondicion: Vacia la memoria del array de los puzles
 void puzzle_freepuzzles(array_puz *);
 
 #endif
