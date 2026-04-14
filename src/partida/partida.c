@@ -1,5 +1,6 @@
 #include "partida.h"
 #include "../ui/ui.h"
+#include <cstdio>
 
 
 /**
