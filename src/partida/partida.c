@@ -1,5 +1,6 @@
 #include "partida.h"
 #include "../ui/ui.h"
+#include <cstdio>
 
 /**
  * @brief Imprime por pantalla el estado completo del GameState para depuración.
@@ -227,6 +228,8 @@ int game_load(GameState* gamestate){
 			}
         }
     }
+
+    fclose(saves_file);
 
 	return 0;
 }
