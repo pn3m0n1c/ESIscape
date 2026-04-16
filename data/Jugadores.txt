@@ -1,6 +1,6 @@
 01-Alumno ESI-alumno0001-pass1234-OB01
 02-Profesor MP-profesor02-admin_00
-03-as-as-as-OB01
+03-as-as-as
 04-Josemi-jmidev-devjmi-OB01-OB03
 05-paco-paco-paco
 06-Pepe-as-sa
