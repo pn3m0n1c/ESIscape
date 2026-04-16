@@ -1,6 +1,6 @@
 #include"../partida/partida.h"
 #include"jugador.h"
-/*!Carga los jugadores y sus respectivos objetos*/
+
 jugadores *player_loadplayer(char path[]) {
     
     FILE *f = fopen(path, "r"); 
@@ -88,7 +88,7 @@ void player_registerplayer(GameState *game_state, char *nom, char *contrasena, c
 
 }
 
-/*!Guarda jugadores dentro del array de jugadores  mirando primero si hay jugadores para guardar dentro del fichero "Jugadores.txt"*/
+
 void player_saveplayer(GameState *game_state, char *path){
     if((game_state->players->arr_jugadores) == NULL){
         printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
@@ -116,26 +116,7 @@ void player_saveplayer(GameState *game_state, char *path){
     }
     fclose(f);
 }
-    /*!Introduces un ID y busca a ese jugador comparandolo con la ID real del jugador que está en la string de jugadores
-    dentro de un blucle for el cual va buscando al jugador pasando por todos*/
-    /*!void estado_jugador(jugador *array_jugador, int total_leidos){
-        char comparador[3];
-        printf("Escribe el ID de tu jugador para ver los detalles de tu jugador: ");
-        fgets(comparador, sizeof(comparador), stdin);
-        comparador[strcspn(comparador, "\n")] = 0;
-        
-        int i;
-        for(i = 0; i < total_leidos; i++){
-            if(strcmp(comparador, array_jugador[i].Id_jugador) == 0){
-                printf("----DETALLES DE TU JUGADOR----");
-                printf("El nombre de tu usuario es: %s", array_jugador[i].Nomb_jugador);
-                printf("El nombre de tu jugador es: %s", array_jugador[i].Jugador);
-               // printf("Tienes una cantidad de %i objetos", ); //!Preguntar en clase
-               // printf("Estas en la sala %s", ); //!Preguntar en clase
-            }
-        }
-    }*/
-
+//! Busca un juegad
 jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
     int i;
 
