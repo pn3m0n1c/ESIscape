@@ -7,8 +7,10 @@
 #include "../inventario/inventario.h"
 #include "../salas/salas.h"
 
+//! @brief Gamestate
 typedef struct GameState GameState;
 
+//! @brief Estructura que contiene cada jugador
 typedef struct{
     char id[3];
     char Nomb_jugador[21];
@@ -18,6 +20,7 @@ typedef struct{
 
 } jugador;
 
+//! @brief Estructura de todos los jugadores
 typedef struct{
 
     jugador* arr_jugadores;
@@ -25,19 +28,33 @@ typedef struct{
 
 } jugadores;
 
-//!Cabecera: jugadores *player_loadplayer(char path[])
-//!Precondicion:
-//!Postcondicion: Devuelve un puntero a la estructura jugadores, la cual contiene un array con los jugadores y el total que se han leido.
+
+/**
+ * @brief Carga los jugadores del fichero.
+ * @par CABECERA
+ * jugadores *player_loadplayer(char path[])
+ * @pre Que haya jugadores en el fichero.
+ * @post Devuelve un puntero a la estructura jugadores, la cual contiene un array con los jugadores y el total que se han leido.
+ */
 jugadores *player_loadplayer(char path[]);
 
-//!Cabecera: void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo)
-//!Precondicion:
-//!Postcondicion: admite un jugador extra en el array de jugadores con un realloc e incrementa en 1 el total leidos.
+
+/**
+ * @brief Guarda a un nuevo jugador con la estructura de jugador dentro del array de jugadores
+ * @par CABECERA
+ * void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo)
+ * @pre Que exista un array de jugadores y una estructura la cual los defina.
+ * @post admite un jugador extra en el array de jugadores con un realloc e incrementa en 1 el total leidos.
+ */
 void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo);
 
-//!Cabecera: void player_saveplayer(GameState *game_state, char *path)
-//!Precondicion: Debe haber jugadores creados en el array para poder guardarlos
-//!Postcondicion: Los jugadores añadidos recientemente se guardan dentro de jugadores.txt.
+/** 
+ * @brief Guarda el array de jugadores en el fichero de jugadores.txt
+ * @par CABECERA
+ * void player_saveplayer(GameState *game_state, char *path)
+ * @pre Debe haber jugadores creados en el array para poder guardarlos.
+ * @post Los jugadores añadidos recientemente se guardan dentro de jugadores.txt.
+ */
 void player_saveplayer(GameState *game_state, char *path);
 
 //!Cabecera:  jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players)

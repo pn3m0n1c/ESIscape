@@ -1,6 +1,6 @@
 #include "puzles.h"
 
-//!Carga los puzles
+//!Carga los puzles del fichero
 array_puz* puzzle_loadpuzzles(char path[]){
     
     FILE *f = fopen(path, "r");
@@ -53,7 +53,7 @@ array_puz* puzzle_loadpuzzles(char path[]){
     return arr_puzles;
 
 }
-
+//! Te busca un puzles poniendo una ID y te devueelve que puzle es
 puzle* puzzle_find_by_id(char* wanted_id, array_puz* arr){
     int i;
     for(i = 0; i < arr->total_leidos; i++){
@@ -94,7 +94,7 @@ int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *
 }
 
 
-
+//! Libera el array con todos los puzles
 void puzzle_freepuzzles(array_puz *arr_puzles) {
     if ((arr_puzles) != NULL) {
         if ((arr_puzles->unidad) != NULL) {

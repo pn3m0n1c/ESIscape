@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//!Estructura que contiene cada puzle
 typedef struct{
     char id_puzle[4];
     char nomb_puz[16];
@@ -15,6 +16,7 @@ typedef struct{
     int resuelto;
 }puzle;
 
+//!Estructura de todos los puzles
 typedef struct{
     puzle *unidad;
     int total_leidos;
