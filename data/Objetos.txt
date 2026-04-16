@@ -1,3 +1,5 @@
 OB01-Tarjeta Lab-Tarjeta NFC para acceso a laboratorios-02
-OB02-Pen Drive-USB con los apuntes de la asignatura-04
+OB02-Papel arrugado-Un simple papel que reza "Manantial. La fuente de vida. Debe ser la solución..."-04
 OB03-Aceite de oliva-Aceite de cocina, el mejor del mundo.-03
+OB04-Etiqueta de Ropa-Una simple etiqueta de una camisa, es de "Giorgio Armani"-09
+OB05-Espada Ceremonial-Una larga y afilada espada de la epoca colonial. En el metal posee un grabado, se puede leer "1401"-09

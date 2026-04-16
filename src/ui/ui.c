@@ -242,7 +242,7 @@ void ui_user_initial_menu(GameState* game_state){
 
     }
 
-    printf("\nTe damos la bienvenida a:\n");
+    printf("\n%s, te damos la bienvenida a:\n", game_state->player->Nomb_jugador);
 
 }
 
