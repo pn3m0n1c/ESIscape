@@ -1,6 +1,12 @@
 #include "puzles.h"
 
-//!Carga los puzles del fichero
+/**
+ * @brief Carga los puzles del fichero
+ * @par CABECERA
+ * array_puz* puzzle_loadpuzzles(char path[])
+ * @pre Que haya puzles en el fichero.
+ * @post Devuelve puntero a la estructura array_puz y actualiza el contador total leidos
+ */
 array_puz* puzzle_loadpuzzles(char path[]){
     
     FILE *f = fopen(path, "r");
@@ -53,7 +59,13 @@ array_puz* puzzle_loadpuzzles(char path[]){
     return arr_puzles;
 
 }
-//! Te busca un puzles poniendo una ID y te devueelve que puzle es
+/**
+ * @brief Busca el puzle en base a su ID
+ * @par CABECERA
+ * puzle* puzzle_find_by_id(char*, array_puz*)
+ * @pre Que exista un array de puzles y que haya al menos 1
+ * @post Devuelve un puntero al puzle con el id especificado, o NULL si no existe
+ */
 puzle* puzzle_find_by_id(char* wanted_id, array_puz* arr){
     int i;
     for(i = 0; i < arr->total_leidos; i++){
@@ -63,7 +75,13 @@ puzle* puzzle_find_by_id(char* wanted_id, array_puz* arr){
     return NULL;
 }
 
-//!Si el puzle esta completado devuelve 1 y si no esta completado devuelve 0
+/**
+ * @brief Comprueba si la solucion de un puzle es correcta o no
+ * @par CABECERA
+ * int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador)
+ * @pre Que exista un array de puzles y que haya al menos 1
+ * @post Si la respuesta es correcta devuelve 1, si no, devuelve 0
+ */
 int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *respuesta_jugador){
     
     if (arr_puzles == NULL || arr_puzles->unidad == NULL) {
@@ -94,7 +112,13 @@ int puzzle_check_solution(array_puz *arr_puzles, char *id_puzle_objetivo, char *
 }
 
 
-//! Libera el array con todos los puzles
+/**
+ * @brief Libera el aaray de puzles y lo deja vacio
+ * @par CABECERA
+ * void puzzle_freepuzzles(array_puz *)
+ * @pre Que exista un array de puzles y que haya al menos 1
+ * @post Devuelve el array de puzles vacio
+ */
 void puzzle_freepuzzles(array_puz *arr_puzles) {
     if ((arr_puzles) != NULL) {
         if ((arr_puzles->unidad) != NULL) {

@@ -1,6 +1,13 @@
 #include"../partida/partida.h"
 #include"jugador.h"
 
+/**
+ * @brief Carga los jugadores del fichero.
+ * @par CABECERA
+ * jugadores *player_loadplayer(char path[])
+ * @pre Que haya jugadores en el fichero.
+ * @post Devuelve un puntero a la estructura jugadores, la cual contiene un array con los jugadores y el total que se han leido.
+ */
 jugadores *player_loadplayer(char path[]) {
     
     FILE *f = fopen(path, "r"); 
@@ -42,16 +49,7 @@ jugadores *player_loadplayer(char path[]) {
             if (token) strcpy((cargados_jugadores->arr_jugadores)[cont].Inventario_como_string, token);
             else (cargados_jugadores->arr_jugadores)[cont].Inventario_como_string[0] = '\0';
 
-            /*!(cargados_jugadores->arr_jugadores)[cont].inv=inv_create_empty_inventory();
-            token = strtok(NULL, "-");
-            while (token != NULL){
-                Item objeto_temporal;
-                strcpy(objeto_temporal.id, token);
-                strcpy(objeto_temporal.location, "Inventario");
-                inv_add_item(objeto_temporal, &(cargados_jugadores->arr_jugadores)[cont].inv);
-                
-                token = strtok(NULL, "-");
-            }*/
+            
 
             cont++;
 
@@ -64,7 +62,13 @@ jugadores *player_loadplayer(char path[]) {
     }
 
 }
-
+/**
+ * @brief Guarda a un nuevo jugador con la estructura de jugador dentro del array de jugadores
+ * @par CABECERA
+ * void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo)
+ * @pre Que exista un array de jugadores y una estructura la cual los defina.
+ * @post admite un jugador extra en el array de jugadores con un realloc e incrementa en 1 el total leidos.
+ */
 void player_registerplayer(GameState *game_state, char *nom, char *contrasena, char *nom_completo){
     
     game_state->players->arr_jugadores = realloc(game_state->players->arr_jugadores, (game_state->players->total_leidos + 1)*sizeof(jugador));
@@ -88,7 +92,13 @@ void player_registerplayer(GameState *game_state, char *nom, char *contrasena, c
 
 }
 
-
+/** 
+ * @brief Guarda el array de jugadores en el fichero de jugadores.txt
+ * @par CABECERA
+ * void player_saveplayer(GameState *game_state, char *path)
+ * @pre Debe haber jugadores creados en el array para poder guardarlos.
+ * @post Los jugadores añadidos recientemente se guardan dentro de jugadores.txt.
+ */
 void player_saveplayer(GameState *game_state, char *path){
     if((game_state->players->arr_jugadores) == NULL){
         printf("No se puede guardar jugadores porque no hay jugadores disponibles.");
@@ -116,7 +126,13 @@ void player_saveplayer(GameState *game_state, char *path){
     }
     fclose(f);
 }
-//! Busca un juegad
+/** 
+ * @brief Va buscando en el array de jugadores el jugador el cual se desea encontrar
+ * @par CABECERA
+ * jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players)
+ * @pre Debe de existir un array de jugadores y el jugador que se quiera buscar.
+ * @post Si el susuario y la contraseña coinciden con un jugador le devuelve un puntero
+ */
 jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
     int i;
 
@@ -129,7 +145,13 @@ jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players){
     return 0;
 }
 
-//!Borra el array de jugadores y lo deja vacio
+/** 
+ * @brief Vacia el array de jugadores
+ * @par CABECERA
+ * void player_freeplayer(jugadores *jugadores_borrar)
+ * @pre Debe de existir un array de jugadores y que tenga al menos un jugador.
+ * @post Vacia el aaray de jugadores
+ */
 void player_freeplayer(jugadores *jugadores_borrar) {
     if ((jugadores_borrar) != NULL) {
         if ((jugadores_borrar->arr_jugadores) != NULL) {
