@@ -119,13 +119,14 @@ int inv_write_items(FILE *file, Inventory *all_items){
  */
 Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
     int i;
+    Item* found_item = NULL;
 
     for (i = 0; i < inv->size; i++) {
         if (strcmp(inv->slot[i].id, wanted_id) == 0)
-            return &inv->slot[i];
+            found_item = &inv->slot[i];
     }
 
-    return NULL;
+    return found_item;
 }
 
 /**
