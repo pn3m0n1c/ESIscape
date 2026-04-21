@@ -2,7 +2,6 @@
 #include "../ui/ui.h"
 
 /**
- * @brief Imprime por pantalla el estado completo del GameState para depuración.
  * @par CABECERA
  * void game_print_debug(GameState *gs)
  * @pre gs preinicializado
@@ -34,7 +33,6 @@ void game_print_debug(GameState *gs) {
 }
 
 /**
- * @brief Actualiza la sala actual del jugador si la conexión no está bloqueada.
  * @par CABECERA
  * int game_update_sala(GameState *game_state, Conn salida_destino)
  * @pre game_state preinicializado, salida_destino es una conexión válida
@@ -50,11 +48,10 @@ int game_update_sala(GameState* game_state, Conn salida_destino){
 }
 
 /**
- * @brief Escribe la partida del jugador actual a SAVE_PATH en modo append.
  * @par CABECERA
  * int game_write(GameState *gamestate)
- * @pre gamestate con player y current_sala preinicializados
- * @post Añade al fichero una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
+ * @pre gamestate con player y current_sala preinicializados. Macro SAVE_PATH inicializada con una ruta válida.
+ * @post Añade al final del fichero ubicado en SAVE_PATH una entrada con los datos del jugador actual. Devuelve 1 si éxito, 0 si error
  */
 int game_write(GameState *gamestate){
 
@@ -85,7 +82,9 @@ int game_write(GameState *gamestate){
 }
 
 /**
- * @brief Sobreescribe la partida del jugador activo eliminando su bloque anterior y guardando el estado actual.
+ * @brief Sobreescribe la partida del jugador activo eliminando su bloque anterior y guardando el estado actual. Esto 
+ se realiza mediante la creación de un fichero intermedio llamado "save.txt" en el directorio "data". La partida
+ sobreescrita siempre se guarda al final.
  * @par CABECERA
  * int game_overwrite(GameState *gamestate)
  * @pre gamestate con player preinicializado
@@ -134,7 +133,6 @@ int game_overwrite(GameState *gamestate){
 }
 
 /**
- * @brief Comprueba si existe una partida guardada para el ID de jugador indicado.
  * @par CABECERA
  * int save_exists(char id[3])
  * @pre id preinicializado
@@ -164,7 +162,6 @@ int save_exists(char id[3]){
 }
 
 /**
- * @brief Gestiona el guardado de partida, preguntando si sobreescribir en caso de que ya exista.
  * @par CABECERA
  * int game_save(GameState *gamestate)
  * @pre gamestate con player preinicializado
@@ -191,7 +188,7 @@ int game_save(GameState* gamestate){
 }
 
 /**
- * @brief Carga la partida guardada del jugador activo y restaura el estado del juego.
+ * @brief Carga la partida guardada del jugador activo y restaura el estado del juego mediante la actualización de la estructura GameState.
  * @par CABECERA
  * int game_load(GameState *gamestate)
  * @pre gamestate con player y estructuras preinicializadas
@@ -234,7 +231,6 @@ int game_load(GameState* gamestate){
 }
 
 /**
- * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA
  * int game_hud(GameState *game_state)
  * @pre game_state preinicializado
@@ -353,7 +349,6 @@ int game_hud(GameState *game_state){
 }
 
 /**
- * @brief Establece la sala inicial y entra en el bucle de juego.
  * @par CABECERA
  * void game_new(GameState *gamestate)
  * @pre gamestate con salas preinicializadas
@@ -369,7 +364,6 @@ void game_new(GameState* gamestate){
 }
 
 /**
- * @brief Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego.
  * @par CABECERA
  * void game_start()
  * @pre ninguna
@@ -393,7 +387,6 @@ void game_start(){
 }
 
 /**
- * @brief Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros.
  * @par CABECERA
  * void game_initial_struct_loading(GameState *game_state)
  * @pre game_state preinicializado
@@ -412,7 +405,6 @@ void game_initial_struct_loading(GameState* game_state){
 }
 
 /**
- * @brief Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir.
  * @par CABECERA
  * void game_loop(GameState *game_state)
  * @pre game_state preinicializado

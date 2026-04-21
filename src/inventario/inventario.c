@@ -13,7 +13,7 @@
 */
 
 /**
- * @brief Comprueba si un fichero se ha podido abrir correctamente.
+ * @brief Función auxiliar que comprueba si un fichero se ha podido abrir correctamente.
  * @par CABECERA
  * check_file(FILE *file)
  * @pre file es el resultado de un fopen()
@@ -29,7 +29,7 @@ int check_file(FILE *file){
 }
 
 /**
- * @brief Parsea una línea del fichero de objetos y rellena un Item.
+ * @brief Función auxiliar que recibe una linea de objeto con el formato correcto, y se encargar de añadirlo a una estructura de tipo *Item
  * @par CABECERA
  * build_item(char line[], Item *item)
  * @pre line tiene formato Id-Nombre-Descripción-Localización, item preinicializado
@@ -51,7 +51,7 @@ int build_item(char line[], Item *item) {
 }
 
 /**
- * @brief Lee los objetos del fichero indicado y los devuelve organizados en un Inventory.
+ * @brief Función de carga de objetos del módulo Inventario.
  * @par CABECERA
  * inv_load_items(char path[])
  * @pre path es una ruta válida a un fichero con formato Id-Nombre-Descripción-Localización
@@ -91,7 +91,7 @@ Inventory* inv_load_items(char path[]) {
 }
 
 /**
- * @brief Escribe las líneas OBJETO de todos los items al fichero abierto recibido.
+ * @brief Se encarga de escribir en el fichero que recibe por parámetro, lo general es que reciba el fichero Objetos.txt
  * @par CABECERA
  * inv_write_items(FILE *file, Inventory *all_items)
  * @pre file abierto en escritura, all_items preinicializado
@@ -112,7 +112,6 @@ int inv_write_items(FILE *file, Inventory *all_items){
 }
 
 /**
- * @brief Busca un item en un inventario en base a su ID.
  * @par CABECERA
  * inv_find_item_by_id(char wanted_id[5], Inventory *inv)
  * @pre wanted_id e inv preinicializados
@@ -130,7 +129,6 @@ Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv){
 }
 
 /**
- * @brief Libera la memoria del inventario y de su array de slots.
  * @par CABECERA
  * inv_free_inventory(Inventory *inv_to_free)
  * @pre inv_to_free preinicializado
@@ -147,6 +145,13 @@ void inv_free_inventory(Inventory *inv_to_free){
 
 }
 
+/**
+ * @brief Actualiza la localización de un item. Esto también es añadir al inventario, pues es también una ubicación realmente.
+ * @par CABECERA
+ * inv_update_item_loc(Item* item, char location[13])
+ * @pre item preinicializado, location es una cadena válida de hasta 12 caracteres
+ * @post Sobreescribe el campo location del item con el valor recibido
+ */
 void inv_update_item_loc(Item* item, char location[13]){
     strcpy(item->location, location);
 }

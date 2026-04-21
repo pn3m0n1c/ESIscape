@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @defgroup puzles Módulo Puzles
+ * @brief Gestión de los puzles del juego
+ * @{
+ */
+
 /** @brief Estructura que contiene cada puzle */
 typedef struct{
     char id_puzle[4];

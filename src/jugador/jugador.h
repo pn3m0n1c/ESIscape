@@ -7,6 +7,12 @@
 #include "../inventario/inventario.h"
 #include "../salas/salas.h"
 
+/**
+ * @defgroup jugador Módulo Jugador
+ * @brief Gestión de los jugadores del juego.
+ * @{
+ */
+
 //! @brief Gamestate
 typedef struct GameState GameState;
 

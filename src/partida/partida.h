@@ -43,7 +43,6 @@ typedef struct{
 } Savegame;
 
 /**
- * @brief Muestra el menú del bucle de juego y ejecuta la acción elegida.
  * @par CABECERA
  * int game_hud(GameState *game_state)
  * @pre game_state preinicializado
@@ -52,7 +51,6 @@ typedef struct{
 int game_hud(GameState*);
 
 /**
- * @brief Actualiza la sala actual del jugador si la conexión no está bloqueada.
  * @par CABECERA
  * int game_update_sala(GameState *game_state, Conn salida_destino)
  * @pre game_state preinicializado, salida_destino es una conexión válida
@@ -61,7 +59,6 @@ int game_hud(GameState*);
 int game_update_sala(GameState* game_state, Conn salida_destino);
 
 /**
- * @brief Inicializa el GameState, carga los jugadores y arranca el bucle principal del juego.
  * @par CABECERA
  * void game_start()
  * @pre ninguna
@@ -70,7 +67,6 @@ int game_update_sala(GameState* game_state, Conn salida_destino);
 void game_start();
 
 /**
- * @brief Carga salas, conexiones, objetos y puzles en el GameState desde sus ficheros.
  * @par CABECERA
  * void game_initial_struct_loading(GameState* game_state)
  * @pre game_state preinicializado
@@ -79,7 +75,6 @@ void game_start();
 void game_initial_struct_loading(GameState*);
 
 /**
- * @brief Muestra el menú principal y gestiona las opciones de nueva partida, cargar partida y salir.
  * @par CABECERA
  * void game_loop(GameState* game_state)
  * @pre game_state preinicializado
@@ -88,7 +83,6 @@ void game_initial_struct_loading(GameState*);
 void game_loop(GameState*);
 
 /**
- * @brief Comprueba si existe una partida guardada para el ID de jugador indicado.
  * @par CABECERA
  * int save_exists(char *player_id)
  * @pre player_id preinicializado
@@ -97,7 +91,6 @@ void game_loop(GameState*);
 int save_exists(char *player_id);
 
 /**
- * @brief Carga la partida guardada del jugador activo y restaura el estado del juego.
  * @par CABECERA
  * int game_load(GameState *gamestate)
  * @pre gamestate con player y estructuras preinicializadas
