@@ -58,33 +58,6 @@ Item* inv_find_item_by_id(char wanted_id[5], Inventory *inv);
 int inv_write_items(FILE *file, Inventory *all_items);
 
 /**
- * @brief Crea un inventario vacío, útil para inicializar un jugador en una nueva partida.
- * @par CABECERA
- * inv_create_empty_inventory()
- * @pre ninguna
- * @post Devuelve un Inventory vacío con slot NULL y size 0
- */
-Inventory inv_create_empty_inventory();
-
-/**
- * @brief Compara dos items campo a campo, al igual que strcmp().
- * @par CABECERA
- * inv_itemcmp(Item item_1, Item item_2)
- * @pre item_1 e item_2 preinicializados
- * @post Devuelve 0 si los dos items son iguales, 1 si no lo son
- */
-int inv_itemcmp(Item item_1, Item item_2);
-
-/**
- * @brief Busca un item en un inventario y devuelve su posición.
- * @par CABECERA
- * inv_find_item(Item item, Inventory *inv)
- * @pre item e inv preinicializados
- * @post Devuelve la posición del item en el inventario, o -1 si no se encuentra
- */
-int inv_find_item(Item item, Inventory *inv);
-
-/**
  * @brief Intenta añadir un Item a un Inventory.
  * @par CABECERA
  * inv_add_item(Item item, Inventory *inv)
