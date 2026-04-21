@@ -57,14 +57,24 @@ void player_registerplayer(GameState *game_state, char *nom, char *contrasena, c
  */
 void player_saveplayer(GameState *game_state, char *path);
 
-//!Cabecera:  jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players)
-//!Precondicion: Debe de existir el jugador previamente
-//!Postcondicion: Si el susuario y la contraseña coinciden con un jugador le devuelve un puntero
+
+/** 
+ * @brief Va buscando en el array de jugadores el jugador el cual se desea encontrar
+ * @par CABECERA
+ * jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players)
+ * @pre Debe de existir un array de jugadores y el jugador que se quiera buscar.
+ * @post Si el susuario y la contraseña coinciden con un jugador le devuelve un puntero
+ */
 jugador* player_findplayer(char name[21], char pass[9], jugadores* all_players);
 
-//!Cabecera:  void player_freeplayer(jugadores *jugadores_borrar)
-//!Precondicion:
-//!Postcondicion: Vacia la memoria de arr_jugadores 
+ 
+/** 
+ * @brief Vacia el array de jugadores
+ * @par CABECERA
+ * void player_freeplayer(jugadores *jugadores_borrar)
+ * @pre Debe de existir un array de jugadores y que tenga al menos un jugador.
+ * @post Vacia el aaray de jugadores
+ */
 void player_freeplayer(jugadores *jugadores_borrar);
 
 

@@ -7,10 +7,18 @@
 #include <string.h>
 #include "../inventario/inventario.h"
 
+/**
+ * @defgroup salas Módulo Salas
+ * @brief Gestión de las salas y las conexiones entre salas, y funciones relacionadas.
+ * @{
+ */
+
 //!SALAS
 
+/** @brief Representa los tipos de sala en forma de enum. */
 typedef enum {INICIAL, NORMAL, SALIDA} type_sala;
 
+/** @brief Representa la estructura que almacena la información de cada sala. */
 typedef struct{
 
     char sala_id[3];        //!2 CARACTERES
@@ -21,6 +29,7 @@ typedef struct{
 
 } Sala;
 
+/** @brief Representa la estructura que almacena el conjunto de todas las salas cargadas y el número de éstas. */
 typedef struct{
 
     Sala *salas;
@@ -30,6 +39,7 @@ typedef struct{
 
 //!CONEXIONES
 
+/** @brief Representa la estructura que almacena la información de cada conexión. */
 typedef struct{
 
     char conn_id[4];             //!3 CARACTERES
@@ -40,6 +50,7 @@ typedef struct{
 
 } Conn;
 
+/** @brief Representa la estructura que almacena el conjunto de todas las conexiones cargadas y el número de éstas. */
 typedef struct{
 
     Conn *conns;
@@ -47,39 +58,61 @@ typedef struct{
 
 } Conns;
 
-//!CABECERA: sala* salas_get_sala_from_id(char* id_to_search)
-//!PRECONDICIÓN: char y salas preinicializado
-//!POSTCONDICIÓN: devuelve un puntero a la sala dentro de un conjunto de salas con el id especificado en los argumentos.
+/**
+ * @par CABECERA
+ * Sala* salas_get_sala_from_id(char* id_to_search, Salas* salas)
+ * @pre char y salas preinicializado
+ * @post devuelve un puntero a la sala dentro de un conjunto de salas con el id especificado en los argumentos.
+ */
 Sala* salas_get_sala_from_id(char*, Salas*);
 
-//!CABECERA: Sala* salas_get_sala_inicial(Salas* arr_salas)
-//!PRECONDICIÓN: arr_salas preinicializada
-//!POSTCONDICIÓN: Devuelve un puntero a la sala inicial
+/**
+ * @par CABECERA
+ * Sala* salas_get_sala_inicial(Salas* arr_salas)
+ * @pre arr_salas preinicializada
+ * @post Devuelve un puntero a la sala inicial
+ */
 Sala* salas_get_sala_inicial(Salas*);
 
-//!CABECERA:         Salas salas_load_salas(char *file_path)
-//!PRECONDICIÓN:     Que exista el archivo de file_path
-//!POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las salas cargadas desde su archivo
+/**
+ * @par CABECERA
+ * Salas salas_load_salas(char *file_path)
+ * @pre Que exista el archivo de file_path
+ * @post Que devuelva un puntero a un array con todas las salas cargadas desde su archivo
+ */ 
 Salas salas_load_salas(char*);
 
-//!CABECERA:         Conns salas_load_conns(char *file_path)
-//!PRECONDICIÓN:     Que exista el archivo de Conexiones.txt
-//!POSTCONDICIÓN:    Que devuelva un puntero a un array con todas las conexiones cargadas desde su archivo
+/**
+ * @par CABECERA
+ * Conns salas_load_conns(char *file_path)
+ * @pre Que exista el archivo de Conexiones.txt
+ * @post Que devuelva un puntero a un array con todas las conexiones cargadas desde su archivo
+ */
 Conns salas_load_conns(char*);
 
-//!CABECERA: Conn* salas_find_conn_by_id(char* wanted_id, Conns* conns)
-//!PRECONDICIÓN: wanted_id y conns preinicializados
-//!POSTCONDICIÓN: Devuelve un puntero a la Conn con el id especificado, o NULL si no existe
+/**
+ * @par CABECERA
+ * Conn* salas_find_conn_by_id(char* wanted_id, Conns* conns)
+ * @pre wanted_id y conns preinicializados
+ * @post Devuelve un puntero a la Conn con el id especificado, o NULL si no existe
+ */
 Conn* salas_find_conn_by_id(char*, Conns*);
 
-//!CABECERA:         void salas_free_salas(Salas* salas)
-//!PRECONDICIÓN:     
-//!POSTCONDICIÓN:    libera la memoria dinámica de las salas cargadas
+/**
+ * @par CABECERA
+ * void salas_free_salas(Salas* salas)
+ * @pre (Ninguna)
+ * @post libera la memoria dinámica de las salas cargadas
+ */
 void salas_free_salas(Salas*);
 
-//!CABECERA:         void salas_free_conns(Conns* conns)
-//!PRECONDICIÓN:     
-//!POSTCONDICIÓN:    libera la memoria dinámica de las conexiones cargadas
+
+/**
+ * @par CABECERA
+ * void salas_free_conns(Conns* conns)
+ * @pre (Ninguna)
+ * @post libera la memoria dinámica de las conexiones cargadas
+ */
 void salas_free_conns(Conns*);
 
 #endif
