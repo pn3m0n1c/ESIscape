@@ -1,9 +1,4 @@
 01-Hall Principal-INICIAL-Amplio recibidor de la ESI con la gran escalinata y acceso a conserjería y pasillos.
-02-Conserjería-NORMAL-Habitáculo acristalado donde los bedeles guardan llaves y tarjetas de la escuela. El escritorio posee un panel de control.
-03-Pasillo Laboratorios-NORMAL-Largo pasillo de la primera planta que conecta con los laboratorios de software.
-04-Laboratorio S11-NORMAL-Aula llena de ordenadores para las prácticas de Metodología de la Programación.
-05-Biblioteca-NORMAL-Zona de estudio silenciosa con varias mesas y ordenadores de consulta. Una estantería deja asomar la esquina una especie de trampilla. Parece realmente estrecha.
-06-Aparcamiento Exterior-SALIDA-El exterior de la ESI. ¡Has conseguido salir a tiempo para coger el autobús!
-07-Pasadizo Secreto-NORMAL- ¡Me encantan los pasadizos secretos!
-08-Túnel Oscuro-NORMAL-Aquí no se ve nada. Pero nada de nada vamos. ¿Oigo una voz?
-09-Altar Illuminatti-NORMAL-¿Qué demonios es esto? Una sala con abalorios, ornamentos dorados y telas rojas. Hay una especie de altar en el centro en el que alguna cosa reposa. 
+02-Pasillo Laboratorios-NORMAL-Largo pasillo de la primera planta que conecta con los laboratorios de software.
+03-Biblioteca-NORMAL-Zona de estudio silenciosa con varias mesas y ordenadores de consulta. Una estantería deja asomar la esquina una especie de trampilla. Parece realmente estrecha.
+04-Aparcamiento Exterior-SALIDA-El exterior de la ESI. ¡Has conseguido salir a tiempo para coger el autobús!
